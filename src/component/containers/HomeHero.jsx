@@ -5,7 +5,7 @@ import HomeMiddleSide from '../ssr/HomeMiddleSide/HomeMiddleSide';
 
 const HomeHero = () => {
       return (
-            <div className='w-full min-h-full relative'>
+            <div className='container mx-auto min-h-screen flex justify-between mt-[65px]'>
                   <HomeLeftNavigation />
                   <HomeMiddleSide />
                   <HomeRightSide />

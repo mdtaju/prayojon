@@ -6,6 +6,7 @@ const CustomPopper = ({ children, ...rest }) => {
             <Popper
                   {...rest}
                   transition
+                  style={{ zIndex: '100' }}
                   modifiers={[
                         {
                               name: 'flip',

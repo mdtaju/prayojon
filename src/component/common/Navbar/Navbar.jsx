@@ -8,7 +8,6 @@ import {
 import dynamic from "next/dynamic";
 import React from 'react';
 import MobileNav from "./MobileNav/MobileNav";
-import Styles from './Navbar.module.scss';
 // import NavLeftElement from "./NavLeftElement";
 import NavMiddleElement from "./NavMiddleElement";
 import NavRightSideElement from "./NavRightSideElement";
@@ -19,13 +18,13 @@ const NavLeftElement = dynamic(() => import('./NavLeftElement'), {
 const Navbar = () => {
       return (
             // {/* There are three part in header */}
-            <header className='w-full h-[90px] md:h-[60px] sticky md:fixed top-0 shadow-md flex items-center bg-white'>
+            <header className='w-full h-[90px] md:h-[60px] sticky md:fixed top-0 shadow-md flex items-center bg-white z-50'>
                   {/* Inner container for large screen */}
                   <div className="hidden md:flex container mx-auto items-center justify-between h-full">
 
                         {/* Part one contain logo and search box */}
                         <div className="flex items-center gap-2 w-[302px]">
-                              <p className={Styles.pri_color}>Logo</p>
+                              <p className="text-base font-bold text-blue-600">Logo</p>
                               {/* SearchBar Component */}
                               <NavLeftElement />
                         </div>

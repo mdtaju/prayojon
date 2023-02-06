@@ -2,8 +2,8 @@ import React from 'react';
 
 const HomeRightSide = () => {
       return (
-            <div>
-
+            <div className='w-[310px]'>
+                  {/* <h1>Right side</h1> */}
             </div>
       );
 };

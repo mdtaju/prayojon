@@ -1,7 +1,7 @@
 import Script from 'next/script';
+import Navbar from '../src/component/common/Navbar/Navbar';
 import HomeHero from '../src/component/containers/HomeHero';
 import Layout from '../src/component/containers/Layout';
-import Navbar from '../src/component/csr/Navbar/Navbar';
 // const Navbar = dynamic(() => import('../src/component/csr/Navbar/Navbar'), {
 //   ssr: false,
 // })
