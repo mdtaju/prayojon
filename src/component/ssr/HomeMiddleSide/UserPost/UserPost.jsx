@@ -1,7 +1,7 @@
 import React from 'react';
-import PostBtmArea from './PostBtmArea';
-import PostImgArea from './PostImgArea';
-import PostTopArea from './PostTopArea';
+import PostBtmArea from './PostBtmArea/PostBtmArea';
+import PostImgArea from './PostImgArea/PostImgArea';
+import PostTopArea from './PostTopArea/PostTopArea';
 
 const UserPost = () => {
       return (
