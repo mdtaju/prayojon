@@ -21,4 +21,7 @@
   .nav_icon_round_btn {
     @apply w-[40px] h-[40px] bg-gray-200 rounded-full grid place-items-center hover:bg-gray-300 cursor-pointer
   }
+  .post_icon {
+    @apply text-[16px] text-gray-800
+  }
 }

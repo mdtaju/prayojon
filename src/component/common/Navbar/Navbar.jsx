@@ -7,11 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
 import React from 'react';
+import CustomSkeleton from "../CustomSkeleton";
 import MobileNav from "./MobileNav/MobileNav";
-// import NavLeftElement from "./NavLeftElement";
 import NavMiddleElement from "./NavMiddleElement";
 import NavRightSideElement from "./NavRightSideElement";
-const NavLeftElement = dynamic(() => import('./NavLeftElement'), {
+const NavLeftElement = dynamic(() => import('./NavLeftElement') || <CustomSkeleton />, {
       ssr: false,
 })
 

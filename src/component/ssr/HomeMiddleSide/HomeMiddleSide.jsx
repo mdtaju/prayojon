@@ -1,6 +1,7 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
-import CreatePost from './CreatePost';
 import UserPost from './UserPost/UserPost';
+const CreatePost = dynamic(() => import('./CreatePost'), { ssr: false });
 const HomeMiddleSide = () => {
       return (
             <div className='w-full md:w-[740px] mx-auto p-2 sm:py-4 sm:px-8'>

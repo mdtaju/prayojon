@@ -15,9 +15,14 @@ const NavRightSideElement = ({ toolTitle, countValue, Icon, children }) => {
             setOpen((prev) => placement !== newPlacement || !prev);
             setPlacement(newPlacement);
       };
+      const handleClickAway = () => {
+            setOpen(false);
+            console.log("Handle Click Away")
+      }
       return (
             <li onClick={handleClick('bottom')} className="h-full grid place-items-center">
                   <CustomPopper
+                        setOpenPopper={setOpen}
                         anchorEl={anchorEl}
                         open={open}
                         placement={placement}

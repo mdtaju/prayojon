@@ -16,9 +16,14 @@ const NavLeftElement = () => {
             setOpen((prev) => placement !== newPlacement || !prev);
             setPlacement(newPlacement);
       };
+      const handleClickAway = () => {
+            setOpen(false);
+            console.log("Handle Click Away")
+      }
       return (
             <>
                   <CustomPopper
+                        setOpenPopper={setOpen}
                         anchorEl={anchorEl}
                         open={open}
                         placement={placement}
