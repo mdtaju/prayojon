@@ -10,8 +10,9 @@ import React from 'react';
 import CustomSkeleton from "../CustomSkeleton";
 import MobileNav from "./MobileNav/MobileNav";
 import NavMiddleElement from "./NavMiddleElement";
-import NavRightSideElement from "./NavRightSideElement";
-const NavLeftElement = dynamic(() => import('./NavLeftElement') || <CustomSkeleton />, {
+import NavRightSideElement from "./NavRightSideElement/NavRightSideElement";
+import ProfilePopperBody from "./NavRightSideElement/ProfilePopperBody";
+const NavLeftElement = dynamic(() => import('./NavLeftElement/NavLeftElement') || <CustomSkeleton />, {
       ssr: false,
 })
 
@@ -78,7 +79,7 @@ const Navbar = () => {
                                     <NavRightSideElement
                                           toolTitle={"Profile"}
                                     >
-                                          <h1>Profile</h1>
+                                          <ProfilePopperBody />
                                     </NavRightSideElement>
                               </ul>
                         </div>

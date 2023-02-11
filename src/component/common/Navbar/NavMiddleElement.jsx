@@ -6,7 +6,7 @@ import React from 'react';
 const NavMiddleElement = ({ toolTitle, Icon, activeLink }) => {
       const router = useRouter();
       return (
-            <li className={`h-full py-1 ${router.pathname === activeLink && "border-b-2 border-blue-600"}`}>
+            <li className={`h-full py-1 ${router.pathname === activeLink && "border-b-2 border-primary"}`}>
                   <Tooltip title={toolTitle} arrow>
                         <div className="nav_icon_btn">
                               {
@@ -19,7 +19,7 @@ const NavMiddleElement = ({ toolTitle, Icon, activeLink }) => {
                                           </Badge> :
 
                                           <FontAwesomeIcon
-                                                className={`nav_icon ${router.pathname === activeLink && "text-blue-600"}`}
+                                                className={`nav_icon ${router.pathname === activeLink && "text-primary"}`}
                                                 icon={Icon}
                                           />
                               }

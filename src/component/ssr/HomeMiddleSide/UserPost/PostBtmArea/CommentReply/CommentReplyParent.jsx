@@ -5,11 +5,12 @@ const CommentReplyParent = ({ userReply }) => {
       return (
             <div className='ml-[48px] flex flex-col gap-2'>
                   {
-                        userReply.map((reply, i) => (
+                        userReply.map((reply, i, arr) => (
                               <CommentReplyChild
                                     key={i}
                                     name={reply.name}
                                     comment={reply.comment}
+                                    linear={i + 1 === arr.length ? true : false}
                               />
                         ))
                   }

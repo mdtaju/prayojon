@@ -2,7 +2,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-const CustomPopper = dynamic(() => import('../../common/CustomPopper'), {
+const CustomPopper = dynamic(() => import('../../CustomPopper'), {
       ssr: false,
 })
 

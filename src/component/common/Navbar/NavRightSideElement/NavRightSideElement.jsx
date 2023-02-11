@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Badge, Tooltip } from '@mui/material';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-const CustomPopper = dynamic(() => import('../../common/CustomPopper'), {
+const CustomPopper = dynamic(() => import('../../CustomPopper'), {
       ssr: false,
 })
 const NavRightSideElement = ({ toolTitle, countValue, Icon, children }) => {
@@ -15,10 +15,6 @@ const NavRightSideElement = ({ toolTitle, countValue, Icon, children }) => {
             setOpen((prev) => placement !== newPlacement || !prev);
             setPlacement(newPlacement);
       };
-      const handleClickAway = () => {
-            setOpen(false);
-            console.log("Handle Click Away")
-      }
       return (
             <li onClick={handleClick('bottom')} className="h-full grid place-items-center">
                   <CustomPopper

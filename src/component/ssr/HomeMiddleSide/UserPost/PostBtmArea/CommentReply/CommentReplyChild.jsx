@@ -1,10 +1,16 @@
 import { Avatar } from '@mui/material';
 import React from 'react';
 
-const CommentReplyChild = ({ name, comment }) => {
+const CommentReplyChild = ({ name, comment, linear }) => {
       return (
             <div className='flex items-start gap-2 relative'>
-                  <div className='absolute top-[-35px] left-[-31px] w-[25px] h-[50px] border-l border-b border-gray-200 rounded-bl-xl z-0'></div>
+                  <div className='absolute top-[-35px] left-[-31px] w-[25px] h-[50px] border-l-[2px] border-b-[2px] border-[#f0f5f2] rounded-bl-xl z-0'></div>
+                  {
+                        !linear &&
+                        <div
+                              className={`absolute left-[-31px] top-0 w-[2px] h-full bg-[#f0f5f2] rounded-b-full `}
+                        ></div>
+                  }
                   <div>
                         <Avatar
                               alt="Remy Sharp"
