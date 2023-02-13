@@ -5,14 +5,17 @@ import {
       faStore,
       faTv
 } from "@fortawesome/free-solid-svg-icons";
+import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import React from 'react';
-import CustomSkeleton from "../CustomSkeleton";
+// import CustomSkeleton from "../CustomSkeleton";
 import MobileNav from "./MobileNav/MobileNav";
 import NavMiddleElement from "./NavMiddleElement";
 import NavRightSideElement from "./NavRightSideElement/NavRightSideElement";
+import NotificationPopper from "./NavRightSideElement/NotificationPopper/NotificationPopper";
 import ProfilePopperBody from "./NavRightSideElement/ProfilePopperBody";
-const NavLeftElement = dynamic(() => import('./NavLeftElement/NavLeftElement') || <CustomSkeleton />, {
+const NavLeftElement = dynamic(() => import('./NavLeftElement/NavLeftElement'), {
+      loading: () => <Skeleton variant="rounded" width={110} height={20} />,
       ssr: false,
 })
 
@@ -73,7 +76,7 @@ const Navbar = () => {
                                           countValue={0}
                                           Icon={faBell}
                                     >
-                                          <h1>Notifications</h1>
+                                          <NotificationPopper />
                                     </NavRightSideElement>
                                     {/* Profile Component */}
                                     <NavRightSideElement
