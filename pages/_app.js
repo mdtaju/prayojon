@@ -9,6 +9,15 @@ const theme = createTheme({
     primary: {
       main: "#1b74e4"
     }
+  },
+  components: {
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgba(255,255,255,0.7)",
+        },
+      },
+    },
   }
 })
 function MyApp({ Component, pageProps }) {
