@@ -1,6 +1,7 @@
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import 'react-phone-number-input/style.css';
 import '../styles/globals.css';
 config.autoAddCss = false;
 

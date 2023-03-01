@@ -9,6 +9,10 @@
   body {
     background-color: #f0f1f5;
   }
+  .PhoneInputInput {
+    outline: none !important;
+    border: none !important;
+  }
 }
 
 @layer components{
@@ -42,8 +46,21 @@
     border-radius:5px;
     background: #888;
   }
-  .css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar {
-    width: 16px !important;
-    height: 16px !important;
+  .post_text_scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+  [contenteditable=true]:empty:not(:focus):before{
+    content: attr(placeholder);
+    color:grey;
+    font-style:italic;
+  }
+  .register_input {
+    @apply px-2 py-1 border-none outline-none w-full
+  }
+  .input_submit_btn {
+    @apply py-2 px-4 bg-primary text-white text-lg font-bold w-full rounded-md active:scale-95 duration-150
+  }
+  .login_icon_btn {
+    @apply w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md flex items-center gap-4 my-3 hover:bg-gray-200 cursor-pointer active:scale-95 duration-150
   }
 }

@@ -38,12 +38,12 @@ const HomeLeftNavigation = () => {
 
       return (
             <section
-                  className={`hidden md:block w-[310px] h-screen overflow-hidden`}
+                  className={`w-[310px] h-screen overflow-hidden`}
             >
                   {/* Menus outer container position fixed */}
                   <div
                         style={{ overscrollBehaviorY: 'contain' }}
-                        className={`fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px]`}
+                        className={`md:fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-0 sm:px-4 py-3 pb-[70px]`}
                   >
                         {/* Menus inner container */}
                         <div>

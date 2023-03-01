@@ -4,7 +4,6 @@ import CreatePostDialog from './CreatePostDialog';
 
 const CreatePost = () => {
       const [open, setOpen] = useState(false);
-
       const handleClickOpen = () => {
             setOpen(true);
       };
@@ -23,8 +22,8 @@ const CreatePost = () => {
                                     sx={{ width: 40, height: 40 }}
                               />
                         </div>
-                        <div onClick={handleClickOpen} className='py-2 px-3 rounded-full bg-gray-200 cursor-pointer w-full'>
-                              <p className='font-bold text-base text-gray-500'>{"What's on your mind?"}</p>
+                        <div onClick={handleClickOpen} className='py-2 px-3 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer w-full'>
+                              <p className='font-semibold text-base text-gray-500'>{"What's on your mind?"}</p>
                         </div>
                   </div>
             </div>

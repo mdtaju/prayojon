@@ -30,6 +30,7 @@ const NavLeftElement = () => {
                   >
                         <h1>Search</h1>
                   </CustomPopper>
+                  <p className="text-base font-bold text-blue-600">PRAYOJON</p>
                   <div onClick={handleClick('bottom-start')} className="w-fit flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
                         <FontAwesomeIcon
                               className="text-gray-400 text-base"

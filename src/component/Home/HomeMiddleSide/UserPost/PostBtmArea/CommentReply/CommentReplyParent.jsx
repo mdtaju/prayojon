@@ -3,7 +3,7 @@ import CommentReplyChild from './CommentReplyChild';
 
 const CommentReplyParent = ({ userReply }) => {
       return (
-            <div className='ml-[48px] flex flex-col gap-2'>
+            <div className='ml-[44px] sm:ml-[48px] flex flex-col gap-2'>
                   {
                         userReply.map((reply, i, arr) => (
                               <CommentReplyChild
@@ -14,6 +14,7 @@ const CommentReplyParent = ({ userReply }) => {
                               />
                         ))
                   }
+
             </div>
       );
 };

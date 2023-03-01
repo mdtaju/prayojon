@@ -28,7 +28,6 @@ const Navbar = () => {
 
                         {/* Part one contain logo and search box */}
                         <div className="flex items-center gap-2 w-[302px]">
-                              <p className="text-base font-bold text-blue-600">PRAYOJON</p>
                               {/* SearchBar Component */}
                               <NavLeftElement />
                         </div>
