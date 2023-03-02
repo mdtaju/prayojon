@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import Script from 'next/script';
 import Navbar from '../src/component/common/Navbar/Navbar';
 import HomeHero from '../src/component/containers/HomeHero';
@@ -7,6 +8,7 @@ import Layout from '../src/component/containers/Layout';
 // })
 
 export default function Home() {
+
   return (
     <div>
       {/* <Head>
@@ -21,4 +23,22 @@ export default function Home() {
       <Script src="https://kit.fontawesome.com/4b71bb4dff.js" crossorigin="anonymous" />
     </div>
   )
+}
+
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: { session }
+  }
 }

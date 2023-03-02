@@ -1,9 +1,15 @@
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from '@mui/material';
+import { signOut } from 'next-auth/react';
 import React from 'react';
 
 const ProfilePopperBody = () => {
+
+      const logoutHandler = async () => {
+            await signOut()
+      }
+
       return (
             <div className='w-[320px] px-3 py-2'>
                   <div className='flex flex-col gap-2'>
@@ -15,7 +21,9 @@ const ProfilePopperBody = () => {
                               />
                               <span className='text-gray-800 font-bold'>User Name</span>
                         </div>
-                        <div className='flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md cursor-pointer'>
+                        <div
+                              onClick={logoutHandler}
+                              className='flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md cursor-pointer'>
                               <div className='p-[7px]'>
                                     <FontAwesomeIcon
                                           icon={faArrowRightFromBracket}

@@ -1,10 +1,16 @@
 import { TextField } from '@mui/material';
+import { signIn, useSession } from "next-auth/react";
 import Image from 'next/image';
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
-
 const Login = () => {
-      const [userPhone, setUserPhone] = useState()
+      const { data } = useSession();
+      const [userPhone, setUserPhone] = useState();
+
+      // google auth handler function 
+      const handleGoogleSignIn = async () => {
+            await signIn('google', { callbackUrl: "/" })
+      }
       return (
             <section className='container min-h-screen mx-auto py-6'>
                   <div className='w-[300px] sm:w-[420px] flex flex-col gap-4 mx-auto'>
@@ -33,7 +39,7 @@ const Login = () => {
                                     <p className='w-fit mx-auto text-primary hover:underline cursor-pointer'>Forgotten Password?</p>
                               </form>
                               <div>
-                                    <div className='login_icon_btn'>
+                                    <div onClick={handleGoogleSignIn} className='login_icon_btn'>
                                           <Image
                                                 src={'/web-icons/icons8-google.svg'}
                                                 alt="google"
