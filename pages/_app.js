@@ -4,7 +4,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import 'react-phone-number-input/style.css';
 import '../styles/globals.css';
-
 config.autoAddCss = false;
 
 const theme = createTheme({

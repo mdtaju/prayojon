@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const withCommentInput = (OriginalComponent) => {
+const withFormPhone = (OriginalComponent) => {
       function NewComponent() {
             const [comment, setComment] = useState("");
             return <OriginalComponent
@@ -11,4 +11,4 @@ const withCommentInput = (OriginalComponent) => {
       return NewComponent;
 }
 
-export default withCommentInput;
+export default withFormPhone;

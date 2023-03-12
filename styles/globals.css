@@ -9,15 +9,11 @@
   body {
     background-color: #f0f1f5;
   }
-  .PhoneInputInput {
-    outline: none !important;
-    border: none !important;
-  }
 }
 
 @layer components{
   .btn_primary {
-    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-md active:scale-95 duration-150
+    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-md active:scale-95 duration-150 cursor-pointer
   }
   .common_shadow {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -60,7 +56,19 @@
   .input_submit_btn {
     @apply py-2 px-4 bg-primary text-white text-lg font-bold w-full rounded-md active:scale-95 duration-150
   }
+  .input_submit_btn_err {
+    @apply py-2 px-4 bg-gray-200 text-gray-700 text-lg font-bold w-full rounded-md cursor-not-allowed
+  }
   .login_icon_btn {
     @apply w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md flex items-center gap-4 my-3 hover:bg-gray-200 cursor-pointer active:scale-95 duration-150
+  }
+  .input-phone-number input:focus {
+    outline: none !important;
+    border:none !important;
+    background-color: #fff !important;
+    /* box-shadow: none !important; */
+  }
+  .otp_btn_disable {
+    @apply min-w-[108px] bg-gray-300 text-gray-600 text-base font-medium py-[6px] px-[20px] rounded-md cursor-not-allowed select-none
   }
 }
