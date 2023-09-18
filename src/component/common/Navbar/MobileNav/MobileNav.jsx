@@ -1,13 +1,12 @@
 import {
       faBell,
-      faCartShopping, faHouse, faMessage,
-      faStore,
-      faTv
+      faCartShopping, faHouse,
+      faStore
 } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/legacy/image';
 import React from 'react';
 import BtmMenuElement from './BtmMenuElement';
 import MenuTabTopSide from './MenuTabTopSide';
-import SearchTopSide from './SearchTopSide';
 
 const MobileNav = () => {
       return (
@@ -15,24 +14,31 @@ const MobileNav = () => {
             <div className='block md:hidden w-full h-full py-2 px-3'>
                   {/* Top header include search and menu tab */}
                   <div className='h-1/2 flex items-center justify-between'>
-                        <p>Logo</p>
+                        <div className='relative w-[120px] h-[80px]'>
+                              <Image
+                                    src={"/images/logo-full.svg"}
+                                    alt='logo'
+                                    layout='fill'
+                                    className='object-contain'
+                              />
+                        </div>
                         <div className='h-full flex items-center gap-4'>
                               {/* search component. In this component include all search functionality and search drawer */}
-                              <SearchTopSide />
+                              {/* <SearchTopSide /> */}
                               {/* menu component. In this component include all profile related menus */}
                               <MenuTabTopSide />
                         </div>
                   </div>
                   {/* Bottom menu bar */}
-                  <div className='h-1/2 w-full grid grid-cols-6 gap-2 mt-1'>
+                  <div className='h-1/2 w-full grid grid-cols-4 gap-2 mt-1'>
                         <BtmMenuElement
                               Icon={faHouse}
                               activeLink={"/"}
                         />
-                        <BtmMenuElement
+                        {/* <BtmMenuElement
                               Icon={faTv}
                               activeLink={"/watch"}
-                        />
+                        /> */}
                         <BtmMenuElement
                               Icon={faStore}
                               activeLink={"/marketplace"}
@@ -45,10 +51,10 @@ const MobileNav = () => {
                               Icon={faBell}
                               activeLink={"/notification"}
                         />
-                        <BtmMenuElement
+                        {/* <BtmMenuElement
                               Icon={faMessage}
                               activeLink={"/messages"}
-                        />
+                        /> */}
                   </div>
             </div>
       );

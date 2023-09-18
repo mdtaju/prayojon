@@ -48,6 +48,7 @@ const MenuTabTopSide = () => {
                         </DialogContent>
                   </Dialog>
 
+                  {/* tree line menu */}
                   <div
                         onClick={() => setOpen(true)}
                         className='nav_icon_round_btn'>
@@ -55,8 +56,6 @@ const MenuTabTopSide = () => {
                               className="text-gray-600 text-base"
                               icon={faBars}
                         />
-
-
                   </div>
             </>
       );

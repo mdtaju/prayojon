@@ -1,19 +1,36 @@
 import { faArrowTurnUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { useSession } from 'next-auth/react';
+import React, { memo, useEffect, useState } from 'react';
+import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
 import CommentReplyParent from './CommentReply/CommentReplyParent';
-import LikeAction from './LikeAction';
-import LikeStatus from './LikeStatus';
 import PostBtmWriteComment from './PostBtmWriteComment';
 
-const PostBtmCommentChild = ({ name, comment, reply }) => {
+const PostBtmCommentChild = ({ comment, reply, time, userId }) => {
       const [toggleReply, setToggleReply] = useState(false);
       const [toggleReplyInput, setToggleReplyInput] = useState(false);
       const [textExpand, setTextExpand] = useState(false);
       const [commentInput, setCommentInput] = useState("");
       const windowSize = useWindowSize();
+
+      const [name, setName] = useState("");
+      const [photo, setPhoto] = useState("");
+      const { data: authData } = useSession();
+      const { data: getAuthUser } = useGetUserQuery(userId);
+
+      // get users photo and name 
+      useEffect(() => {
+            if (getAuthUser && getAuthUser[0]?.photo_url) {
+                  setPhoto(getAuthUser[0].photo_url);
+            }
+            if (getAuthUser && getAuthUser[0]?.name) {
+                  setName(getAuthUser[0].name);
+            }
+      }, [getAuthUser]);
+
       useEffect(() => {
             if (comment.length > 100) {
                   setTextExpand(false)
@@ -42,7 +59,7 @@ const PostBtmCommentChild = ({ name, comment, reply }) => {
                                     <Avatar
                                           style={{ zIndex: '2' }}
                                           alt="Remy Sharp"
-                                          //   src="/static/images/avatar/1.jpg"
+                                          src={photo}
                                           sx={windowSize.width > 425 ? { width: 36, height: 36 } : { width: 28, height: 28 }}
                                     />
                               </div>
@@ -64,19 +81,19 @@ const PostBtmCommentChild = ({ name, comment, reply }) => {
                                           }
                                     </p>
                                     {/* like status on comment */}
-                                    <div className='absolute -bottom-2 right-0'>
+                                    {/* <div className='absolute -bottom-2 right-0'>
                                           <LikeStatus />
-                                    </div>
+                                    </div> */}
                               </div>
                         </div>
                         {/* Like and Reply to user comment */}
                         <div className='ml-[36px] sm:ml-[48px] px-1 flex items-center gap-2 text-gray-600 text-sm font-semibold'>
-                              <div className='relative group'>
+                              {/* <div className='relative group'>
                                     <span className='cursor-pointer hover:underline'>Like</span>
                                     <LikeAction />
-                              </div>
-                              <span onClick={() => setToggleReplyInput(true)} className='cursor-pointer hover:underline'>Reply</span>
-                              <span className='cursor-pointer hover:underline text-xs'>23h</span>
+                              </div> */}
+                              {/* <span onClick={() => setToggleReplyInput(true)} className='cursor-pointer hover:underline'>Reply</span> */}
+                              <span className='cursor-pointer hover:underline text-xs'>{moment(time).fromNow()}</span>
                         </div>
                         {/* write a reply input */}
                         {
@@ -90,6 +107,7 @@ const PostBtmCommentChild = ({ name, comment, reply }) => {
                                                 style={{ height: "100%" }}
                                           ></div>
                                     }
+                                    {/* write replay with write comment component */}
                                     <PostBtmWriteComment
                                           avatarWidth={28}
                                           avatarHeight={28}
@@ -131,4 +149,4 @@ const PostBtmCommentChild = ({ name, comment, reply }) => {
       );
 };
 
-export default PostBtmCommentChild;
+export default memo(PostBtmCommentChild);

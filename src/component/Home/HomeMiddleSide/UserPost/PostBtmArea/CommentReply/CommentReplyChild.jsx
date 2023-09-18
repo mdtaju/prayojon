@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 const CommentReplyChild = ({ name, comment, linear }) => {
       const [textExpand, setTextExpand] = useState(false);
+      // comment length checking
       useEffect(() => {
             if (comment.length > 100) {
                   setTextExpand(false)

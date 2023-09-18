@@ -9,6 +9,7 @@ const AuthProviders = () => {
       }
       return (
             <div>
+                  {/* Login wit google */}
                   <div onClick={handleGoogleSignIn} className='login_icon_btn'>
                         <Image
                               src={'/web-icons/icons8-google.svg'}
@@ -18,7 +19,8 @@ const AuthProviders = () => {
                         />
                         <span className='text-lg text-gray-800 font-semibold'>Login with Google</span>
                   </div>
-                  <div className='login_icon_btn'>
+                  {/* Login with facebook */}
+                  {/* <div className='login_icon_btn'>
                         <Image
                               src={'/web-icons/icons8-facebook.svg'}
                               alt="google"
@@ -26,7 +28,7 @@ const AuthProviders = () => {
                               height={36}
                         />
                         <span className='text-lg text-gray-800 font-semibold'>Login with Facebook</span>
-                  </div>
+                  </div> */}
             </div>
       );
 };

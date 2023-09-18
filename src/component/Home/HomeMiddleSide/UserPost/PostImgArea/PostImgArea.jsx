@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PostImgList from './PostImgList';
-// import PostImg from '../../../../../public/images/post-image.jpg';
-const PostImgArea = () => {
+
+const PostImgArea = ({ files = [] }) => {
+
       return (
-            <div className='w-full h-auto'>
-                  {/* <CardMedia
-                        component="img"
-                        height="194"
-                        image={'/images/post-image.jpg'}
-                        alt="Paella dish"
-                  /> */}
-                  <PostImgList />
+            <div className='w-full'>
+                  <PostImgList
+                        images={files}
+                  />
             </div>
       );
 };
 
-export default PostImgArea;
+export default memo(PostImgArea);

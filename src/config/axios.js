@@ -1,7 +1,8 @@
 const { default: axios } = require("axios");
 
 const axiosInstance = axios.create({
-      baseURL: "http://prayo-server.ghoroya.com",
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  // "https://prayojon-server.prayojon.com",
 });
 
 export default axiosInstance;

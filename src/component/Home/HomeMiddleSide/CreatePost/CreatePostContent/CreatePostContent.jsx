@@ -21,9 +21,26 @@ const CreatePostContent = ({
       productPrice,
       setProductPrice,
       currencySign,
-      setCurrencySign
+      setCurrencySign,
+      productTitle,
+      setProductTitle,
+      location,
+      setLocation,
+      category,
+      setCategory,
+      discount,
+      setDiscount,
+      productType,
+      setProductType,
+      productQuantity,
+      setProductQuantity,
+      shippingCharge,
+      setShippingCharge,
+      termsAgreement,
+      setTermsAgreement,
+      districts
 }) => {
-      const [fileSizeWarning, setFileSizeWarning] = useState([]);
+      const [fileSizeWarning, setFileSizeWarning] = useState("");
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
@@ -31,20 +48,32 @@ const CreatePostContent = ({
       // file size validation
       const onDrop = useCallback(selectedFiles => {
             const acceptedFiles = [];
+            if (storeFiles?.length === 0 && !isImageFile(selectedFiles[0])) {
+                  setFileSizeWarning(`Your selected first file must be an image`)
+                  return setTimeout(() => { setFileSizeWarning([]) }, 5000)
+            }
+            // Add the files to the state
             selectedFiles.forEach((item) => {
                   // calculation of each selected file size into MB(Mega byte).
                   const getSize = item.size / (1024 ** 2);
+
                   if (getSize < 25) {
                         acceptedFiles.push(item); // if file size small than 25MB then is accepted
                   } else {
-                        setFileSizeWarning((prevState) => [...prevState, `Your selected file "${item.name}" is large than 25MB.`])
+                        setFileSizeWarning(`Your selected file "${item.name}" is large than 25MB.`);
+                        return;
                   }
             })
             // after 5 seconds warning messages will remove.
-            console.log("called file fun")
-            setTimeout(() => { setFileSizeWarning([]) }, 5000)
+            // console.log("called file fun")
+            setTimeout(() => { setFileSizeWarning("") }, 5000)
             return setStoreFiles((prevState) => [...prevState, ...acceptedFiles])
       }, [setStoreFiles])
+
+      // check is first file an image 
+      const isImageFile = (file) => {
+            return file.type.startsWith("image/");
+      };
 
       // file type validation
       const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -77,6 +106,23 @@ const CreatePostContent = ({
                               setProductPrice={setProductPrice}
                               currencySign={currencySign}
                               setCurrencySign={setCurrencySign}
+                              productTitle={productTitle}
+                              setProductTitle={setProductTitle}
+                              location={location}
+                              setLocation={setLocation}
+                              category={category}
+                              setCategory={setCategory}
+                              discount={discount}
+                              setDiscount={setDiscount}
+                              productType={productType}
+                              setProductType={setProductType}
+                              productQuantity={productQuantity}
+                              setProductQuantity={setProductQuantity}
+                              shippingCharge={shippingCharge}
+                              setShippingCharge={setShippingCharge}
+                              termsAgreement={termsAgreement}
+                              setTermsAgreement={setTermsAgreement}
+                              districts={districts}
                         />
                   }
                   {/* Write post text here */}
@@ -123,13 +169,12 @@ const CreatePostContent = ({
                   </CustomPopper>
                   {/* File size warning messages */}
                   {
-                        fileSizeWarning.map((item, i) => (
-                              <p
-                                    className='text-xs font-semibold text-red-400 text-center mb-1'
-                                    key={i}>
-                                    {item}
-                              </p>
-                        ))
+                        fileSizeWarning &&
+                        <p
+                              className='text-xs font-semibold text-red-400 text-center mb-1'
+                        >
+                              {fileSizeWarning}
+                        </p>
                   }
                   {
                         // drag drop file input & show main container

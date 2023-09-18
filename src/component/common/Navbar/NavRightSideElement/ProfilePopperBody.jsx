@@ -1,39 +1,52 @@
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar } from '@mui/material';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const ProfilePopperBody = () => {
+      const { data } = useSession();
+      const router = useRouter();
 
       const logoutHandler = async () => {
+            // if (data) {
             await signOut()
+            // } 
+            // else {
+            //       router.replace("/login")
+            // }
       }
 
       return (
-            <div className='w-[320px] px-3 py-2'>
-                  <div className='flex flex-col gap-2'>
-                        <div className='flex items-center gap-3 shadow-md p-2 rounded-md hover:bg-gray-100 cursor-pointer'>
-                              <Avatar
-                                    alt="Remy Sharp"
-                                    //   src="/static/images/avatar/1.jpg"
-                                    sx={{ width: 36, height: 36 }}
-                              />
-                              <span className='text-gray-800 font-bold'>User Name</span>
-                        </div>
-                        <div
-                              onClick={logoutHandler}
-                              className='flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md cursor-pointer'>
-                              <div className='p-[7px]'>
+            <div className='w-fit py-2'>
+                  <div className='flex flex-col'>
+                        {/* profile link */}
+                        <Link href="/profile">
+                              <div className='nav_sub_link_btn'>
                                     <FontAwesomeIcon
-                                          icon={faArrowRightFromBracket}
-                                          className="text-xl"
+                                          icon={faUser}
                                     />
+                                    <span>Profile</span>
                               </div>
-                              <span className='text-gray-800 font-bold'>Log Out</span>
+                        </Link>
+                        {/* dashboard link */}
+                        <Link href="/dashboard">
+                              <div className='nav_sub_link_btn'>
+                                    <FontAwesomeIcon
+                                          icon={faList}
+                                    />
+                                    <span>Dashboard</span>
+                              </div>
+                        </Link>
+                        {/* logout handler */}
+                        <div onClick={logoutHandler} className='nav_sub_link_btn'>
+                              <FontAwesomeIcon
+                                    icon={faArrowRightFromBracket}
+                              />
+                              <span>Log Out</span>
                         </div>
                   </div>
-
             </div>
       );
 };

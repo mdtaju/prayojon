@@ -2,73 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
+@layer base {
   :root {
     --colorPrimary: 27 116 228;
   }
   body {
-    background-color: #f0f1f5;
+    background-color: #dae0e6;
   }
 }
 
-@layer components{
+@layer components {
   .btn_primary {
-    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-md active:scale-95 duration-150 cursor-pointer
+    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-full active:scale-95 duration-150 cursor-pointer;
   }
   .common_shadow {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    @apply rounded-md bg-[#fff] py-2 px-4
+    @apply rounded-md bg-[#fff] py-2 px-4;
+  }
+  .common_description {
+    @apply text-[.9375rem] leading-[1.3333] font-normal text-gray-900;
   }
   .nav_icon_btn {
-    @apply px-8 py-2 h-full hover:bg-gray-100 rounded-md cursor-pointer grid place-items-center
+    @apply px-8 py-2 h-full hover:bg-gray-100 rounded-md cursor-pointer grid place-items-center;
   }
   .nav_icon {
-    @apply text-[24px] text-gray-500
+    @apply text-[24px] text-gray-500;
   }
   .nav_icon_round_btn {
-    @apply w-[40px] h-[40px] bg-gray-200 rounded-full grid place-items-center hover:bg-gray-300 cursor-pointer
+    @apply w-[40px] h-[40px] bg-gray-200 rounded-full grid place-items-center hover:bg-gray-300 cursor-pointer;
+  }
+  .nav_sub_link_btn {
+    @apply flex items-center gap-3 cursor-pointer px-4 py-2 hover:bg-primary font-semibold text-gray-600 hover:text-white;
+  }
+  .nav_sub_link_btn_active {
+    @apply bg-primary text-white;
   }
   .post_icon {
-    @apply text-[16px] text-gray-800
+    @apply text-[16px] text-gray-800;
   }
   .custom_scrollbar::-webkit-scrollbar {
     width: 5px;
   }
   .custom_scrollbar::-webkit-scrollbar-track {
     background: transparent;
-    border-radius:5px;
+    border-radius: 5px;
   }
   .common_shadow::-webkit-scrollbar-thumb {
-    border-radius:5px;
+    border-radius: 5px;
     background: #888;
   }
   .post_text_scrollbar::-webkit-scrollbar {
     width: 5px;
   }
-  [contenteditable=true]:empty:not(:focus):before{
+  [contenteditable="true"]:empty:not(:focus):before {
     content: attr(placeholder);
-    color:grey;
-    font-style:italic;
+    color: grey;
+    font-style: italic;
   }
   .register_input {
-    @apply px-2 py-1 border-none outline-none w-full
+    @apply px-2 py-1 border-none outline-none w-full;
   }
   .input_submit_btn {
-    @apply py-2 px-4 bg-primary text-white text-lg font-bold w-full rounded-md active:scale-95 duration-150
+    @apply py-2 px-4 bg-primary text-white text-lg font-bold w-full rounded-md active:scale-95 duration-150;
   }
   .input_submit_btn_err {
-    @apply py-2 px-4 bg-gray-200 text-gray-700 text-lg font-bold w-full rounded-md cursor-not-allowed
+    @apply py-2 px-4 bg-gray-200 text-gray-700 text-lg font-bold w-full rounded-md cursor-not-allowed;
   }
   .login_icon_btn {
-    @apply w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md flex items-center gap-4 my-3 hover:bg-gray-200 cursor-pointer active:scale-95 duration-150
+    @apply w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md flex items-center gap-4 my-3 hover:bg-gray-200 cursor-pointer active:scale-95 duration-150;
   }
   .input-phone-number input:focus {
     outline: none !important;
-    border:none !important;
+    border: none !important;
     background-color: #fff !important;
     /* box-shadow: none !important; */
   }
   .otp_btn_disable {
-    @apply min-w-[108px] bg-gray-300 text-gray-600 text-base font-medium py-[6px] px-[20px] rounded-md cursor-not-allowed select-none
+    @apply min-w-[108px] bg-gray-300 text-gray-600 text-base font-medium py-[6px] px-[20px] rounded-md cursor-not-allowed select-none;
+  }
+
+  /* profile css */
+  .profile_tab_link {
+    @apply font-semibold text-gray-600 px-2 py-4 cursor-pointer;
+  }
+  .profile_tab_link_active {
+    @apply text-primary border-b-[3px] border-primary;
+  }
+  .profile_tab_link_mobile {
+    @apply px-2 py-1 hover:bg-primary hover:text-white;
+  }
+  /* dashboard sidebar and other design */
+  .dashboard_sidebar {
+    @apply fixed left-0 top-0 h-full w-[260px] common_shadow;
+  }
+  .dashboard_sidebar_link {
+    @apply p-2 hover:rounded-md flex items-center gap-3 text-base font-semibold text-gray-800 hover:bg-primary hover:text-white cursor-pointer border-b border-gray-300 hover:border-white select-none;
+  }
+  .sidebar_links_container::-webkit-scrollbar {
+    display: none;
+  }
+  .dashboard_cart_shadow {
+    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
+      0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
+      0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
+      0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+    background-color: #fff;
   }
 }

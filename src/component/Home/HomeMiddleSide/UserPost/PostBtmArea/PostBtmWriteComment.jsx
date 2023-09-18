@@ -1,17 +1,40 @@
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar } from '@mui/material';
+import { Avatar, Dialog, IconButton } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
-import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { memo, useEffect, useState } from 'react';
+import { useAddNotificationMutation } from '../../../../../features/notification/notificationApi';
+import { useGetUserQuery } from '../../../../../features/profile/profileApi';
+import { useAddCommentMutation } from '../../../../../features/userPost/userPostApi';
+import useWindowSize from '../../../../../hook/useWindowSize';
 import CustomPopper from '../../../../common/CustomPopper';
 
-const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, placeholder }) => {
+const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, placeholder, id, postType, postUserId }) => {
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
       // const [comment, setComment] = useState("");
       const [isFocus, setIsFocus] = useState(false);
+      const [addComment, { data }] = useAddCommentMutation();
+      const [snackOpen, setSnackOpen] = useState(false);
+      const [warnMss, setWarnMss] = useState("");
+      const router = useRouter();
+      const [photo, setPhoto] = useState("");
+      const { data: authData } = useSession();
+      const { data: getAuthUser } = useGetUserQuery(authData?.user?.email);
+      const [addNotification, { data: notificationRes, error }] = useAddNotificationMutation();
+      const windowSize = useWindowSize();
+
+      // get users photo 
+      useEffect(() => {
+            if (getAuthUser && getAuthUser[0]?.photo_url) {
+                  setPhoto(getAuthUser[0].photo_url);
+            }
+      }, [getAuthUser]);
 
       // const ref = useRef();
       useEffect(() => {
@@ -26,12 +49,61 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
             setOpen((prev) => placement !== newPlacement || !prev);
             setPlacement(newPlacement);
       };
+      // comment sent handler 
+      const handleSentComment = () => {
+            const d = new Date();
+            if (getAuthUser?.length > 0) {
+                  if (authData && !getAuthUser[0]?.name) {
+                        setWarnMss(<p className='text-lg font-bold'>Please <Link className='text-primary underline' href="/profile/edit">update</Link> your profile to write a comment</p>)
+                  }
+                  if (authData && getAuthUser[0]?.name) {
+                        addComment({
+                              post_id: id,
+                              comment,
+                              post_type: postType,
+                              user_id: authData?.user?.email,
+                              created_at: d.toUTCString()
+                        });
+                        addNotification({
+                              sender_id: authData?.user?.email,
+                              receiver_id: postUserId,
+                              message: "comment to your post.",
+                              link: ``,
+                              date: d.toUTCString()
+                        })
+                        setComment("")
+                  } else {
+                        setSnackOpen(true)
+                  }
+            }
+            if (!authData) {
+                  setWarnMss(<p className='text-lg font-bold'>Please <Link className='text-primary underline' href="/login">login</Link> to write a comment</p>)
+            }
+
+      }
+
+      const action = (
+            <>
+                  <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        className='float-right bg-orange-500 w-[35px] h-[35px] hover:bg-orange-500'
+                        onClick={() => setSnackOpen(false)}
+                  >
+                        <FontAwesomeIcon
+                              className='text-white'
+                              icon={faClose}
+                        />
+                  </IconButton>
+            </>
+      );
       return (
             <div className='flex items-start gap-2 pb-1'>
                   <div className=''>
                         <Avatar
                               alt="Remy Sharp"
-                              //   src="/static/images/avatar/1.jpg"
+                              src={photo}
                               sx={{ width: avatarWidth, height: avatarHeight }}
                         />
                   </div>
@@ -69,7 +141,9 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
                                           className='text-xl text-gray-600'
                                     />
                               </div>
+                              {/* comment sent button */}
                               <div
+                                    onClick={handleSentComment}
                                     className='p-1 w-fit cursor-pointer'>
                                     <FontAwesomeIcon
                                           icon={faPaperPlane}
@@ -98,8 +172,32 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
                               onEmojiClick={(e) => setComment((prevState) => prevState + e.emoji)}
                         />
                   </CustomPopper>
+
+                  {/* snackbar */}
+                  <Dialog
+                        open={snackOpen}
+                        onClose={() => setSnackOpen(false)}
+                        fullScreen
+                        PaperProps={windowSize.width > 768 ?
+                              {
+                                    style: {
+                                          borderRadius: '10px',
+                                          width: '500px',
+                                          height: "400px"
+                                    }
+                              } :
+                              {}
+                        }
+                  >
+                        <div className='p-4 bg-orange-200 w-full h-full'>
+                              {action}
+                              <div className='w-full h-[80%] grid place-items-center'>
+                                    {warnMss}
+                              </div>
+                        </div>
+                  </Dialog>
             </div>
       );
 };
 
-export default PostBtmWriteComment;
+export default memo(PostBtmWriteComment);

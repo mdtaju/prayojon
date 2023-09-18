@@ -1,26 +1,35 @@
 import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import useWindowSize from '../../../../../hook/useWindowSize';
 import PostBtmCommentParent from './PostBtmCommentParent';
 import PostBtmStatusBar from './PostBtmStatusBar';
 const PostBtmActionBar = dynamic(() => import('./PostBtmActionBar'), { ssr: false });
 const PostBtmWriteComment = dynamic(() => import('./PostBtmWriteComment'), { ssr: false });
 
-const PostBtmArea = () => {
+const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] }) => {
       const [comment, setComment] = useState("");
       const [showReplyInput, setShowReplyInput] = useState(false);
       const windowSize = useWindowSize();
+
       return (
             <div className='w-full px-1 sm:px-4 border-t border-gray-300'>
 
                   {/* Like Comment Status component */}
-                  <PostBtmStatusBar />
+                  <PostBtmStatusBar
+                        postReacts={reacts}
+                  />
 
                   {/* Do Like Comment component */}
-                  <PostBtmActionBar />
+                  <PostBtmActionBar
+                        id={postId}
+                        postType={postType}
+                        reacts={reacts}
+                  />
 
                   {/* Users comments component */}
-                  <PostBtmCommentParent />
+                  <PostBtmCommentParent
+                        comments={comments}
+                  />
 
                   {/* Write comment component */}
                   <PostBtmWriteComment
@@ -29,10 +38,13 @@ const PostBtmArea = () => {
                         comment={comment}
                         setComment={setComment}
                         placeholder={"Write a comment..."}
+                        id={postId}
+                        postType={postType}
+                        postUserId={postUserId}
                   />
 
             </div>
       );
 };
 
-export default PostBtmArea;
+export default memo(PostBtmArea);

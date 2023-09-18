@@ -1,119 +1,270 @@
-import Image from 'next/image';
-import React from 'react';
-import PostImg from '../../../../../../public/images/post-image.jpg';
+import { faCircleChevronLeft, faCircleChevronRight, faPlayCircle, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dialog, DialogContent } from '@mui/material';
+import dynamic from 'next/dynamic';
+import Image from 'next/legacy/image';
+import React, { memo, useState } from 'react';
+import useWindowSize from '../../../../../hook/useWindowSize';
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
-
-const itemData = [
-      {
-            img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-            title: 'Breakfast',
-            rows: 1,
-            cols: 2,
-      },
-      {
-            img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-            title: 'Burger',
-            cols: 2,
-            rows: 1
-      },
-      {
-            img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-            title: 'Camera',
-      },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-      //       title: 'Coffee',
-      //       cols: 2,
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-      //       title: 'Hats',
-      //       cols: 2,
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-      //       title: 'Honey',
-      //       author: '@arwinneil',
-      //       rows: 2,
-      //       cols: 2,
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-      //       title: 'Basketball',
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-      //       title: 'Fern',
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-      //       title: 'Mushrooms',
-      //       rows: 2,
-      //       cols: 2,
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-      //       title: 'Tomato basil',
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      //       title: 'Sea star',
-      // },
-      // {
-      //       img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      //       title: 'Bike',
-      //       cols: 2,
-      // },
-];
-
-function srcset(image, size, rows = 1, cols = 1) {
-      return {
-            src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-            srcSet: `${image}?w=${size * cols}&h=${size * rows
-                  }&fit=crop&auto=format&dpr=2 2x`,
+const PostImgList = ({ images }) => {
+      const [open, setOpen] = useState(false);
+      const [imgUrl, setImgUrl] = useState({
+            imgLink: "",
+            imgIndex: ""
+      });
+      const windowSize = useWindowSize()
+      const handleClose = () => {
+            setOpen(false);
       };
-}
-const PostImgList = () => {
-      return (
-            // <ImageList
-            //       sx={{ width: 500, height: 450 }}
-            //       variant="quilted"
-            //       cols={1}
-            //       rowHeight={'auto'}
-            // >
-            //       {itemData.map((item, i) => (
-            //             <ImageListItem key={item.img} cols={i} rows={1}>
-            //                   <img
-            //                         {...srcset(item.img, 121, item.rows, item.cols)}
-            //                         alt={item.title}
-            //                         loading="lazy"
-            //                   />
-            //             </ImageListItem>
-            //       ))}
-            // </ImageList>
-            <div className='w-full flex flex-col gap-1'>
-                  <div>
-                        <Image
-                              src={PostImg}
-                              alt="post-img"
-                        />
+
+      // dialog open image right arrow button 
+      const handleImgIncrement = () => {
+            setImgUrl((prevState) => {
+                  const getItem = images.find((item, i) => i === prevState.imgIndex + 1);
+                  if (getItem) {
+                        return {
+                              ...prevState,
+                              imgIndex: prevState.imgIndex + 1,
+                              imgLink: getItem?.file_path
+                        }
+                  } else {
+                        return prevState
+                  }
+            })
+      }
+
+      // dialog open image left arrow button 
+      const handleImgDecrement = () => {
+            setImgUrl((prevState) => {
+                  const getItem = images.find((item, i) => i === prevState.imgIndex - 1);
+                  if (getItem) {
+                        return {
+                              ...prevState,
+                              imgIndex: prevState.imgIndex - 1,
+                              imgLink: getItem?.file_path
+                        }
+                  } else {
+                        return prevState
+                  }
+            })
+      }
+
+      // dialog open handler
+      const handleOpen = (img, i) => {
+            setImgUrl({
+                  imgLink: img,
+                  imgIndex: i
+            })
+            setOpen(true)
+      }
+
+      // what to render
+      let content;
+      if (images?.length === 1) {
+            content = ((images[0]?.file_path?.split(".")?.pop() === "mp4") || (images[0]?.file_path?.split(".")?.pop() === "mkv") || (images[0]?.file_path?.split(".")?.pop() === "ts")) ? <div onClick={() => handleOpen(images[0]?.file_path, 0)} className='h-[300px] bg-black relative w-full cursor-pointer'>
+                  <ReactPlayer
+                        width={"100%"}
+                        height={"100%"}
+                        url={images[0]?.file_path}
+                        // controls
+                        playIcon={<button><FontAwesomeIcon icon={faPlayCircle} className='text-4xl text-white' /></button>}
+                        light
+                        playing={false}
+                  />
+            </div> : <div onClick={() => handleOpen(images[0]?.file_path, 0)} className='h-[300px] w-full relative cursor-pointer'>
+                  <Image
+                        src={images[0]?.file_path}
+                        alt={images[0]?.file_name}
+                        layout='fill'
+                        className='object-cover object-center'
+                  />
+            </div>
+
+      } else if (images?.length === 2) {
+            content = <div className='flex flex-col gap-1'>
+                  {
+                        images?.map((img, i) => {
+                              if ((images[i]?.file_path?.split(".")?.pop() === "mp4") || (images[i]?.file_path?.split(".")?.pop() === "mkv") || (images[i]?.file_path?.split(".")?.pop() === "ts")) {
+                                    return (
+                                          <div key={i} onClick={() => handleOpen(img?.file_path, i)} className='h-[300px] bg-black relative w-full cursor-pointer'>
+                                                <ReactPlayer
+                                                      width={"100%"}
+                                                      height={"100%"}
+                                                      url={img?.file_path}
+                                                      playIcon={<button><FontAwesomeIcon icon={faPlayCircle} className='text-4xl text-white' /></button>}
+                                                      light
+                                                      playing={false}
+                                                />
+                                          </div>
+                                    )
+                              } else {
+                                    return (
+                                          <div onClick={() => handleOpen(img?.file_path, i)} key={i} className='h-[300px] w-full relative cursor-pointer'>
+                                                <Image
+                                                      src={img?.file_path}
+                                                      alt={img?.file_name}
+                                                      layout='fill'
+                                                      className='object-cover object-center'
+                                                />
+                                          </div>
+                                    )
+                              }
+
+                        })
+                  }
+            </div>
+      } else if (images?.length >= 3) {
+            content = <div className='flex flex-col gap-1'>
+                  <div onClick={() => handleOpen(images[0]?.file_path, 0)} className='h-[300px] w-full relative cursor-pointer'>
+                        {
+                              (images[0]?.file_path?.split(".")?.pop() === "mp4") || (images[0]?.file_path?.split(".")?.pop() === "mkv") || (images[0]?.file_path?.split(".")?.pop() === "ts") ? <ReactPlayer
+                                    width={"100%"}
+                                    height={"100%"}
+                                    url={images[0]?.file_path}
+                                    // controls
+                                    playIcon={<button><FontAwesomeIcon icon={faPlayCircle} className='text-4xl text-white' /></button>}
+                                    light
+                                    playing={false}
+                              /> :
+                                    <Image
+                                          src={images[0]?.file_path}
+                                          alt={images[0]?.file_name}
+                                          layout='fill'
+                                          className='object-cover object-center'
+                                    />
+                        }
                   </div>
-                  <div className='w-full flex items-center gap-1'>
-                        <div>
-                              <Image
-                                    src={PostImg}
-                                    alt="post-img"
-                              />
+                  <div className='h-[300px] w-full flex gap-1'>
+                        <div onClick={() => handleOpen(images[1]?.file_path, 1)} className='h-[300px] w-full relative cursor-pointer'>
+                              {
+                                    (images[1]?.file_path?.split(".")?.pop() === "mp4") || (images[1]?.file_path?.split(".")?.pop() === "mkv") || (images[1]?.file_path?.split(".")?.pop() === "ts") ?
+                                          <ReactPlayer
+                                                width={"100%"}
+                                                height={"100%"}
+                                                url={images[1]?.file_path}
+                                                // controls
+                                                playIcon={<button><FontAwesomeIcon icon={faPlayCircle} className='text-4xl text-white' /></button>}
+                                                light
+                                                playing={false}
+                                          /> :
+                                          <Image
+                                                src={images[1]?.file_path}
+                                                alt={images[1]?.file_name}
+                                                layout='fill'
+                                                className='object-cover object-center'
+                                          />
+                              }
                         </div>
-                        <div>
-                              <Image
-                                    src={PostImg}
-                                    alt="post-img"
-                              />
+                        <div onClick={() => handleOpen(images[2]?.file_path, 2)} className='h-[300px] w-full relative cursor-pointer'>
+                              {
+                                    (images[2]?.file_path?.split(".")?.pop() === "mp4") || (images[2]?.file_path?.split(".")?.pop() === "mkv") || (images[2]?.file_path?.split(".")?.pop() === "ts") ?
+                                          <ReactPlayer
+                                                width={"100%"}
+                                                height={"100%"}
+                                                url={images[2]?.file_path}
+                                                // controls
+                                                playIcon={<button><FontAwesomeIcon icon={faPlayCircle} className='text-4xl text-white' /></button>}
+                                                light
+                                                playing={false}
+                                          /> :
+                                          <Image
+                                                src={images[2]?.file_path}
+                                                alt={images[2]?.file_name}
+                                                layout='fill'
+                                                className='object-cover object-center'
+                                          />
+                              }
+                              {
+                                    images?.length > 3 &&
+                                    <div className='w-full h-full absolute top-0 z-10 bg-black opacity-60 grid place-items-center'>
+                                          <span className='text-white font-semibold text-sm'>More {images?.length - 3}</span>
+                                    </div>
+                              }
                         </div>
                   </div>
             </div>
+      } else {
+            content = <></>
+      }
+
+      return (
+            <>
+                  <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        fullScreen={windowSize.width > 768 ? false : true}
+                        PaperProps={windowSize.width > 768 ?
+                              {
+                                    style: {
+                                          borderRadius: '10px',
+                                          width: '700px',
+                                          height: "90vh",
+                                          backgroundColor: "#000"
+                                    }
+                              } :
+                              {}
+                        }
+                  >
+                        <div className='w-full text-right py-2 px-4 z-50'>
+                              <button
+                                    onClick={handleClose}
+                                    className='w-[32px] h-[32px] rounded-full bg-red-500 text-white cursor-pointer'>
+                                    <FontAwesomeIcon
+                                          icon={faXmark}
+                                    />
+                              </button>
+                        </div>
+                        <DialogContent
+                        // sx={
+                        //       windowSize.width > 425 ?
+                        //             {} :
+                        //             { padding: '10px' }
+                        // }
+                        >
+                              <button
+                                    onClick={handleImgDecrement}
+                                    style={{ zIndex: "8000" }}
+                                    className='absolute bg-white w-[30px] h-[30px] rounded-full left-3 top-[50%] translate-y-[-50%]'
+                              >
+                                    <FontAwesomeIcon
+                                          className='text-lg cursor-pointer'
+                                          icon={faCircleChevronLeft}
+                                    />
+                              </button>
+                              {
+                                    (imgUrl?.imgLink?.split(".")?.pop() === "mp4") || (imgUrl?.imgLink?.split(".")?.pop() === "mkv") || (imgUrl?.imgLink?.split(".")?.pop() === "ts") ?
+                                          <ReactPlayer
+                                                width={"100%"}
+                                                height={"100%"}
+                                                url={imgUrl?.imgLink}
+                                                controls
+                                                playing={true}
+                                          /> :
+                                          <Image
+                                                src={imgUrl?.imgLink}
+                                                layout="fill"
+                                                alt='post-img'
+                                                className='object-contain rounded-md'
+                                          />
+                              }
+                              <button
+                                    onClick={handleImgIncrement}
+                                    style={{ zIndex: "8000" }}
+                                    className='absolute bg-white w-[30px] h-[30px] rounded-full right-3 top-[50%] translate-y-[-50%]'
+                              >
+                                    <FontAwesomeIcon
+                                          className='text-lg cursor-pointer'
+                                          icon={faCircleChevronRight}
+                                    />
+                              </button>
+                        </DialogContent>
+                  </Dialog>
+                  <div className='w-full h-auto'>
+                        {content}
+                  </div>
+            </>
       );
 };
 
-export default PostImgList;
+export default memo(PostImgList);

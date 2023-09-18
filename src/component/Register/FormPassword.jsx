@@ -9,6 +9,7 @@ const FormPassword = ({ userPhone, setIsSuccessValidated }) => {
       const [password, setPassword] = useState("");
       const [isValid, setIsValid] = useState(false);
 
+      // password length checking
       useEffect(() => {
             if (password.length >= 6) {
                   setIsValid(true)
@@ -17,6 +18,7 @@ const FormPassword = ({ userPhone, setIsSuccessValidated }) => {
             }
       }, [password]);
 
+      // registration submission
       const handleSubmit = async (e) => {
             e.preventDefault();
             const getPhone = userPhone.replace("+", "");

@@ -9,6 +9,7 @@ const NewPassword = ({ userPhone }) => {
       const [password, setPassword] = useState("");
       const [isValid, setIsValid] = useState(false);
 
+      // password length checking 
       useEffect(() => {
             if (password.length >= 6) {
                   setIsValid(true)
@@ -17,6 +18,7 @@ const NewPassword = ({ userPhone }) => {
             }
       }, [password]);
 
+      // request for new password submission 
       const handleSubmit = async (e) => {
             e.preventDefault();
             try {
@@ -30,7 +32,7 @@ const NewPassword = ({ userPhone }) => {
                         setOperationMss("");
                   }
             } catch (error) {
-                  console.log(error)
+                  // console.log(error)
             }
       }
       return (

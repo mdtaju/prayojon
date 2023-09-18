@@ -1,14 +1,18 @@
 import {
+      faArrowRightFromBracket,
+      faArrowRightToBracket,
       faBell,
       faCartShopping,
-      faHouse, faMessage,
-      faStore,
-      faTv
+      faHouse,
+      faStore
 } from "@fortawesome/free-solid-svg-icons";
 import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import React from 'react';
 // import CustomSkeleton from "../CustomSkeleton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import MobileNav from "./MobileNav/MobileNav";
 import NavMiddleElement from "./NavMiddleElement";
 import NavRightSideElement from "./NavRightSideElement/NavRightSideElement";
@@ -20,6 +24,7 @@ const NavLeftElement = dynamic(() => import('./NavLeftElement/NavLeftElement'), 
 })
 
 const Navbar = () => {
+      const { data } = useSession();
       return (
             // {/* There are three part in header */}
             <header className='w-full h-[90px] md:h-[60px] sticky md:fixed top-0 shadow-md flex items-center bg-white z-50'>
@@ -40,11 +45,11 @@ const Navbar = () => {
                                           Icon={faHouse}
                                           activeLink={"/"}
                                     />
-                                    <NavMiddleElement
+                                    {/* <NavMiddleElement
                                           toolTitle={"Watch"}
                                           Icon={faTv}
                                           activeLink={"/watch"}
-                                    />
+                                    /> */}
                                     <NavMiddleElement
                                           toolTitle={"Marketplace"}
                                           Icon={faStore}
@@ -62,27 +67,42 @@ const Navbar = () => {
                         <div className="w-[302px] h-full flex items-center justify-end">
                               <ul className="h-full flex items-center gap-3">
                                     {/* Message Component */}
-                                    <NavRightSideElement
+                                    {/* <NavRightSideElement
                                           toolTitle={"Messages"}
                                           countValue={4}
                                           Icon={faMessage}
                                     >
                                           <h1>Messages</h1>
-                                    </NavRightSideElement>
-                                    {/* Notification Component */}
-                                    <NavRightSideElement
-                                          toolTitle={"Notifications"}
-                                          countValue={0}
-                                          Icon={faBell}
-                                    >
-                                          <NotificationPopper />
-                                    </NavRightSideElement>
+                                    </NavRightSideElement> */}
+
                                     {/* Profile Component */}
-                                    <NavRightSideElement
-                                          toolTitle={"Profile"}
-                                    >
-                                          <ProfilePopperBody />
-                                    </NavRightSideElement>
+                                    {
+                                          data ?
+                                                <>
+                                                      {/* Notification Component */}
+                                                      <NavRightSideElement
+                                                            toolTitle={"Notifications"}
+                                                            countValue={0}
+                                                            Icon={faBell}
+                                                      >
+                                                            <NotificationPopper />
+                                                      </NavRightSideElement>
+                                                      <NavRightSideElement
+                                                            toolTitle={"Profile"}
+                                                      >
+                                                            <ProfilePopperBody />
+                                                      </NavRightSideElement>
+                                                </>
+                                                :
+                                                <Link href={"/login"}>
+                                                      <div className="btn_primary">
+                                                            <FontAwesomeIcon
+                                                                  icon={data ? faArrowRightFromBracket : faArrowRightToBracket}
+                                                                  className="text-xl"
+                                                            /> Login
+                                                      </div>
+                                                </Link>
+                                    }
                               </ul>
                         </div>
                   </div>

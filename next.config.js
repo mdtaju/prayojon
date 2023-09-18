@@ -1,16 +1,21 @@
 /** @type {import('next').NextConfig} */
-const path = require('path')
+const path = require("path");
 const nextConfig = {
   reactStrictMode: false,
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
+    includePaths: [path.join(__dirname, "styles")],
   },
-  env: {
-    NEXTAUTH_URL: 'https://prayojon.vercel.app',
-    NEXTAUTH_SECRET: '9/t9OgEaK+FH5pLc4zh3+pn6Iz76t1R7dZvzuk0/1HA=',
-    GOOGLE_CLIENT_ID: "34076138076-241viq138prertak9h48lu0jmqhaktd2.apps.googleusercontent.com",
-    GOOGLE_CLIENT_SECRET: "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"
+  images: {
+    domains: [process.env.NEXT_PUBLIC_SERVER_URL],
+    remotePatterns: [
+      {
+        protocol: process.env.NEXT_PUBLIC_SERVER_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_SERVER_HOSTNAME,
+        port: process.env.NEXT_PUBLIC_SERVER_PORT,
+        // pathname: '/account123/**',
+      },
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

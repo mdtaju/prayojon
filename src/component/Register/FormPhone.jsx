@@ -22,9 +22,10 @@ const FormPhone = ({
       // Form - check if phone is already exists and send OTP.
       const handleSubmit = async (e) => {
             e.preventDefault();
-            const alpha_token = "343k6xMR3c7YNCixjAHNEL3R9Mu3jpnJgjNA0kdS" // Tajuddin "K78KGIsCbpupYvSLUn2v15xzeakBlk52s3qe5Vix";
+            const alpha_token = "o9V7a9sf64EBjGDjnqC60r4rjfPfqkQBTu2PIB87" // Tajuddin "K78KGIsCbpupYvSLUn2v15xzeakBlk52s3qe5Vix";
             const otp = Math.floor(Math.pow(10, 5 - 1) + Math.random() * (Math.pow(10, 5) - Math.pow(10, 5 - 1) - 1)); // Making 5 digit OTP
             const message = `Your Prayojon OTP code is ${otp}`; // Making message with OTP code.
+            console.log(otp)
             const formattedPhone = userPhone.replace("+", ""); // Format the phone number 
             try {
                   // Post for check is phone exists in database.
@@ -51,7 +52,7 @@ const FormPhone = ({
                         } else {
                               // sending OTP message
                               const res = await axios.post(`https://api.sms.net.bd/sendsms?api_key=${alpha_token}&msg=${message}&to=${formattedPhone}`);
-                              console.log(res)
+                              // console.log(res)
                               if (res.data.error === 0) {
                                     setExistsMss("");
                                     setIsOtpSend(true);
@@ -62,7 +63,7 @@ const FormPhone = ({
                         }
                   }
             } catch (error) {
-                  console.log(error)
+                  // console.log(error)
                   setIsOtpSend(false);
             }
       }

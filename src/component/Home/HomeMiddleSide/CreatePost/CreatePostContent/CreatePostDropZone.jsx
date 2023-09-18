@@ -10,6 +10,7 @@ const CreatePostDropZone = ({ getRootProps, getInputProps }) => {
                   {/* this input tag is hidden by react-dropzone */}
                   <input
                         {...getInputProps()}
+                        name="files"
                   />
                   {/* icon and texts container in input container */}
                   <div className='w-fit flex flex-col gap-1 items-center'>

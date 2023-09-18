@@ -1,9 +1,14 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSession } from 'next-auth/react';
 import React from 'react';
+import { useGetNotificationsQuery } from '../../../../../features/notification/notificationApi';
 import NotificationChild from './NotificationChild';
 
 const NotificationPopper = () => {
+      const { data: session } = useSession();
+      const { data } = useGetNotificationsQuery(session?.user?.email);
+
       return (
             <div
                   className='w-[340px] px-3 py-2'>
@@ -24,14 +29,14 @@ const NotificationPopper = () => {
                   </div>
                   {/* Notification body area */}
                   <div className='w-full mt-4 flex flex-col gap-4'>
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
-                        <NotificationChild />
+                        {
+                              data?.map((n, i) => (
+                                    <NotificationChild
+                                          key={i}
+                                          notification={n}
+                                    />
+                              ))
+                        }
                   </div>
             </div>
       );

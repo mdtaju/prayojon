@@ -1,21 +1,61 @@
 import { faComment, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
-import { faCartShopping, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LikeStatus from './LikeStatus';
 
-const PostBtmStatusBar = () => {
+const PostBtmStatusBar = ({ postReacts }) => {
+      const [reacts, setReacts] = useState([]);
+      const [likes, setLikes] = useState("");
+      const [loves, setLoves] = useState("");
+      const [dislikes, setDislikes] = useState("");
+
+      useEffect(() => {
+            if (postReacts) {
+                  const getLikes = postReacts?.reduce((sum, curr) => {
+                        let total = 0;
+                        if (curr?.react_type?.toLowerCase() === "like") {
+                              total++;
+                        }
+                        return total + sum;
+                  }, 0);
+                  const getLoves = postReacts?.reduce((sum, curr) => {
+                        let total = 0;
+                        if (curr?.react_type?.toLowerCase() === "love") {
+                              total++;
+                        }
+                        return total + sum;
+                  }, 0);
+                  const getDislikes = postReacts?.reduce((sum, curr) => {
+                        let total = 0;
+                        if (curr?.react_type?.toLowerCase() === "dislike") {
+                              total++;
+                        }
+                        return total + sum;
+                  }, 0);
+                  setLikes(getLikes);
+                  setLoves(getLoves);
+                  setDislikes(getDislikes);
+                  setReacts(postReacts);
+            }
+      }, [postReacts]);
+
       return (
             <div className='w-full flex items-center justify-between p-1'>
-                  <div className='flex items-center gap-3'>
-                        <div className='flex items-center'>
-                              {/* <FontAwesomeIcon
+                  {/* like status area */}
+                  <div className='flex items-center'>
+                        {/* <FontAwesomeIcon
                                     className='post_icon'
                                     icon={faThumbsUp}
                               /> */}
-                              <LikeStatus />
-                              <span className='text-base font-bold text-gray-600 ml-[2px]'>12</span>
-                        </div>
+                        <LikeStatus
+                              likes={likes}
+                              loves={loves}
+                              dislikes={dislikes}
+                        />
+                        <span className='text-base font-bold text-gray-600 ml-[2px]'>{reacts?.length}</span>
+                  </div>
+                  {/* comment status area */}
+                  <div className='flex items-center gap-2'>
                         <div>
                               <FontAwesomeIcon
                                     className='post_icon'
@@ -23,25 +63,13 @@ const PostBtmStatusBar = () => {
                               />
                               <span className='text-base font-bold text-gray-600 ml-[2px]'>5</span>
                         </div>
+                        {/* share status area */}
                         <div>
                               <FontAwesomeIcon
                                     className='post_icon'
                                     icon={faShareFromSquare}
                               />
                               <span className='text-base font-bold text-gray-600 ml-[2px]'>5</span>
-                        </div>
-                  </div>
-                  <div className='flex items-center gap-1'>
-                        <div>
-                              <FontAwesomeIcon icon={faDollarSign} className='text-gray-700 text-sm' key={0} />
-                              <span className='text-base font-bold text-gray-700'>35</span>
-                        </div>
-                        <div className='py-1 px-3 hover:bg-gray-200 rounded-md cursor-pointer active:scale-95 duration-150 select-none'>
-                              <FontAwesomeIcon
-                                    className='post_icon text-primary'
-                                    icon={faCartShopping}
-                              />
-                              <span className='text-base font-bold text-primary ml-1'>+</span>
                         </div>
                   </div>
             </div>

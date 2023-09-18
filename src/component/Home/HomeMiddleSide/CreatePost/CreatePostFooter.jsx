@@ -1,13 +1,21 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { memo } from 'react';
 
 const CreatePostFooter = ({
       setChooseImgToggle,
       postTypeValue,
       description,
       storeFiles,
-      productPrice
+      productPrice,
+      handlePostSubmit,
+      productTitle,
+      location,
+      category,
+      productType,
+      productQuantity,
+      termsAgreement,
+      shippingCharge
 }) => {
       return (
             <div className='w-full p-2 flex flex-col gap-2'>
@@ -23,18 +31,19 @@ const CreatePostFooter = ({
                               />
                         </div>
                   </div>
+                  {/* post button validation */}
                   {
                         postTypeValue === "General" ?
                               (description || storeFiles.length !== 0) ?
-                                    <button className='btn_primary w-full'>Post</button> :
+                                    <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
                                     <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
                               :
-                              (productPrice && storeFiles.length !== 0) ?
-                                    <button className='btn_primary w-full'>Post</button> :
+                              (productPrice && storeFiles.length !== 0 && location && category && productTitle && productType && productQuantity && termsAgreement && shippingCharge) ?
+                                    <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
                                     <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
                   }
             </div>
       );
 };
 
-export default CreatePostFooter;
+export default memo(CreatePostFooter);

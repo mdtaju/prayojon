@@ -8,7 +8,9 @@ const CreatePostHeader = ({
       postTypeValue,
       setPostTypeValue,
       postAudience,
-      setPostAudience
+      setPostAudience,
+      name,
+      photo
 }) => {
       const options = ['General', 'Product']
       const handleChange = (e) => {
@@ -34,16 +36,16 @@ const CreatePostHeader = ({
                               <div>
                                     <Avatar
                                           alt="Remy Sharp"
-                                          //   src="/static/images/avatar/1.jpg"
+                                          src={photo}
                                           sx={{ width: 44, height: 44 }}
                                     />
                               </div>
                               <div>
-                                    <span className='text-base text-gray-900 font-semibold'>Abdullah</span>
+                                    <span className='text-base text-gray-900 font-semibold'>{name}</span>
                                     {/* Post access public/friend */}
                                     <div className='group px-2 py-[2px] bg-gray-200 w-fit flex items-center gap-1 rounded-md cursor-pointer relative'>
                                           {
-                                                postAudience === "Friends" ?
+                                                postAudience === "Followers" ?
                                                       <FontAwesomeIcon
                                                             icon={faUserGroup}
                                                             className='text-[10px]'
@@ -54,7 +56,7 @@ const CreatePostHeader = ({
                                                       />
                                           }
                                           <span className='text-sm font-semibold text-gray-900'>
-                                                {postAudience === "Friends" ? "Friends" : "Public"}
+                                                {postAudience === "Followers" ? "Followers" : "Public"}
                                           </span>
                                           <FontAwesomeIcon
                                                 icon={faCaretDown}
@@ -79,9 +81,9 @@ const CreatePostHeader = ({
 
                                                             <FormControlLabel
                                                                   sx={{ height: '30px', fontSize: '10px' }}
-                                                                  value="Friends"
+                                                                  value="Followers"
                                                                   control={<Radio />}
-                                                                  label="Friends" />
+                                                                  label="Followers" />
                                                       </RadioGroup>
                                                 </FormControl>
                                           </div>
