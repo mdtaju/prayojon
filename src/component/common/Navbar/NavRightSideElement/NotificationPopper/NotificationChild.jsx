@@ -8,6 +8,7 @@ const NotificationChild = ({ notification = {} }) => {
       const { data } = useGetUserQuery(sender_id);
       const [name, setName] = useState("");
       const [photo, setPhoto] = useState("");
+      console.log(notification)
 
       useEffect(() => {
             if (data) {

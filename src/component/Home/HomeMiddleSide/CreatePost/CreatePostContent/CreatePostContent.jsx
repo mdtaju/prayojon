@@ -38,7 +38,21 @@ const CreatePostContent = ({
       setShippingCharge,
       termsAgreement,
       setTermsAgreement,
-      districts
+      districts,
+      brandName,
+      setBrandName,
+      color,
+      setColor,
+      size,
+      setSize,
+      model,
+      setModel,
+      estimateTime,
+      setEstimateTime,
+      paymentAddType,
+      setPaymentAddType,
+      subCategory,
+      setSubCategory
 }) => {
       const [fileSizeWarning, setFileSizeWarning] = useState("");
       const [anchorEl, setAnchorEl] = useState(null);
@@ -123,6 +137,20 @@ const CreatePostContent = ({
                               termsAgreement={termsAgreement}
                               setTermsAgreement={setTermsAgreement}
                               districts={districts}
+                              brandName={brandName}
+                              setBrandName={setBrandName}
+                              color={color}
+                              setColor={setColor}
+                              size={size}
+                              setSize={setSize}
+                              model={model}
+                              setModel={setModel}
+                              estimateTime={estimateTime}
+                              setEstimateTime={setEstimateTime}
+                              paymentAddType={paymentAddType}
+                              setPaymentAddType={setPaymentAddType}
+                              subCategory={subCategory}
+                              setSubCategory={setSubCategory}
                         />
                   }
                   {/* Write post text here */}

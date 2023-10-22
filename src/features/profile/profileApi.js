@@ -41,6 +41,9 @@ export const profileApi = apiSlice.injectEndpoints({
     getNearPeople: builder.query({
       query: (id) => `/near_people/${id}`,
     }),
+    getTopUsers: builder.query({
+      query: () => `/top_users`,
+    }),
   }),
 });
 
@@ -51,5 +54,6 @@ export const {
   useGetUserQuery,
   useAddSecurityInfoMutation,
   useGetNearPeopleQuery,
+  useGetTopUsersQuery,
   util: { getRunningQueriesThunk },
 } = profileApi;

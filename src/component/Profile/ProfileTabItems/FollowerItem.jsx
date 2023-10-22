@@ -1,7 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
-import Image from 'next/legacy/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../features/profile/profileApi';
@@ -25,7 +24,7 @@ const FollowerItem = ({ follower = {}, from }) => {
             <div className='w-full flex items-center gap-3 p-2 border border-gray-300 rounded-md'>
                   {/* user image */}
                   <div className='grow-0 w-[80px] h-[80px] cursor-pointer relative'>
-                        <Image
+                        <img
                               src={photo}
                               alt='profile'
                               layout='fill'

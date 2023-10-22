@@ -2,6 +2,7 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../dashboard/Products/ProductCard';
+import SearchBar from './SearchBar';
 // const FunctionalArticle = forwardRef((props, ref) => (
 //       <ProductCard
 //             ref={ref}
@@ -71,20 +72,25 @@ const ProductsContainer = ({ products }) => {
 
       return (
             <div className='w-full md:w-[calc(100%-340px)] min-h-screen mt-0 md:mt-[80px] flex flex-col justify-between pb-6 px-4 md:px-0'>
-                  <div className='w-full grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4'>
-                        {/* <FlipMove className="w-full grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4"> */}
-                        {
-                              pageProduct?.map((p, i) => (
-                                    // <FunctionalArticle key={p.id} p={p} {...p} />
-                                    <ProductCard
-                                          key={i}
-                                          // ref={ref}
-                                          product={p}
-                                          isDialogStay={true}
-                                    />
-                              ))
-                        }
-                        {/* </FlipMove> */}
+                  {/* search bar */}
+                  <div>
+
+                        <SearchBar />
+                        <div className='w-full grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4'>
+                              {/* <FlipMove className="w-full grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4"> */}
+                              {
+                                    pageProduct?.map((p, i) => (
+                                          // <FunctionalArticle key={p.id} p={p} {...p} />
+                                          <ProductCard
+                                                key={i}
+                                                // ref={ref}
+                                                product={p}
+                                                isDialogStay={true}
+                                          />
+                                    ))
+                              }
+                              {/* </FlipMove> */}
+                        </div>
                   </div>
                   {/* footer */}
                   <div className='mt-4 w-fit mx-auto common_shadow rounded-full flex items-center gap-4'>

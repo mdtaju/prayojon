@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import useWindowSize from '../../hook/useWindowSize';
 import HomeLeftNavigation from '../Home/HomeLeftNavigation/HomeLeftNavigation';
 import HomeMiddleSide from '../Home/HomeMiddleSide/HomeMiddleSide';
@@ -18,4 +18,4 @@ const HomeHero = () => {
       );
 };
 
-export default memo(HomeHero);
+export default HomeHero;

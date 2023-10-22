@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAddGeneralPostMutation, useAddProductPostMutation } from '../../../../features/userPost/userPostApi';
 import useWindowSize from '../../../../hook/useWindowSize';
 import { bd_districts } from '../../../../utils/bd_districts';
@@ -27,9 +27,21 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
       const [districts, setDistricts] = useState([]);
       const descriptionElementRef = useRef(null);
       const windowSize = useWindowSize();
-      const [addGeneralPost, { data, isLoading, isError, error }] = useAddGeneralPostMutation();
-      const [addProductPost, { data: productData, isLoading: productIsLoading }] = useAddProductPostMutation();
+      const [addGeneralPost] = useAddGeneralPostMutation();
+      const [addProductPost] = useAddProductPostMutation();
       const { data: authData } = useSession();
+      const [postError, setPostError] = useState("");
+      const [brandName, setBrandName] = useState("");
+      const [color, setColor] = useState("");
+      const [size, setSize] = useState("");
+      const [model, setModel] = useState("")
+      const [estimateTime, setEstimateTime] = useState("");
+      const [paymentAddType, setPaymentAddType] = useState("");
+      const [subCategory, setSubCategory] = useState("");
+      // check submit button - state 
+      const [isProductReadyForSubmit, setIsProductReadyForSubmit] = useState(false);
+      const [postLoading, setPostLoading] = useState(false);
+
 
       // getting the district names
       useEffect(() => {
@@ -51,44 +63,53 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
             }
       }, [open]);
 
+      // check is ready for submit 
+      useEffect(() => {
+            if (productPrice &&
+                  storeFiles.length !== 0 &&
+                  location &&
+                  category &&
+                  productTitle &&
+                  productType &&
+                  productQuantity &&
+                  termsAgreement &&
+                  shippingCharge &&
+                  brandName &&
+                  color &&
+                  size &&
+                  model &&
+                  estimateTime &&
+                  paymentAddType &&
+                  subCategory) {
+                  setIsProductReadyForSubmit(true);
+            } else {
+                  setIsProductReadyForSubmit(false);
+            }
+      }, [productPrice,
+            storeFiles,
+            location,
+            category,
+            productTitle,
+            productType,
+            productQuantity,
+            termsAgreement,
+            shippingCharge,
+            brandName,
+            color,
+            size,
+            model,
+            estimateTime,
+            paymentAddType,
+            subCategory])
+
       const handleClose = () => {
             setOpen(false);
       };
 
-      useEffect(() => {
-            if ((!isLoading && !isError && data) || (!productIsLoading && productData)) {
-                  setProductTitle("")
-                  setProductPrice("")
-                  setDescription("")
-                  setStoreFiles([])
-                  setCurrencySign("")
-                  setLocation("")
-                  setCategory("")
-                  setOpen(false);
-                  setLocation("")
-                  setCategory("")
-                  setDiscount("")
-            }
-            // if (!productIsLoading && productData) {
-            //       setProductTitle("")
-            //       setProductPrice("")
-            //       setDescription("")
-            //       setStoreFiles([])
-            //       setCurrencySign("")
-            //       setLocation("")
-            //       setCategory("")
-            //       setOpen(false);
-            //       setLocation("")
-            //       setCategory("")
-            //       setDiscount("")
-            // }
-      }, [isLoading, isError, data, setOpen, productIsLoading, productData]);
-
-
       // post_type, post_title, post_content, post_audience, created_at, product
-
       // post submit handler
       const handlePostSubmit = async () => {
+            setPostLoading(true);
             const d = new Date();
 
             const formData = new FormData();
@@ -112,6 +133,14 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
             fromProductData.append("discount", discount);
             fromProductData.append("type", productType);
             fromProductData.append("quantity", productQuantity);
+
+            fromProductData.append("brand_name", brandName);
+            fromProductData.append("color", color);
+            fromProductData.append("size", size);
+            fromProductData.append("model", model);
+            fromProductData.append("estimate_time", estimateTime);
+            fromProductData.append("payment_add_type", paymentAddType);
+            fromProductData.append("sub_category", subCategory);
             const inDiscount = productPrice * discount / 100;
             const price = productPrice - inDiscount;
             fromProductData.append("price", price);
@@ -123,9 +152,43 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
             }
 
             if (postTypeValue === "General") {
-                  addGeneralPost(formData);
+                  addGeneralPost(formData).unwrap().then((d) => {
+                        setProductTitle("")
+                        setProductPrice("")
+                        setDescription("")
+                        setStoreFiles([])
+                        setCurrencySign("")
+                        setLocation("")
+                        setCategory("")
+                        setPostLoading(false);
+                        setOpen(false);
+                        setLocation("")
+                        setCategory("")
+                        setDiscount("")
+                        setPostError("")
+                  }).catch((e) => {
+                        setPostLoading(false);
+                        setPostError("Failed to post. Please, try again.")
+                  })
             } else {
-                  addProductPost(fromProductData);
+                  addProductPost(fromProductData).unwrap().then((d) => {
+                        setProductTitle("")
+                        setProductPrice("")
+                        setDescription("")
+                        setStoreFiles([])
+                        setCurrencySign("")
+                        setLocation("")
+                        setCategory("")
+                        setPostLoading(false);
+                        setOpen(false);
+                        setLocation("")
+                        setCategory("")
+                        setDiscount("")
+                        setPostError("")
+                  }).catch((e) => {
+                        setPostLoading(false);
+                        setPostError("Failed to post. Please, try again.")
+                  })
             }
       }
 
@@ -157,6 +220,7 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                               setPostAudience={setPostAudience}
                               name={name}
                               photo={photo}
+                              postError={postError}
                         />
 
                         <DialogContent
@@ -196,6 +260,20 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                                     termsAgreement={termsAgreement}
                                     setTermsAgreement={setTermsAgreement}
                                     districts={districts}
+                                    brandName={brandName}
+                                    setBrandName={setBrandName}
+                                    color={color}
+                                    setColor={setColor}
+                                    size={size}
+                                    setSize={setSize}
+                                    model={model}
+                                    setModel={setModel}
+                                    estimateTime={estimateTime}
+                                    setEstimateTime={setEstimateTime}
+                                    paymentAddType={paymentAddType}
+                                    setPaymentAddType={setPaymentAddType}
+                                    subCategory={subCategory}
+                                    setSubCategory={setSubCategory}
                               />
                         </DialogContent>
 
@@ -206,15 +284,9 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                                     postTypeValue={postTypeValue}
                                     description={description}
                                     storeFiles={storeFiles}
-                                    productPrice={productPrice}
                                     handlePostSubmit={handlePostSubmit}
-                                    productTitle={productTitle}
-                                    location={location}
-                                    category={category}
-                                    productType={productType}
-                                    productQuantity={productQuantity}
-                                    termsAgreement={termsAgreement}
-                                    shippingCharge={shippingCharge}
+                                    isProductReadyForSubmit={isProductReadyForSubmit}
+                                    postLoading={postLoading}
                               />
                         </DialogActions>
                   </Dialog>
@@ -222,4 +294,4 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
       );
 };
 
-export default memo(CreatePostDialog);
+export default CreatePostDialog

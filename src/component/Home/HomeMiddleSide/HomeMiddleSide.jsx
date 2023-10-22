@@ -1,36 +1,34 @@
 import dynamic from 'next/dynamic';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetGeneralPostsQuery, useGetProductPostsQuery } from '../../../features/userPost/userPostApi';
 import PostsFilter from './PostsFilter';
 import UserE_Post from './UserPost/UserE_Post';
 import UserPost from './UserPost/UserPost';
 const CreatePost = dynamic(() => import('./CreatePost/CreatePost'), { ssr: false });
 
-const HomeMiddleSide = ({ userProducts, getGeneralPost }) => {
+const HomeMiddleSide = ({ userProducts, generalPost }) => {
       const [postType, setPostType] = useState("product");
       const { data } = useGetGeneralPostsQuery();
       const { data: productPosts } = useGetProductPostsQuery();
       const [userPosts, setUserPosts] = useState([]);
       const [userEPosts, setUserEPosts] = useState([]);
-      // console.log(productPosts)
-      // console.log("Product ----------------")
-      // console.log(data)
-      // console.log("General ----------------")
 
       useEffect(() => {
             if (data, productPosts) {
-                  if (getGeneralPost) {
-                        setUserPosts(getGeneralPost);
-                  } else {
+                  if (generalPost) {
+                        setUserPosts(generalPost);
+                  }
+                  if (!generalPost && data) {
                         setUserPosts(data);
                   }
                   if (userProducts) {
                         setUserEPosts(userProducts);
-                  } else {
+                  }
+                  if (!userProducts && productPosts) {
                         setUserEPosts(productPosts);
                   }
             }
-      }, [data, productPosts, userProducts, getGeneralPost]);
+      }, [data, productPosts, userProducts, generalPost]);
 
       return (
             <section className='w-full min-h-screen md:w-[740px] mx-auto p-2 sm:py-4 sm:px-8'>
@@ -73,4 +71,4 @@ const HomeMiddleSide = ({ userProducts, getGeneralPost }) => {
       );
 };
 
-export default memo(HomeMiddleSide);
+export default HomeMiddleSide

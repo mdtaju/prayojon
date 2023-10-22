@@ -39,7 +39,7 @@ const FormPhone = ({
                         } else {
                               // sending OTP message
                               const res = await axios.post(`https://api.sms.net.bd/sendsms?api_key=${alpha_token}&msg=${message}&to=${formattedPhone}`);
-                              if (res.data.error === 0) {
+                              if (!res.data.error) {
                                     setExistsMss("");
                                     setIsOtpSend(true);
                                     setRequestedOTP(otp);
@@ -52,6 +52,7 @@ const FormPhone = ({
                         } else {
                               // sending OTP message
                               const res = await axios.post(`https://api.sms.net.bd/sendsms?api_key=${alpha_token}&msg=${message}&to=${formattedPhone}`);
+                              console.log(res)
                               // console.log(res)
                               if (res.data.error === 0) {
                                     setExistsMss("");

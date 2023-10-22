@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, IconButton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../config/axios';
 import { useAddPaymentMutation, useGetCartItemsQuery } from '../../features/cart/cartApi';
 import { addCarts } from '../../features/cart/cartSlice';
@@ -193,4 +193,4 @@ const CartHero = () => {
       );
 };
 
-export default memo(CartHero);
+export default CartHero;

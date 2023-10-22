@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetProductPostsQuery } from '../../features/userPost/userPostApi';
+import { addProductPost } from '../../features/userPost/userPostSlice';
 import ProductsContainer from '../marketplace/ProductsContainer/ProductsContainer';
 import Sidebar from '../marketplace/Sidebar/Sidebar';
 
@@ -14,10 +16,18 @@ const MarketPlaceHero = () => {
       });
       const { data } = useGetProductPostsQuery();
       const [products, setProducts] = useState([]);
+      const dispatch = useDispatch();
+      const { searchProductPost } = useSelector(state => state?.userPost)
 
       useEffect(() => {
             if (data) {
-                  const filteredProducts = data.filter((product) => {
+                  dispatch(addProductPost(data));
+            }
+      }, [data, dispatch]);
+
+      useEffect(() => {
+            if (searchProductPost) {
+                  const filteredProducts = searchProductPost.filter((product) => {
                         // Apply filters here
                         const { priceRange, categories, type, sort, availability } = filters;
 
@@ -47,7 +57,7 @@ const MarketPlaceHero = () => {
                   });
                   setProducts(filteredProducts);
             }
-      }, [data, filters]);
+      }, [searchProductPost, filters]);
 
       return (
             <div className='w-full min-h-screen flex flex-col md:flex-row items-start gap-4'>

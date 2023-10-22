@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PostImgList from './PostImgList';
 
 const PostImgArea = ({ files = [] }) => {
@@ -12,4 +12,4 @@ const PostImgArea = ({ files = [] }) => {
       );
 };
 
-export default memo(PostImgArea);
+export default PostImgArea

@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import useWindowSize from '../../../../../hook/useWindowSize';
 import PostBtmCommentParent from './PostBtmCommentParent';
 import PostBtmStatusBar from './PostBtmStatusBar';
@@ -17,6 +17,7 @@ const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] 
                   {/* Like Comment Status component */}
                   <PostBtmStatusBar
                         postReacts={reacts}
+                        commentsLength={comments.length}
                   />
 
                   {/* Do Like Comment component */}
@@ -47,4 +48,4 @@ const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] 
       );
 };
 
-export default memo(PostBtmArea);
+export default PostBtmArea

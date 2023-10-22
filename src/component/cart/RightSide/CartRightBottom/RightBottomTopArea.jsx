@@ -32,11 +32,11 @@ const RightBottomTopArea = ({ setSaving, setTotalAmount }) => {
                   } else {
                         setShipping("120");
                   }
-                  const totalCal = subTotalCal + +shipping;
+                  const totalCal = subTotalCal
                   setTotal(totalCal);
                   setTotalAmount(totalCal);
             }
-      }, [getCarts, shipping, setSaving, setTotalAmount]);
+      }, [getCarts, setSaving, setTotalAmount]);
 
       return (
             <div className='p-6'>
@@ -46,11 +46,11 @@ const RightBottomTopArea = ({ setSaving, setTotalAmount }) => {
                         title={"Subtotal"}
                         price={thousandFormate(subtotal)}
                   />
-                  <TopAreaItem
+                  {/* <TopAreaItem
                         classes={"border-t font-normal"}
                         title={"Shipping"}
                         price={shipping}
-                  />
+                  /> */}
                   <TopAreaItem
                         classes={"border-t font-normal"}
                         title={"Total"}

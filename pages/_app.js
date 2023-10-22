@@ -1,10 +1,23 @@
+import ProgressBar from "@badrap/bar-of-progress";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
+import Router from "next/router";
 import "react-phone-number-input/style.css";
 import { wrapper } from "../src/reduxStore/store";
 import "../styles/globals.css";
+
+const progress = new ProgressBar({
+  size: 2,
+  color: "rgb(27 116 228)",
+  className: "z-50",
+  delay: 100,
+});
+
+Router.events.on("routeChangeStart", progress.start);
+Router.events.on("routeChangeComplete", progress.finish);
+Router.events.on("routeChangeError", progress.finish);
 // const { default: AbortController } = require("abort-controller");
 // const { default: fetch, Headers, Request, Response } = require("node-fetch");
 

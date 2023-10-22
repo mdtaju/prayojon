@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDropzone } from 'react-dropzone';
 import { useAddCoverPicMutation, useAddPersonalInfoMutation, useAddProfilePicMutation, useGetUserQuery } from '../../../features/profile/profileApi';
 import { bd_districts } from '../../../utils/bd_districts';
+import SnackMessage from '../../common/SnackMessage';
 import CoverPhoto from './CoverPhoto';
 
 const professions = [
@@ -195,6 +196,11 @@ const EditPersonalInfo = () => {
       const [userProfession, setUserProfession] = useState("Others");
       const [districts, setDistricts] = useState([]);
       const router = useRouter();
+      const [open, setOpen] = useState(false);
+      const [message, setMessage] = useState({
+            message: "",
+            error: false
+      });
 
 
 
@@ -271,32 +277,83 @@ const EditPersonalInfo = () => {
             e.preventDefault();
             const birthdayDate = new Date(birthday).toUTCString();
             if (name || userProfession || city || address || birthday || bio) {
-                  addPersonalInfo({ name, profession: userProfession, city, address, birthday: providedBirthday, bio, id: authData?.user?.email })
+                  addPersonalInfo({ name, profession: userProfession, city, address, birthday: providedBirthday, bio, id: authData?.user?.email }).unwrap().then((d) => {
+                        setMessage({
+                              message: "Profile successfully updated.",
+                              error: false
+                        })
+                        setOpen(true);
+                  }).catch((e) => {
+                        setMessage({
+                              message: "Something went wrong. Please, try agin.",
+                              error: true
+                        })
+                        setOpen(true);
+                  })
             }
-            if (storeFiles?.length !== 0) {
+            if (storeFiles?.length) {
                   const formData = new FormData();
-                  formData.append("file", storeFiles[0]);
+                  for (let i = 0; i < storeFiles.length;) {
+                        const element = storeFiles[i];
+                        formData.append("files", element);
+                        i++
+                  }
                   formData.append("id", authData?.user?.email);
                   // formData.append("type",);
-                  addProfilePic(formData);
+                  addProfilePic(formData).unwrap().then((d) => {
+                        setMessage({
+                              message: "Profile successfully updated.",
+                              error: false
+                        })
+                        setOpen(true);
+                  }).catch((e) => {
+                        setMessage({
+                              message: "Something went wrong. Please, try agin.",
+                              error: true
+                        })
+                        setOpen(true);
+                  })
             }
-            if (coverPhoto?.length !== 0) {
+            if (coverPhoto?.length) {
                   const coverForm = new FormData();
-                  coverForm.append("file", coverPhoto[0]);
+                  for (let i = 0; i < coverPhoto.length;) {
+                        const element = coverPhoto[i];
+                        coverForm.append("files", element);
+                        i++
+                  }
+                  // coverForm.append("files", coverPhoto);
                   coverForm.append("id", authData?.user?.email);
                   // coverForm.append("type",);
-                  addCoverPic(coverForm);
+                  addCoverPic(coverForm).unwrap().then((d) => {
+                        setMessage({
+                              message: "Profile successfully updated.",
+                              error: false
+                        })
+                        setOpen(true);
+                  }).catch((e) => {
+                        console.log(e)
+                        setMessage({
+                              message: "Something went wrong. Please, try agin.",
+                              error: true
+                        })
+                        setOpen(true);
+                  })
             }
             setStoreFiles([]);
             setCoverPhoto([]);
-            if (personalInfo || profileData || coverPic) {
-                  refetch(authData?.user?.email)
-                  window.open("/profile")
-            }
+            refetch(authData?.user?.email)
+            // if (personalInfo || profileData || coverPic) {
+            //       window.open("/profile")
+            // }
       }
 
       return (
             <div className='w-full'>
+                  <SnackMessage
+                        open={open}
+                        setOpen={setOpen}
+                        message={message}
+                  />
                   {/* title part */}
                   <div className='w-full pb-2 border-b border-gray-300'>
                         <h1 className='text-lg font-semibold text-gray-800'>Personal Info</h1>

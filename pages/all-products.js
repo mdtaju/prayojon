@@ -89,7 +89,7 @@ const AllProducts = () => {
                   Business Office & Industrial
                 </MenuItem>
                 <MenuItem value={"Sporting"}>Sporting</MenuItem>
-                <MenuItem value={"Toyes & Games"}>oyes & Games</MenuItem>
+                <MenuItem value={"Toyes & Games"}>Toyes & Games</MenuItem>
               </Select>
             </FormControl>
           </div>

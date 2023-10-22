@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Dialog, IconButton } from '@mui/material';
 import { useSession } from "next-auth/react";
 import Link from 'next/link';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../../features/profile/profileApi';
 import useWindowSize from '../../../../hook/useWindowSize';
 import CreatePostDialog from './CreatePostDialog';
@@ -115,4 +115,4 @@ const CreatePost = () => {
       );
 };
 
-export default memo(CreatePost);
+export default CreatePost

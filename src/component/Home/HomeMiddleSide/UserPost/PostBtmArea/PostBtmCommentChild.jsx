@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from '@mui/material';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
 import CommentReplyParent from './CommentReply/CommentReplyParent';
@@ -149,4 +149,4 @@ const PostBtmCommentChild = ({ comment, reply, time, userId }) => {
       );
 };
 
-export default memo(PostBtmCommentChild);
+export default PostBtmCommentChild

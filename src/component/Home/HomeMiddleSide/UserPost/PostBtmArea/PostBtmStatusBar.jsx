@@ -1,9 +1,9 @@
-import { faComment, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
+import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import LikeStatus from './LikeStatus';
 
-const PostBtmStatusBar = ({ postReacts }) => {
+const PostBtmStatusBar = ({ postReacts, commentsLength }) => {
       const [reacts, setReacts] = useState([]);
       const [likes, setLikes] = useState("");
       const [loves, setLoves] = useState("");
@@ -61,16 +61,16 @@ const PostBtmStatusBar = ({ postReacts }) => {
                                     className='post_icon'
                                     icon={faComment}
                               />
-                              <span className='text-base font-bold text-gray-600 ml-[2px]'>5</span>
+                              <span className='text-base font-bold text-gray-600 ml-[2px]'>{commentsLength}</span>
                         </div>
                         {/* share status area */}
-                        <div>
+                        {/* <div>
                               <FontAwesomeIcon
                                     className='post_icon'
                                     icon={faShareFromSquare}
                               />
                               <span className='text-base font-bold text-gray-600 ml-[2px]'>5</span>
-                        </div>
+                        </div> */}
                   </div>
             </div>
       );

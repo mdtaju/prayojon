@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetNearPeopleQuery, useGetUserQuery } from '../../../features/profile/profileApi';
 import useWindowSize from '../../../hook/useWindowSize';
 import HomeLeftOptionChild from './HomeLeftMenuChild';
@@ -117,4 +117,4 @@ const HomeLeftMenuPrivate = () => {
       );
 };
 
-export default memo(HomeLeftMenuPrivate);
+export default HomeLeftMenuPrivate

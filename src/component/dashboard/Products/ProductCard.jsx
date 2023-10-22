@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/legacy/image';
-import React, { memo, useEffect, useState } from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { MdOutlineOpenInNew } from "react-icons/md";
 import ReactPlayer from 'react-player';
 import { useAddCartItemMutation, useGetCartItemsQuery } from '../../../features/cart/cartApi';
 import { useGetUPostsImagesQuery } from '../../../features/userPost/userPostApi';
 import useWindowSize from '../../../hook/useWindowSize';
 import thousandFormate from '../../../utils/thousandFormate';
-
 
 const ProductCard = ({ product = {}, isDialogStay }) => {
       const { id, product_id, product_title, description, price, original_price, status, category, location, sales } = product;
@@ -178,6 +179,7 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
                                     <h1 className='text-lg font-bold text-gray-800 text-center'>
                                           {product_title}
                                     </h1>
+
                                     <p className='text-justify'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, tenetur! Corrupti facilis autem esse modi deleniti nihil libero rerum quae! {description}</p>
                                     {/* location and category container */}
                                     <div className="flex items-center gap-4 w-fit mx-auto">
@@ -285,7 +287,12 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
                   </div>
                   {/* product description container */}
                   <div className='p-2'>
-                        <h1 onClick={handleOpen} className='text-gray-800 text-lg font-semibold cursor-pointer hover:underline'>{product_title?.slice(0, 20)} {product_title?.length >= 20 ? "..." : ""}</h1>
+                        <div className='flex items-center justify-between'>
+                              <h1 onClick={handleOpen} className='text-gray-800 text-lg font-semibold cursor-pointer hover:underline'>{product_title?.slice(0, 20)} {product_title?.length >= 20 ? "..." : ""}</h1>
+                              <Link href={`/marketplace/${product_id}`} target='_blank'>
+                                    <MdOutlineOpenInNew className='text-lg hover:text-blue-600 cursor-pointer' />
+                              </Link>
+                        </div>
                         <div className='w-fit flex items-center justify-between gap-2'>
                               <h4 className='text-sm font-bold text-orange-500'>Price: <del>{thousandFormate(original_price)}</del></h4>
                               <h4 className='text-sm font-bold text-orange-500'>{thousandFormate(price)} TK.</h4>
@@ -311,4 +318,4 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
       );
 };
 
-export default memo(ProductCard);
+export default ProductCard

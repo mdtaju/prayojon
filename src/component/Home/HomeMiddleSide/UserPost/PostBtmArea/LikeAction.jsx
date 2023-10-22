@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, IconButton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import { useAddReactsMutation, useRemoveReactMutation } from '../../../../../features/userPost/userPostApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
@@ -113,4 +113,4 @@ const LikeAction = ({ id, postType, reactType }) => {
       );
 };
 
-export default memo(LikeAction);
+export default LikeAction

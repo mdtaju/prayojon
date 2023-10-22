@@ -5,7 +5,7 @@ import moment from 'moment/moment';
 import { useSession } from "next-auth/react";
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import { useAddFollowerMutation, useGetFollowerQuery, useGetFollowingQuery, useUnfollowMutation } from '../../../../../features/userPost/userPostApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
@@ -218,4 +218,4 @@ const PostTopArea = ({ postContent = "", postAudience, createdAt, name, photo, u
   );
 };
 
-export default memo(PostTopArea);
+export default PostTopArea

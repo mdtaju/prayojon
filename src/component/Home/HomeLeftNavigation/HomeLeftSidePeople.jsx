@@ -15,9 +15,9 @@ const HomeLeftSidePeople = ({ user = {} }) => {
                         sx={{ width: 40, height: 40 }}
                   />
                   <div className='flex flex-col'>
-                        <div className='flex items-center justify-between mb-1'>
-                              <span className='text-lg leading-3 font-semibold text-gray-900 mr-1'>{name}</span>
-                              <span className='text-sm leading-3 text-gray-400 mt-1'>{city}</span>
+                        <div className='flex items-start justify-between mb-1 w-full'>
+                              <span className='text-lg leading-[20px] font-semibold text-gray-900 mr-1'>{name}</span>
+                              <span className='text-sm text-gray-400 mt-1'>{city}</span>
                         </div>
                         <p className='text-sm font-semibold text-gray-800'>{profession}</p>
                         <div className='flex items-center gap-2 mt-2'>

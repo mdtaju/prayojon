@@ -4,11 +4,17 @@ export const userPostApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getGeneralPosts: builder.query({
       query: () => "/user_post_general",
-      providesTags: ["getGeneralPosts"],
     }),
     getProductPosts: builder.query({
       query: () => "/user_post_product",
-      providesTags: ["getProductPosts"],
+      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const { result: data } = await queryFulfilled;
+      //     dispatch(addProductPost(data));
+      //   } catch (error) {
+      //     dispatch(addProductPost([]));
+      //   }
+      // },
     }),
     getProductPostsForPersonal: builder.query({
       query: (id) => `/product_get_user/${id}`,
@@ -224,21 +230,22 @@ export const userPostApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-      //   try {
-      //     const { data: result } = await queryFulfilled;
-      //     dispatch(
-      //       apiSlice.util.updateQueryData(
-      //         "getGeneralPosts",
-      //         undefined,
-      //         (draft) => {
-      //           draft.push(result);
-      //         }
-      //       )
-      //     );
-      //   } catch (error) {}
-      // },
-      invalidatesTags: ["getImages", "getGeneralPosts"],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data: result } = await queryFulfilled;
+          console.log(arg);
+          dispatch(
+            apiSlice.util.updateQueryData(
+              "getGeneralPosts",
+              undefined,
+              (draft) => {
+                draft.unshift(result);
+              }
+            )
+          );
+        } catch (error) {}
+      },
+      // invalidatesTags: ["getImages", "getGeneralPosts"],
     }),
     addProductPost: builder.mutation({
       query: (data) => ({
@@ -246,20 +253,20 @@ export const userPostApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-      //   try {
-      //     const { data: result } = await queryFulfilled;
-      //     dispatch(
-      //       apiSlice.util.updateQueryData(
-      //         "getProductPosts",
-      //         undefined,
-      //         (draft) => {
-      //           draft.push(result);
-      //         }
-      //       )
-      //     );
-      //   } catch (error) {}
-      // },
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data: result } = await queryFulfilled;
+          dispatch(
+            apiSlice.util.updateQueryData(
+              "getProductPosts",
+              undefined,
+              (draft) => {
+                draft.unshift(result);
+              }
+            )
+          );
+        } catch (error) {}
+      },
       // invalidatesTags: ["getImages", "getProductPosts"],
     }),
     updateProduct: builder.mutation({

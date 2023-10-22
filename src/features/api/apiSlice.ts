@@ -15,11 +15,7 @@ export const apiSlice = createApi({
   tagTypes: [
     "getImages",
     "getPosts",
-    "getGeneralPosts",
-    "getProductPosts",
     "getProduct",
-    // "getComments",
-    // "getReacts",
     "getCartItems",
     "cartItemsQuery",
   ],

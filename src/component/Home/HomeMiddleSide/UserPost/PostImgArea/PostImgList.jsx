@@ -1,9 +1,9 @@
 import { faCircleChevronLeft, faCircleChevronRight, faPlayCircle, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog, DialogContent, Skeleton } from '@mui/material';
 import dynamic from 'next/dynamic';
 import Image from 'next/legacy/image';
-import React, { memo, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import useWindowSize from '../../../../../hook/useWindowSize';
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
@@ -73,12 +73,17 @@ const PostImgList = ({ images }) => {
                         playing={false}
                   />
             </div> : <div onClick={() => handleOpen(images[0]?.file_path, 0)} className='h-[300px] w-full relative cursor-pointer'>
-                  <Image
-                        src={images[0]?.file_path}
-                        alt={images[0]?.file_name}
-                        layout='fill'
-                        className='object-cover object-center'
-                  />
+                  <Suspense fallback={<Skeleton variant="rectangular"
+                        width="100%"
+                        height="100%" />}>
+                        <Image
+                              src={images[0]?.file_path}
+                              alt={images[0]?.file_name}
+                              layout='fill'
+                              priority={true}
+                              className='object-cover object-center'
+                        />
+                  </Suspense>
             </div>
 
       } else if (images?.length === 2) {
@@ -101,12 +106,18 @@ const PostImgList = ({ images }) => {
                               } else {
                                     return (
                                           <div onClick={() => handleOpen(img?.file_path, i)} key={i} className='h-[300px] w-full relative cursor-pointer'>
-                                                <Image
-                                                      src={img?.file_path}
-                                                      alt={img?.file_name}
-                                                      layout='fill'
-                                                      className='object-cover object-center'
-                                                />
+                                                <Suspense fallback={<Skeleton variant="rectangular"
+                                                      width="100%"
+                                                      height="100%" />}>
+
+                                                      <Image
+                                                            src={img?.file_path}
+                                                            alt={img?.file_name}
+                                                            layout='fill'
+                                                            priority={true}
+                                                            className='object-cover object-center'
+                                                      />
+                                                </Suspense>
                                           </div>
                                     )
                               }
@@ -127,12 +138,18 @@ const PostImgList = ({ images }) => {
                                     light
                                     playing={false}
                               /> :
-                                    <Image
-                                          src={images[0]?.file_path}
-                                          alt={images[0]?.file_name}
-                                          layout='fill'
-                                          className='object-cover object-center'
-                                    />
+                                    <Suspense fallback={<Skeleton variant="rectangular"
+                                          width="100%"
+                                          height="100%" />}>
+
+                                          <Image
+                                                src={images[0]?.file_path}
+                                                alt={images[0]?.file_name}
+                                                layout='fill'
+                                                priority={true}
+                                                className='object-cover object-center'
+                                          />
+                                    </Suspense>
                         }
                   </div>
                   <div className='h-[300px] w-full flex gap-1'>
@@ -148,12 +165,18 @@ const PostImgList = ({ images }) => {
                                                 light
                                                 playing={false}
                                           /> :
-                                          <Image
-                                                src={images[1]?.file_path}
-                                                alt={images[1]?.file_name}
-                                                layout='fill'
-                                                className='object-cover object-center'
-                                          />
+                                          <Suspense fallback={<Skeleton variant="rectangular"
+                                                width="100%"
+                                                height="100%" />}>
+
+                                                <Image
+                                                      src={images[1]?.file_path}
+                                                      alt={images[1]?.file_name}
+                                                      layout='fill'
+                                                      priority={true}
+                                                      className='object-cover object-center'
+                                                />
+                                          </Suspense>
                               }
                         </div>
                         <div onClick={() => handleOpen(images[2]?.file_path, 2)} className='h-[300px] w-full relative cursor-pointer'>
@@ -168,12 +191,17 @@ const PostImgList = ({ images }) => {
                                                 light
                                                 playing={false}
                                           /> :
-                                          <Image
-                                                src={images[2]?.file_path}
-                                                alt={images[2]?.file_name}
-                                                layout='fill'
-                                                className='object-cover object-center'
-                                          />
+                                          <Suspense fallback={<Skeleton variant="rectangular"
+                                                width="100%"
+                                                height="100%" />}>
+                                                <Image
+                                                      src={images[2]?.file_path}
+                                                      alt={images[2]?.file_name}
+                                                      layout='fill'
+                                                      priority={true}
+                                                      className='object-cover object-center'
+                                                />
+                                          </Suspense>
                               }
                               {
                                     images?.length > 3 &&
@@ -241,12 +269,17 @@ const PostImgList = ({ images }) => {
                                                 controls
                                                 playing={true}
                                           /> :
-                                          <Image
-                                                src={imgUrl?.imgLink}
-                                                layout="fill"
-                                                alt='post-img'
-                                                className='object-contain rounded-md'
-                                          />
+                                          <Suspense fallback={<Skeleton variant="rectangular"
+                                                width="100%"
+                                                height="100%" />}>
+                                                <Image
+                                                      src={imgUrl?.imgLink}
+                                                      layout="fill"
+                                                      alt='post-img'
+                                                      priority={true}
+                                                      className='object-contain rounded-md'
+                                                />
+                                          </Suspense>
                               }
                               <button
                                     onClick={handleImgIncrement}
@@ -267,4 +300,4 @@ const PostImgList = ({ images }) => {
       );
 };
 
-export default memo(PostImgList);
+export default PostImgList

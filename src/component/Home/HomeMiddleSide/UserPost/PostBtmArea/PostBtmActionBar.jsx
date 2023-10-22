@@ -1,4 +1,4 @@
-import { faComment, faThumbsUp as faLikeIcon, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
+import { faComment, faThumbsUp as faLikeIcon } from '@fortawesome/free-regular-svg-icons';
 import { faHeart, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSession } from 'next-auth/react';
@@ -93,7 +93,7 @@ const PostBtmActionBar = ({ id, postType, reacts }) => {
 
 
       return (
-            <div className='grid grid-cols-3 items-center sm:gap-2 py-1 border-y border-gray-300'>
+            <div className='grid grid-cols-2 items-center sm:gap-2 py-1 border-y border-gray-300'>
                   {/* like action */}
                   <div className='group sm:px-4 py-1 hover:bg-gray-200 rounded-md cursor-pointer select-none'>
                         <div className='w-fit mx-auto relative'>
@@ -116,7 +116,7 @@ const PostBtmActionBar = ({ id, postType, reacts }) => {
                         </div>
                   </div>
                   {/* share */}
-                  <div className=' sm:px-4 py-1 hover:bg-gray-200 rounded-md cursor-pointer select-none'>
+                  {/* <div className=' sm:px-4 py-1 hover:bg-gray-200 rounded-md cursor-pointer select-none'>
                         <div className='w-fit mx-auto'>
                               <FontAwesomeIcon
                                     className='post_icon'
@@ -124,7 +124,7 @@ const PostBtmActionBar = ({ id, postType, reacts }) => {
                               />
                               <span className='text-sm sm:text-base font-bold text-gray-600 ml-2'>Share</span>
                         </div>
-                  </div>
+                  </div> */}
             </div>
       );
 };

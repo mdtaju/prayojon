@@ -1,5 +1,6 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CircularProgress } from '@mui/material';
 import React, { memo } from 'react';
 
 const CreatePostFooter = ({
@@ -7,15 +8,9 @@ const CreatePostFooter = ({
       postTypeValue,
       description,
       storeFiles,
-      productPrice,
       handlePostSubmit,
-      productTitle,
-      location,
-      category,
-      productType,
-      productQuantity,
-      termsAgreement,
-      shippingCharge
+      isProductReadyForSubmit,
+      postLoading
 }) => {
       return (
             <div className='w-full p-2 flex flex-col gap-2'>
@@ -35,11 +30,29 @@ const CreatePostFooter = ({
                   {
                         postTypeValue === "General" ?
                               (description || storeFiles.length !== 0) ?
-                                    <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
+                                    <>
+                                          {
+                                                !postLoading ?
+                                                      <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
+                                                      <button disabled onClick={handlePostSubmit} className='btn_primary w-full'>
+                                                            <CircularProgress color='inherit' size={16} />
+                                                      </button>
+                                          }
+                                    </>
+                                    :
                                     <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
                               :
-                              (productPrice && storeFiles.length !== 0 && location && category && productTitle && productType && productQuantity && termsAgreement && shippingCharge) ?
-                                    <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
+                              (isProductReadyForSubmit) ?
+                                    <>
+                                          {
+                                                !postLoading ?
+                                                      <button onClick={handlePostSubmit} className='btn_primary w-full'>Post</button> :
+                                                      <button disabled className='btn_primary w-full'>
+                                                            <CircularProgress color='inherit' size={16} />
+                                                      </button>
+                                          }
+                                    </>
+                                    :
                                     <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
                   }
             </div>

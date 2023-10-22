@@ -6,7 +6,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAddNotificationMutation } from '../../../../../features/notification/notificationApi';
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import { useAddCommentMutation } from '../../../../../features/userPost/userPostApi';
@@ -200,4 +200,4 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
       );
 };
 
-export default memo(PostBtmWriteComment);
+export default PostBtmWriteComment

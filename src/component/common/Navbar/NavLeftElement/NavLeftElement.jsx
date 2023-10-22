@@ -35,7 +35,7 @@ const NavLeftElement = () => {
 
       return (
             <>
-                  <div className={`w-[300px] fixed top-1 left-1 z-50 bg-white border border-gray-400 rounded-md transform translate-y-2 ${searchPop ? "visible translate-y-0 transition-all duration-200" : "invisible"}`}>
+                  <div className={`w-[300px] max-h-[calc(100vh-120px)] overflow-y-scroll fixed top-1 left-1 z-50 bg-white border border-gray-400 rounded-md transform translate-y-2 ${searchPop ? "visible translate-y-0 transition-all duration-200" : "invisible"}`}>
                         <div className='flex items-center justify-between px-4 py-2 border-b border-gray-300 mb-2'>
                               <h1>Search</h1>
                               <FontAwesomeIcon onClick={() => setSearchPop(false)} icon={faArrowRight} className='p-1 cursor-pointer' />
@@ -106,7 +106,9 @@ const NavLeftElement = () => {
                         </div>
                   </div>
                   {/* logo */}
-                  <Image src={"/images/logo-full.svg"} alt="logo" width={129} height={30} />
+                  <Link href={"/"}>
+                        <Image src={"/images/logo-full.svg"} alt="logo" width={129} height={30} />
+                  </Link>
                   {/* search icon button and input */}
                   <div onClick={() => setSearchPop(true)} className="w-fit flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full cursor-pointer">
                         <FontAwesomeIcon

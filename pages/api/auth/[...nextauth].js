@@ -23,7 +23,6 @@ export default NextAuth({
             return null;
           }
         } catch (error) {
-          console.log(error);
           throw new Error("No user Found with Phone Please Sign Up...!");
         }
       },

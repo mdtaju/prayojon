@@ -4,6 +4,7 @@ import { apiSlice } from "../features/api/apiSlice";
 import cartSlice from "../features/cart/cartSlice";
 import profileSlice from "../features/profile/profileSlice";
 import searchSlice from "../features/search/searchSlice";
+import userPostSlice from "../features/userPost/userPostSlice";
 
 export const store = () =>
   configureStore({
@@ -11,9 +12,10 @@ export const store = () =>
       [apiSlice.reducerPath]: apiSlice.reducer,
       auth: profileSlice,
       cart: cartSlice,
+      userPost: userPostSlice,
       search: searchSlice,
     },
-    devTools: process.env.NODE_ENV !== "production",
+    devTools: false,
     middleware: (getDefaultMiddleWares) =>
       getDefaultMiddleWares().concat(apiSlice.middleware),
   });

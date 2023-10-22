@@ -1,8 +1,9 @@
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Skeleton } from '@mui/material';
 import Image from 'next/legacy/image';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useCartRemoveMutation, useCartUpdateQuantityMutation } from '../../../features/cart/cartApi';
 import thousandFormate from '../../../utils/thousandFormate';
 
@@ -65,13 +66,17 @@ const CartLeftBottomAreaItem = ({ item = {} }) => {
                               </div> */}
                               {/* image area */}
                               <div className='relative w-[220px] sm:w-[120px] h-[220px] sm:h-[120px]'>
-                                    <Image
-                                          src={image}
-                                          alt='watch'
-                                          layout='fill'
-                                          priority
-                                          className='absolute object-contain rounded-md'
-                                    />
+                                    <Suspense fallback={<Skeleton variant="rectangular"
+                                          width="100%"
+                                          height="100%" />}>
+                                          <Image
+                                                src={image}
+                                                alt='watch'
+                                                layout='fill'
+                                                priority
+                                                className='absolute object-contain rounded-md'
+                                          />
+                                    </Suspense>
                               </div>
                         </div>
                         {/* title, description and quantity buttons */}

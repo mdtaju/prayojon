@@ -2,7 +2,7 @@ import { faBangladeshiTakaSign, faDollarSign, faEuroSign, faIndianRupeeSign, faS
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Link from 'next/link';
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import thousandFormate from '../../../../../utils/thousandFormate';
 
 const CreatePostPrice = ({
@@ -26,7 +26,21 @@ const CreatePostPrice = ({
       setShippingCharge,
       termsAgreement,
       setTermsAgreement,
-      districts
+      districts,
+      brandName,
+      setBrandName,
+      color,
+      setColor,
+      size,
+      setSize,
+      model,
+      setModel,
+      estimateTime,
+      setEstimateTime,
+      paymentAddType,
+      setPaymentAddType,
+      subCategory,
+      setSubCategory
 }) => {
       const [disCountPrice, setDiscountPrice] = useState("");
 
@@ -82,7 +96,7 @@ const CreatePostPrice = ({
                   />
                   <br />
                   {/* category selection input */}
-                  <div className='w-full mt-4'>
+                  <div className='w-full mt-4 flex flex-col sm:flex-row items-center gap-4'>
                         <FormControl
                               fullWidth
                               size='small'
@@ -108,9 +122,94 @@ const CreatePostPrice = ({
 
                               </Select>
                         </FormControl>
+                        <FormControl
+                              fullWidth
+                              size='small'
+                              required
+                        >
+                              <InputLabel id="demo-simple-select-label">Sub Category</InputLabel>
+                              <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={subCategory}
+                                    label="Sub Category"
+                                    onChange={e => setSubCategory(e.target.value)}
+                              >
+                                    <MenuItem value={"Electronics"}>Electronics</MenuItem>
+                                    <MenuItem value={"Fashion"}>Fashion</MenuItem>
+                                    <MenuItem value={"Home & Garden"}>Home & Garden</MenuItem>
+                                    <MenuItem value={"Vehaicle"}>Vehaicle</MenuItem>
+                                    <MenuItem value={"Jewllery & Watches"}>Jewllery & Watches</MenuItem>
+                                    <MenuItem value={"Health &  Beauty"}>Health &  Beauty</MenuItem>
+                                    <MenuItem value={"Business Office & Industrial"}>Business Office & Industrial</MenuItem>
+                                    <MenuItem value={"Sporting"}>Sporting</MenuItem>
+                                    <MenuItem value={"Toyes & Games"}>oyes & Games</MenuItem>
+
+                              </Select>
+                        </FormControl>
                   </div>
                   {/* price input and category input container */}
                   <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 items-center my-4'>
+                        {/* brand name */}
+                        <TextField
+                              required
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='text'
+                              size='small'
+                              id="outlined-basic"
+                              label="Brand"
+                              variant="outlined"
+                              value={brandName}
+                              onChange={(e) => setBrandName(e.target.value)}
+                        />
+                        {/* model name */}
+                        <TextField
+                              required
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='text'
+                              size='small'
+                              id="outlined-basic"
+                              label="Model"
+                              variant="outlined"
+                              value={model}
+                              onChange={(e) => setModel(e.target.value)}
+                        />
+                        {/* color name */}
+                        <TextField
+                              required
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='text'
+                              size='small'
+                              id="outlined-basic"
+                              label="Color"
+                              variant="outlined"
+                              value={color}
+                              onChange={(e) => setColor(e.target.value)}
+                        />
+                        {/* size name */}
+                        <TextField
+                              required
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='number'
+                              size='small'
+                              id="outlined-basic"
+                              label="Size"
+                              variant="outlined"
+                              value={size}
+                              onChange={(e) => setSize(e.target.value)}
+                        />
+                        <TextField
+                              required
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='number'
+                              size='small'
+                              id="outlined-basic"
+                              label="Delivery Estimate Time"
+                              placeholder='Number of days'
+                              variant="outlined"
+                              value={estimateTime}
+                              onChange={(e) => setEstimateTime(e.target.value)}
+                        />
                         {/* write product price */}
                         <TextField
                               required
@@ -136,6 +235,25 @@ const CreatePostPrice = ({
                               value={discount}
                               onChange={(e) => setDiscount(e.target.value)}
                         />
+                        {/* payment premium add type */}
+                        <FormControl
+                              fullWidth
+                              size='small'
+                              required
+                        >
+                              <InputLabel id="demo-simple-select-label">Premium Ad Type</InputLabel>
+                              <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={paymentAddType}
+                                    label="Premium Ad Type"
+                                    onChange={e => setPaymentAddType(e.target.value)}
+                              >
+                                    <MenuItem value={"Free"}>Free</MenuItem>
+                                    <MenuItem value={"Top"}>Top</MenuItem>
+                                    <MenuItem value={"Features"}>Features</MenuItem>
+                              </Select>
+                        </FormControl>
                   </div>
                   <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 items-center mb-4'>
                         <TextField
@@ -221,7 +339,7 @@ const CreatePostPrice = ({
       );
 };
 
-export default memo(CreatePostPrice);
+export default CreatePostPrice
 
 
 // Electronics

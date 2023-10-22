@@ -1,9 +1,10 @@
 import { faBoxOpen, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { memo, useEffect, useState } from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 
-const E_PostTitleDes = ({ postContent = "", productTitle, location, category }) => {
+const E_PostTitleDes = ({ postContent = "", productTitle, location, category, id }) => {
       const [textExpand, setTextExpand] = useState(false);
 
 
@@ -19,7 +20,9 @@ const E_PostTitleDes = ({ postContent = "", productTitle, location, category }) 
             <div className='w-full p-1 sm:p-4 border-t border-gray-300'>
                   {/* title to description part */}
                   <div className=''>
-                        <h1 className='text-xl font-semibold text-gray-800'>{productTitle}</h1>
+                        <Link href={`/marketplace/${id}`} target='_blank' >
+                              <h1 className='text-xl font-semibold text-gray-800 hover:underline'>{productTitle}</h1>
+                        </Link>
                         <div className='flex items-center gap-2 mt-1 text-gray-500'>
                               <div>
                                     <FontAwesomeIcon
@@ -56,4 +59,4 @@ const E_PostTitleDes = ({ postContent = "", productTitle, location, category }) 
       );
 };
 
-export default memo(E_PostTitleDes);
+export default E_PostTitleDes

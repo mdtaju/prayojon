@@ -1,7 +1,7 @@
 import { faCaretDown, faEarthAmerica, faUserGroup, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, DialogTitle, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
-import React, { memo } from 'react';
+import React from 'react';
 
 const CreatePostHeader = ({
       handleClose,
@@ -10,7 +10,8 @@ const CreatePostHeader = ({
       postAudience,
       setPostAudience,
       name,
-      photo
+      photo,
+      postError
 }) => {
       const options = ['General', 'Product']
       const handleChange = (e) => {
@@ -19,10 +20,13 @@ const CreatePostHeader = ({
       return (
             <>
                   <div className='relative'>
-                        <DialogTitle className='text-center' id="scroll-dialog-title">Create Post</DialogTitle>
+                        <div className='text-center p-2'>
+                              <DialogTitle className='p-0' id="scroll-dialog-title">Create Post</DialogTitle>
+                              <p className='text-xs text-red-600 font-semibold'>{postError}</p>
+                        </div>
                         <button
                               onClick={handleClose}
-                              className='absolute top-4 right-4 w-[35px] h-[35px] rounded-full bg-gray-200 hover:bg-gray-300 text-gray-900 active:scale-95 duration-150'>
+                              className='absolute top-[50%] translate-y-[-50%] right-4 w-[35px] h-[35px] rounded-full bg-gray-200 hover:bg-gray-300 text-gray-900 active:scale-95 duration-150'>
                               <FontAwesomeIcon
                                     icon={faXmark}
                               />
@@ -125,4 +129,4 @@ const CreatePostHeader = ({
       );
 };
 
-export default memo(CreatePostHeader);
+export default CreatePostHeader

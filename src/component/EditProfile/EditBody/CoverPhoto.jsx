@@ -46,7 +46,6 @@ const CoverPhoto = ({ coverPhoto, setCoverPhoto, coverUrl }) => {
                                     <div className='w-full h-full relative'>
                                           {
                                                 coverPhoto?.length === 0 ?
-
                                                       <Image
                                                             src={coverUrl}
                                                             alt='cover-photo'
