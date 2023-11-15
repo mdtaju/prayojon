@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Description from './Description';
 import Reviews from './Reviews';
 
-const MiddleContainer = () => {
+const MiddleContainer = ({ product }) => {
+      const { description, reviews } = product;
       const [activeTab, setActiveTab] = useState("description");
       return (
             <div className='w-full common_shadow mt-4 sm:mt-6'>
@@ -19,8 +20,12 @@ const MiddleContainer = () => {
                   <div className='w-full mt-4 p-4'>
                         {
                               activeTab === "description" ?
-                                    <Description /> :
-                                    <Reviews />
+                                    <Description
+                                          description={description}
+                                    /> :
+                                    <Reviews
+                                          reviews={reviews}
+                                    />
                         }
                   </div>
             </div>

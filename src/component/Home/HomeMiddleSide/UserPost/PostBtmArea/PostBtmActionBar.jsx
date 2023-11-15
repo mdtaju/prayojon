@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import React, { memo, useEffect, useState } from 'react';
 import LikeAction from './LikeAction';
 
-const PostBtmActionBar = ({ id, postType, reacts }) => {
+const PostBtmActionBar = ({ id, postQueryId,
+      postUserId, postType, reacts }) => {
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
@@ -101,6 +102,8 @@ const PostBtmActionBar = ({ id, postType, reacts }) => {
                                     id={id}
                                     postType={postType}
                                     reactType={reactType}
+                                    postQueryId={postQueryId}
+                                    postUserId={postUserId}
                               />
                               {content}
                         </div>

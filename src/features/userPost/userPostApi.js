@@ -1,3 +1,4 @@
+import io from "socket.io-client";
 import { apiSlice } from "../api/apiSlice";
 
 export const userPostApi = apiSlice.injectEndpoints({
@@ -36,6 +37,33 @@ export const userPostApi = apiSlice.injectEndpoints({
     // }),
     getFollower: builder.query({
       query: (id) => `/follower/${id}`,
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
+          reconnectionDelay: 1000,
+          reconnection: true,
+          reconnectionAttempts: 10,
+          transports: ["websocket"],
+          agent: false,
+          upgrade: false,
+          rejectUnauthorized: false,
+        });
+        try {
+          await cacheDataLoaded;
+          socket.on("addFollower", (data) => {
+            updateCachedData((draft) => {
+              const getElement = draft.find(
+                (item) => item?.user_id === data?.data?.user_id
+              );
+              if (getElement) {
+                draft.push(data?.data);
+              }
+            });
+          });
+        } catch (error) {}
+      },
     }),
     getFollowing: builder.query({
       query: (id) => `/following/${id}`,
@@ -233,7 +261,7 @@ export const userPostApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const { data: result } = await queryFulfilled;
-          console.log(arg);
+
           dispatch(
             apiSlice.util.updateQueryData(
               "getGeneralPosts",
@@ -276,6 +304,7 @@ export const userPostApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
     addFollower: builder.mutation({
       query: (data) => ({
         url: "/follower",
@@ -302,6 +331,9 @@ export const userPostApi = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getSinglePost: builder.query({
+      query: ({ type, id }) => `/single_post?type=${type}&id=${id}`,
+    }),
   }),
 });
 
@@ -327,5 +359,6 @@ export const {
   useGetUserPurchaseQuery,
   useGetUserPurchaseOrdersMutation,
   useRemoveReactMutation,
+  useGetSinglePostQuery,
   util: { getRunningQueriesThunk },
 } = userPostApi;

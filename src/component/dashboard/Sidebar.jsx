@@ -9,7 +9,7 @@ const Sidebar = () => {
       return (
             <div className='dashboard_sidebar'>
                   {/* Sidebar nav */}
-                  <ul className='mt-14 pt-2 pb-16 overflow-auto h-full sidebar_links_container'>
+                  <ul className='mt-2 pt-2 pb-16 overflow-auto h-full sidebar_links_container'>
                         <SidebarItem
                               Icon={faTableCellsLarge}
                               title={"Dashboard"}
@@ -18,7 +18,7 @@ const Sidebar = () => {
                         <SidebarMultipleItem
                               Icon={faTag}
                               title={"Products"}
-                              options={[{ name: "All Products", link: "/all-products" }, { name: "Manage Products", link: "/manage-products" }]}
+                              options={[{ name: "All Products", link: "/dashboard/all-products" }, { name: "Manage Products", link: "/dashboard/manage-products" }]}
                         />
                         {/* <SidebarMultipleItem
                               Icon={faGraduationCap}
@@ -29,7 +29,7 @@ const Sidebar = () => {
                               Icon={faHammer}
                               title={"Selling"}
                               options={[
-                                    { name: "Manage Orders", link: "/manage-orders" },
+                                    { name: "Manage Orders", link: "/dashboard/manage-orders" },
                                     // { name: "Order Status", link: "/order-status" }
                               ]}
                         />
@@ -37,8 +37,8 @@ const Sidebar = () => {
                               Icon={faCartShopping}
                               title={"Purchase"}
                               options={[
-                                    { name: "All Purchase", link: "/all-purchase" },
-                                    { name: "Track Purchase", link: "/track-purchase" }
+                                    { name: "All Purchase", link: "/dashboard/all-purchase" },
+                                    { name: "Track Purchase", link: "/dashboard/track-purchase" }
                               ]}
                         />
                         {/* <SidebarItem
@@ -49,12 +49,12 @@ const Sidebar = () => {
                         <SidebarItem
                               Icon={faChartLine}
                               title={"Reports"}
-                              link={"/reports"}
+                              link={"/dashboard/reports"}
                         />
                         <SidebarItem
                               Icon={faCircleQuestion}
                               title={"Help & Support"}
-                              link={"/help"}
+                              link={"/dashboard/help"}
                         />
                   </ul>
             </div>

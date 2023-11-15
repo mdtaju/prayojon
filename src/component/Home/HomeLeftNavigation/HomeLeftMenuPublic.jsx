@@ -1,8 +1,12 @@
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const HomeLeftMenuPublic = () => {
+      const handleGoogleSignIn = async () => {
+            await signIn('google', { callbackUrl: "/" })
+      }
       return (
             <div>
                   {/* welcome banner */}
@@ -23,7 +27,10 @@ const HomeLeftMenuPublic = () => {
                               <div className='w-[40px] h-[2px] bg-gray-800'></div>
                         </div>
                         <div className='w-[100px] mx-auto flex items-center justify-between'>
-                              <div className='w-[40px] h-[40px] rounded-full border border-primary grid place-items-center cursor-pointer'>
+                              {/* google login button */}
+                              <div
+                                    onClick={handleGoogleSignIn}
+                                    className='w-[40px] h-[40px] rounded-full border border-primary grid place-items-center cursor-pointer'>
                                     <Image
                                           src={"/web-icons/icons8-google.svg"}
                                           width={30}
@@ -31,6 +38,7 @@ const HomeLeftMenuPublic = () => {
                                           alt='google'
                                     />
                               </div>
+                              {/* facebook login button */}
                               <div className='w-[40px] h-[40px] rounded-full border border-primary grid place-items-center cursor-pointer'>
                                     <Image
                                           src={"/web-icons/icons8-facebook.svg"}

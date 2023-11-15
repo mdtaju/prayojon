@@ -4,18 +4,21 @@ import { Dialog, IconButton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useAddNotificationMutation } from '../../../../../features/notification/notificationApi';
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import { useAddReactsMutation, useRemoveReactMutation } from '../../../../../features/userPost/userPostApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
 
-const LikeAction = ({ id, postType, reactType }) => {
+const LikeAction = ({ id, postQueryId,
+      postUserId, postType, reactType }) => {
       const [addReacts, { data }] = useAddReactsMutation();
       const { data: session } = useSession();
       const [snackOpen, setSnackOpen] = useState(false);
       const { data: getAuthUser } = useGetUserQuery(session?.user?.email);
       const [warnMss, setWarnMss] = useState("");
       const windowSize = useWindowSize();
-      const [removeReact, { data: reactRemoved }] = useRemoveReactMutation();
+      const [removeReact] = useRemoveReactMutation();
+      const [addNotification] = useAddNotificationMutation();
 
       // action handler 
       const actionHandler = (type) => {
@@ -35,11 +38,25 @@ const LikeAction = ({ id, postType, reactType }) => {
                               user_id: session?.user?.email,
                               created_at: d.toUTCString()
                         })
+                        addNotification({
+                              sender_id: session?.user?.email,
+                              receiver_id: postUserId,
+                              message: "react to your post.",
+                              link: `/posts/${postType?.toLowerCase()}?id=${postQueryId}`,
+                              date: d.toUTCString()
+                        })
                   } else {
                         removeReact({
                               post_id: id,
                               post_type: postType,
                               user_id: session?.user?.email,
+                        })
+                        addNotification({
+                              sender_id: session?.user?.email,
+                              receiver_id: postUserId,
+                              message: "remove react to your post.",
+                              link: `/posts/${postType?.toLowerCase()}?id=${postQueryId}`,
+                              date: d.toUTCString()
                         })
                   }
             } else {

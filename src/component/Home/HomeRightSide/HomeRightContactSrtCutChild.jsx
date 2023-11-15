@@ -9,7 +9,7 @@ const HomeRightContactSrtCutChild = () => {
                         //   src="/static/images/avatar/1.jpg"
                         sx={{ width: 32, height: 32 }}
                   />
-                  <span className='text-base text-gray-900 font-semibold'>Abdullah</span>
+                  <span className='text-base text-gray-800 font-semibold'>Abdullah</span>
             </div>
       );
 };

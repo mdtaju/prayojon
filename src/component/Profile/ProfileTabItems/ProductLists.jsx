@@ -18,7 +18,7 @@ const ProductLists = ({ UID = false }) => {
 
       return (
             <div className='w-full md:w-[80%] max-w-[1536px] mx-auto common_shadow my-5'>
-                  <h1 className='mt-4 text-xl font-semibold text-gray-900'>Lists</h1>
+                  <h1 className='mt-4 text-xl font-semibold text-gray-800'>Lists</h1>
                   <div className='w-full mt-6 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 place-content-center'>
                         {
                               products.map((pr, i) => (

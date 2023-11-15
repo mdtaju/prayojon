@@ -10,7 +10,6 @@ export const profileApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          console.log(arg);
         } catch (error) {}
       },
     }),

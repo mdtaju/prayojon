@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 import HomeRightSidePrivate from './HomeRightSidePrivate';
@@ -5,6 +6,27 @@ import HomeRightSidePublic from './HomeRightSidePublic';
 
 const HomeRightSide = () => {
       const { data: session } = useSession();
+      if (session === undefined) {
+            return (
+                  <session className='hidden md:block w-[310px] h-screen overflow-hidden'>
+                        <div
+                              style={{ overscrollBehaviorY: 'contain' }}
+                              className={`fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px] rounded-md`}
+                        >
+                              <div className='space-y-3'>
+                                    {
+                                          Array.from(Array(8)).map((_, i) => (
+                                                <div key={i} className='common_shadow flex gap-4 items-center'>
+                                                      <Skeleton variant="circular" width={40} height={40} />
+                                                      <Skeleton variant="rounded" className='flex-1 rounded-lg' height={40} />
+                                                </div>
+                                          ))
+                                    }
+                              </div>
+                        </div>
+                  </session>
+            )
+      }
       return (
             <section className='hidden md:block w-[310px] h-screen overflow-hidden '>
                   <div

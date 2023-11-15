@@ -26,7 +26,7 @@ const CreatePostHeader = ({
                         </div>
                         <button
                               onClick={handleClose}
-                              className='absolute top-[50%] translate-y-[-50%] right-4 w-[35px] h-[35px] rounded-full bg-gray-200 hover:bg-gray-300 text-gray-900 active:scale-95 duration-150'>
+                              className='absolute top-[50%] translate-y-[-50%] right-4 w-[35px] h-[35px] rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 active:scale-95 duration-150'>
                               <FontAwesomeIcon
                                     icon={faXmark}
                               />
@@ -45,7 +45,7 @@ const CreatePostHeader = ({
                                     />
                               </div>
                               <div>
-                                    <span className='text-base text-gray-900 font-semibold'>{name}</span>
+                                    <span className='text-base text-gray-800 font-semibold'>{name}</span>
                                     {/* Post access public/friend */}
                                     <div className='group px-2 py-[2px] bg-gray-200 w-fit flex items-center gap-1 rounded-md cursor-pointer relative'>
                                           {
@@ -59,7 +59,7 @@ const CreatePostHeader = ({
                                                             className='text-[10px]'
                                                       />
                                           }
-                                          <span className='text-sm font-semibold text-gray-900'>
+                                          <span className='text-sm font-semibold text-gray-800'>
                                                 {postAudience === "Followers" ? "Followers" : "Public"}
                                           </span>
                                           <FontAwesomeIcon

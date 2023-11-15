@@ -6,8 +6,9 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useAddNotificationMutation } from '../../../features/notification/notificationApi';
 import { useGetUserQuery } from '../../../features/profile/profileApi';
-import { useAddFollowerMutation, useGetFollowingQuery, useUnfollowMutation } from '../../../features/userPost/userPostApi';
+import { useAddFollowerMutation, useGetFollowerQuery, useUnfollowMutation } from '../../../features/userPost/userPostApi';
 import useWindowSize from '../../../hook/useWindowSize';
 
 const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
@@ -18,21 +19,22 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
       const [name, setName] = useState("");
       const [profession, setProfession] = useState("");
       const { data: authData } = useSession();
-      const { data: getAuthUser } = useGetUserQuery(UID ? UID : authData?.user?.email);
+      const { data: getAuthUser } = useGetUserQuery(UID);
       const [addFollower, { data }] = useAddFollowerMutation();
-      const { data: getFollowing } = useGetFollowingQuery(authData?.user?.email);
+      const { data: followers } = useGetFollowerQuery(UID);
       const [isFollow, setIsFollow] = useState(false);
       const [unfollow, { data: getUnfollow }] = useUnfollowMutation();
-
+      const [addNotification] = useAddNotificationMutation();
+      const d = new Date();
       // check is follow the user
       useEffect(() => {
-            if (getFollowing) {
-                  const getFollowingUser = getFollowing.find((u) => u.user_id == UID);
+            if (followers) {
+                  const getFollowingUser = followers.find((u) => u.follower_id === authData?.user?.email);
                   if (getFollowingUser) {
                         setIsFollow(true)
                   }
             }
-      }, [getFollowing, UID]);
+      }, [followers, authData?.user?.email]);
 
       // check is follow the user after unfollow action dispatch
       useEffect(() => {
@@ -43,7 +45,7 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
 
       // get user's name, photo and cover-photo 
       useEffect(() => {
-            console.log(getAuthUser)
+
             if (getAuthUser?.length === 0) {
                   router.push("/")
             }
@@ -68,19 +70,31 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
                         user_id: UID,
                         followerId: authData?.user?.email
                   })
+                  addNotification({
+                        sender_id: authData?.user?.email,
+                        receiver_id: UID,
+                        message: "following you",
+                        link: `/profile/${authData?.user?.email}`,
+                        date: d.toUTCString()
+                  })
             }
       }
 
       // handle unfollow 
       const handleUnFollow = () => {
-            if (UID != authData?.user?.email) {
+            if (UID !== authData?.user?.email) {
                   if (authData && getAuthUser[0]?.name) {
                         unfollow({
                               user_id: UID,
                               follower_id: authData?.user?.email?.toString()
                         })
-                  } else {
-                        handleClickOpen()
+                        addNotification({
+                              sender_id: authData?.user?.email,
+                              receiver_id: UID,
+                              message: "unfollowing you",
+                              link: `/profile/${authData?.user?.email}`,
+                              date: d.toUTCString()
+                        })
                   }
             }
       }

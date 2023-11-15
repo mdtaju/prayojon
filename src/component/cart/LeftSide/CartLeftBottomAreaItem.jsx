@@ -100,7 +100,10 @@ const CartLeftBottomAreaItem = ({ item = {} }) => {
                                                       icon={faPlus}
                                                 />
                                           </button>
-                                          <input type="text" value={quantityInput} onChange={handleQuantity} className='w-[50px] px-1 text-center outline-none' onBlur={handleQuantityBlur} />
+                                          <span className='w-[50px] px-1 text-center'>
+                                                {quantityInput}
+                                          </span>
+                                          {/* <input type="text" value={quantityInput} onChange={handleQuantity} className='w-[50px] px-1 text-center outline-none' onBlur={handleQuantityBlur} /> */}
                                           <button onClick={() => handleDecrement()} className='py-1 px-2 bg-gray-200 border-l border-gray-400 text-xs'>
                                                 <FontAwesomeIcon
                                                       icon={faMinus}
@@ -116,8 +119,8 @@ const CartLeftBottomAreaItem = ({ item = {} }) => {
                   </div>
                   {/* price */}
                   <div className='text-center'>
-                        <h4 className='whitespace-nowrap text-lg font-semibold text-gray-800'>{thousandFormate(price * +quantity)} Tk.</h4>
-                        <h4 className='whitespace-nowrap text-base font-semibold text-orange-500'><del>{thousandFormate(+original_price * +quantity)} Tk.</del></h4>
+                        <h4 className='whitespace-nowrap text-lg font-semibold text-gray-800'>{thousandFormate(price * +quantity)} BDT.</h4>
+                        <h4 className='whitespace-nowrap text-base font-semibold text-orange-500'><del>{thousandFormate(+original_price * +quantity)} BDT.</del></h4>
                   </div>
             </div>
       );

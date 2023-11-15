@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import AuthProviders from "../../src/component/Register/AuthProviders";
 import Layout from "../../src/component/Register/Layout";
 import RouteToggle from "../../src/component/Register/RouteToggle";
 import TitleContainer from "../../src/component/Register/TitleContainer";
+
 const Login = () => {
   const router = useRouter();
   const { data } = useSession();
@@ -17,6 +18,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const formattedPhone = userPhone.replace("+", "");
     const status = await signIn("credentials", {
@@ -25,7 +27,6 @@ const Login = () => {
       redirect: false,
       callbackUrl: "/",
     });
-    console.log(status);
     if (status?.ok) {
       setLoading(false);
       router.push("/");
@@ -59,7 +60,7 @@ const Login = () => {
         />
         {errMss && <p className="text-red-500">{errMss}</p>}
         <button className="input_submit_btn" type="submit">
-          Log in
+          {loading ? <CircularProgress color="inherit" size={16} /> : "Log in"}
         </button>
         <Link className="w-fit mx-auto" href={"/login/forget_password"}>
           <p className="w-fit text-primary hover:underline cursor-pointer">

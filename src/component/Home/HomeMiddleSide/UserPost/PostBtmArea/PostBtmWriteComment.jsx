@@ -13,7 +13,7 @@ import { useAddCommentMutation } from '../../../../../features/userPost/userPost
 import useWindowSize from '../../../../../hook/useWindowSize';
 import CustomPopper from '../../../../common/CustomPopper';
 
-const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, placeholder, id, postType, postUserId }) => {
+const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, placeholder, id, postType, postQueryId, postUserId }) => {
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
@@ -26,7 +26,7 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
       const [photo, setPhoto] = useState("");
       const { data: authData } = useSession();
       const { data: getAuthUser } = useGetUserQuery(authData?.user?.email);
-      const [addNotification, { data: notificationRes, error }] = useAddNotificationMutation();
+      const [addNotification] = useAddNotificationMutation();
       const windowSize = useWindowSize();
 
       // get users photo 
@@ -68,7 +68,7 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
                               sender_id: authData?.user?.email,
                               receiver_id: postUserId,
                               message: "comment to your post.",
-                              link: ``,
+                              link: `/posts/${postType?.toLowerCase()}?id=${postQueryId}`,
                               date: d.toUTCString()
                         })
                         setComment("")

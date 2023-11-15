@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import { useGetGeneralPostsForPersonalQuery, useGetProductPostsForPersonalQuery } from '../../features/userPost/userPostApi';
 import HomeMiddleSide from "../Home/HomeMiddleSide/HomeMiddleSide";
@@ -12,12 +11,11 @@ import ProfileTopArea from '../Profile/ProfileTopArea/ProfileTopArea';
 
 const ProfileHero = ({ UID }) => {
       const [activeTab, setActiveTab] = useState("post");
-      const { data: session } = useSession();
       const { data: getProducts } = useGetProductPostsForPersonalQuery(
-            session?.user?.email
+            UID
       );
       const { data: getGeneralPost } = useGetGeneralPostsForPersonalQuery(
-            session?.user?.email
+            UID
       );
 
       // what to render

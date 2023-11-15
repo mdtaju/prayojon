@@ -22,7 +22,7 @@ const CheckoutSuccess = () => {
           <h4 className="text-sm text-bold text-gray-600">
             Your order id is: {router.query.id}
           </h4>
-          <Link href={"/dashboard"}>
+          <Link href={`/dashboard/track-purchase/${router.query.id}`}>
             <p className="text-primary underline">See your order</p>
           </Link>
         </div>

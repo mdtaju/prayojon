@@ -31,7 +31,7 @@ const About = ({ UID = false }) => {
 
       return (
             <div className='w-full md:w-[80%] max-w-[1536px] mx-auto common_shadow my-5'>
-                  <h1 className='mt-4 text-xl font-semibold text-gray-900'>About</h1>
+                  <h1 className='mt-4 text-xl font-semibold text-gray-800'>About</h1>
                   <div className='w-full mt-6 px-2 text-center'>
                         <div className='py-1 px-3 bg-gray-300 rounded-md mb-2 w-fit flex items-center gap-2 mx-auto text-orange-500'>
                               <FontAwesomeIcon

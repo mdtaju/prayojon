@@ -24,6 +24,7 @@ const CustomPopper = ({ children, ...rest }) => {
                                     placement={placement}
                                     transition
                                     style={{ zIndex: '6000', overflowY: 'auto', maxHeight: '85vh', overscrollBehaviorY: "contain" }}
+                              // className='custom_scrollbar'
                               >
                                     {({ TransitionProps }) => (
                                           <Fade {...TransitionProps} timeout={100}>

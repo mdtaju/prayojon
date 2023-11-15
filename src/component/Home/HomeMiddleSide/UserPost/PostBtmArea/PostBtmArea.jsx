@@ -6,7 +6,7 @@ import PostBtmStatusBar from './PostBtmStatusBar';
 const PostBtmActionBar = dynamic(() => import('./PostBtmActionBar'), { ssr: false });
 const PostBtmWriteComment = dynamic(() => import('./PostBtmWriteComment'), { ssr: false });
 
-const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] }) => {
+const PostBtmArea = ({ postId, postQueryId, postType, postUserId, comments = [], reacts = [] }) => {
       const [comment, setComment] = useState("");
       const [showReplyInput, setShowReplyInput] = useState(false);
       const windowSize = useWindowSize();
@@ -23,6 +23,8 @@ const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] 
                   {/* Do Like Comment component */}
                   <PostBtmActionBar
                         id={postId}
+                        postQueryId={postQueryId}
+                        postUserId={postUserId}
                         postType={postType}
                         reacts={reacts}
                   />
@@ -41,6 +43,7 @@ const PostBtmArea = ({ postId, postType, postUserId, comments = [], reacts = [] 
                         placeholder={"Write a comment..."}
                         id={postId}
                         postType={postType}
+                        postQueryId={postQueryId}
                         postUserId={postUserId}
                   />
 

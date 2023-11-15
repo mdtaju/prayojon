@@ -8,9 +8,12 @@ import Sidebar from '../marketplace/Sidebar/Sidebar';
 const MarketPlaceHero = () => {
       const [filters, setFilters] = useState({
             priceRange: [100, 1000000],
-            categories: [],
+            sizeRange: [0, 1000],
+            categories: "",
+            subCategories: [],
             type: [],
             sort: [],
+            colorType: [],
             availability: [],
             // Add more filter options as needed
       });
@@ -29,10 +32,15 @@ const MarketPlaceHero = () => {
             if (searchProductPost) {
                   const filteredProducts = searchProductPost.filter((product) => {
                         // Apply filters here
-                        const { priceRange, categories, type, sort, availability } = filters;
+                        const { priceRange, sizeRange, categories, subCategories, type, colorType, sort, availability } = filters;
 
                         // Apply price range filter
                         if (priceRange && (product.price < priceRange[0] || product.price > priceRange[1])) {
+                              return false;
+                        }
+
+                        // Apply size range filter
+                        if (sizeRange && (product?.size < sizeRange[0] || product?.size > sizeRange[1])) {
                               return false;
                         }
 
@@ -41,8 +49,18 @@ const MarketPlaceHero = () => {
                               return false;
                         }
 
+                        // Apply Colors filter
+                        if (colorType.length > 0 && !colorType.includes(product.color)) {
+                              return false;
+                        }
+
                         // Apply categories filter
                         if (categories.length > 0 && !categories.includes(product.category)) {
+                              return false;
+                        }
+
+                        // Apply sub categories filter
+                        if (subCategories.length > 0 && !subCategories.includes(product.subCategories)) {
                               return false;
                         }
 

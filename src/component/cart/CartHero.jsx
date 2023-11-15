@@ -1,12 +1,13 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dialog, IconButton } from '@mui/material';
+import { Dialog, IconButton, Skeleton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../config/axios';
 import { useAddPaymentMutation, useGetCartItemsQuery } from '../../features/cart/cartApi';
 import { addCarts } from '../../features/cart/cartSlice';
+import { useAddNotificationMutation } from '../../features/notification/notificationApi';
 import useWindowSize from '../../hook/useWindowSize';
 import { useAppDispatch, useAppSelector } from '../../reduxStore/reduxHooks';
 import CartLeftContainer from './LeftSide/CartLeftContainer';
@@ -23,6 +24,8 @@ const CartHero = () => {
       const [isSend, setIsSend] = useState(false);
       const { data: session } = useSession();
       const { data: cartItems, refetch } = useGetCartItemsQuery(session?.user?.email);
+      // const { data: cartItems } = useGetCartItemsQuery(session?.user?.email);
+      const [addNotification] = useAddNotificationMutation();
       const dispatch = useAppDispatch();
       const [shippingInfo, setShippingInfo] = useState({
             name: "",
@@ -34,7 +37,8 @@ const CartHero = () => {
       });
       const router = useRouter();
       const getCart = useAppSelector(state => state.cart);
-      const [isItemInCart, setIsItemInCart] = useState(true);
+      const [isItemInCart, setIsItemInCart] = useState(undefined);
+
       // const router = useRouter();
       // const handleCheckout = () => {
       //       router.push("/cart/checkout")
@@ -42,12 +46,12 @@ const CartHero = () => {
 
       // check is item in the cart 
       useEffect(() => {
-            if (getCart?.cart && getCart?.cart?.length === 0) {
-                  setIsItemInCart(false);
-            } else {
+            if (cartItems?.length) {
                   setIsItemInCart(true)
+            } else {
+                  setIsItemInCart(false);
             }
-      }, [getCart]);
+      }, [cartItems]);
 
       // get data after payment success
       useEffect(() => {
@@ -115,8 +119,16 @@ const CartHero = () => {
                   };
                   const orderRes = await axiosInstance.post("/user_orders", makeOrderData);
                   if (orderRes?.status === 201) {
+                        const d = new Date().toUTCString();
                         refetch()
                         dispatch(addCarts([]));
+                        // addNotification({
+                        //       sender_id: session?.user?.email,
+                        //       receiver_id: session?.user?.email,
+                        //       message: "purchase your product",
+                        //       link: `/profile/${session?.user?.email}`,
+                        //       date: d
+                        // })
                         router.push(`/cart/checkout/${orderRes?.data?.order_id}`)
                   } else {
                         router.reload();
@@ -140,9 +152,25 @@ const CartHero = () => {
                   </IconButton>
             </>
       );
-
+      if (isItemInCart === undefined) {
+            return (
+                  <div className='w-full md:w-[80%] max-w-[1536px] mx-auto min-h-screen mt-[20px] sm:mt-[55px] p-4 flex flex-col md:flex-row justify-between items-start gap-6'>
+                        <div className='common_shadow w-full space-y-4'>
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                        </div>
+                        <div className='common_shadow w-full space-y-4'>
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                              <Skeleton variant="rounded" className='flex-1 rounded-lg' height={120} />
+                        </div>
+                  </div>
+            )
+      }
       return (
             <div className="w-full md:w-[80%] max-w-[1536px] mx-auto min-h-screen mt-[20px] sm:mt-[55px] p-4 flex flex-col md:flex-row justify-between items-start">
+
                   {
                         isItemInCart ?
                               <>
@@ -189,6 +217,7 @@ const CartHero = () => {
                                     </div>
                               </div>
                   }
+
             </div>
       );
 };

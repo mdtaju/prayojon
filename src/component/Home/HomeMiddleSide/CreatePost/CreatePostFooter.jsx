@@ -40,7 +40,7 @@ const CreatePostFooter = ({
                                           }
                                     </>
                                     :
-                                    <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
+                                    <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-800 cursor-not-allowed'>Post</button>
                               :
                               (isProductReadyForSubmit) ?
                                     <>
@@ -53,7 +53,7 @@ const CreatePostFooter = ({
                                           }
                                     </>
                                     :
-                                    <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-900 cursor-not-allowed'>Post</button>
+                                    <button disabled className='btn_primary w-full active:scale-100 bg-gray-300 text-gray-800 cursor-not-allowed'>Post</button>
                   }
             </div>
       );

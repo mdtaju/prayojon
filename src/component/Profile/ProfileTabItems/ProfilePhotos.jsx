@@ -63,7 +63,7 @@ const ProfilePhotos = (UID = false) => {
       }, [data, session, UID]);
       return (
             <div className='w-full md:w-[80%] max-w-[1536px] mx-auto common_shadow my-5'>
-                  <h1 className='mt-4 text-xl font-semibold text-gray-900'>Photos</h1>
+                  <h1 className='mt-4 text-xl font-semibold text-gray-800'>Photos</h1>
                   <div className='w-full mt-6 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2 place-content-center'>
                         {
                               photos.map((p, i) => (

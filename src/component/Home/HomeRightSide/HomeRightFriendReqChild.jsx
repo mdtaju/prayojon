@@ -11,7 +11,7 @@ const HomeRightFriendReqChild = () => {
                   />
                   <div className='flex flex-col'>
                         <div className='flex items-center justify-between mb-2'>
-                              <span className='text-base leading-3 font-semibold text-gray-900 mr-1'>Abdullah</span>
+                              <span className='text-base leading-3 font-semibold text-gray-800 mr-1'>Abdullah</span>
                               <span className='text-sm leading-3 text-gray-400 mt-1'>a day ago</span>
                         </div>
                         <p>following you</p>

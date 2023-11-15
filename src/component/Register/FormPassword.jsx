@@ -46,7 +46,7 @@ const FormPassword = ({ userPhone, setIsSuccessValidated }) => {
                         }
                   }
             } catch (error) {
-                  console.log(error)
+                  // console.log(error)
             }
       }
 

@@ -36,7 +36,7 @@ const FormOTP = ({ setIsSuccessValidated, requestedOTP }) => {
       // Checking OTP 
       const handleSubmit = async (e) => {
             e.preventDefault();
-            console.log(requestedOTP)
+
             if (requestedOTP === +otp) {
                   setIsSuccessValidated(true);
             } else {

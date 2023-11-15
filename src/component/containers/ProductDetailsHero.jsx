@@ -10,7 +10,7 @@ const ProductDetailsHero = ({ product }) => {
                   {/* Top Container */}
                   <TopContainer product={product} />
                   {/* Middle Container */}
-                  <MiddleContainer />
+                  <MiddleContainer product={product} />
                   {/* Bottom container */}
                   <BottomContainer id={product?.id} />
             </div>

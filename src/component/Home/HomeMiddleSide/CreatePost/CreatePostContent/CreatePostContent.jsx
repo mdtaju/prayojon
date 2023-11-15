@@ -58,11 +58,10 @@ const CreatePostContent = ({
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
-
       // file size validation
       const onDrop = useCallback(selectedFiles => {
             const acceptedFiles = [];
-            if (storeFiles?.length === 0 && !isImageFile(selectedFiles[0])) {
+            if (!storeFiles?.length && !isImageFile(selectedFiles[0])) {
                   setFileSizeWarning(`Your selected first file must be an image`)
                   return setTimeout(() => { setFileSizeWarning([]) }, 5000)
             }
@@ -165,6 +164,16 @@ const CreatePostContent = ({
                               e.target.style.height = 'inherit';
                               e.target.style.height = `${e.target.scrollHeight}px`;
                         }}
+                  // onKeyDown={(e) => {
+                  //       if (e.key === "Enter") {
+                  //             setDescription((prevDes) => prevDes + "<br />")
+                  //       }
+                  // }}
+                  // onPaste={(e) => {
+                  //       e.preventDefault();
+                  //       const text = e.clipboardData.getData('text/plain');
+                  //       setDescription((prevText) => prevText + text.replace(/\n/g, '<br />'));
+                  // }}
                   />
                   {/* Emoji button to open emojis */}
                   <div

@@ -8,13 +8,13 @@ const HomeRightSidePrivate = () => {
       return (
             <div>
                   <div className='flex items-center justify-between'>
-                        <div><span className='text-lg font-semibold text-gray-800'>Top Users</span></div>
+                        <div><span className='text-base font-bold text-gray-800'>Top Users</span></div>
                         {/* <div><span className='text-base text-primary hover:underline cursor-pointer'>See all</span></div> */}
                   </div>
                   {/* Friend request notifications inner container */}
 
 
-                  <div className='flex flex-col gap-4 mt-4'>
+                  <div className='flex flex-col gap-4 mt-3'>
                         {
                               data?.map((people, i) => (
                                     <HomeLeftSidePeople

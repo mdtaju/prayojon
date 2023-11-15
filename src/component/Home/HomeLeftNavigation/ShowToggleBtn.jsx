@@ -14,7 +14,7 @@ const ShowToggleBtn = ({ state, setState }) => {
                               className="text-[16px] text-gray-800"
                         />
                   </div>
-                  <span className='text-base text-gray-900 font-semibold'>{state ? "See less" : "See more"}</span>
+                  <span className='text-base text-gray-800 font-semibold'>{state ? "See less" : "See more"}</span>
             </div>
       );
 };

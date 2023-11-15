@@ -5,7 +5,7 @@ import PostImgArea from './PostImgArea/PostImgArea';
 import PostTopArea from './PostTopArea/PostTopArea';
 
 const UserPost = ({ post = {} }) => {
-      const { id, post_type, post_content, post_audience, user_id, post_file_id, category, product_title, location, product_id, created_at, comments, reacts, files, user } = post;
+      const { id, post_query_id, post_content, post_audience, user_id, post_file_id, category, product_title, location, product_id, created_at, comments, reacts, files, user } = post;
 
       if (post) {
             return (
@@ -24,6 +24,7 @@ const UserPost = ({ post = {} }) => {
                         <PostBtmArea
                               postId={id}
                               postType="General"
+                              postQueryId={post_query_id}
                               postUserId={user_id}
                               comments={comments}
                               reacts={reacts}

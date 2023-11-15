@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useAddNotificationMutation } from "../../../../../features/notification/notificationApi";
 import { useGetUserQuery } from '../../../../../features/profile/profileApi';
 import { useAddFollowerMutation, useGetFollowerQuery, useGetFollowingQuery, useUnfollowMutation } from '../../../../../features/userPost/userPostApi';
 import useWindowSize from '../../../../../hook/useWindowSize';
@@ -29,6 +30,8 @@ const PostTopArea = ({ postContent = "", postAudience, createdAt, name, photo, u
   const { data: getFollowing } = useGetFollowingQuery(session?.user?.email);
   const [unfollow, { data: getUnfollow }] = useUnfollowMutation();
   const [isFollow, setIsFollow] = useState(false);
+  const [addNotification] = useAddNotificationMutation();
+  const d = new Date();
 
   // check is follow the user
   useEffect(() => {
@@ -83,6 +86,13 @@ const PostTopArea = ({ postContent = "", postAudience, createdAt, name, photo, u
         user_id: uid,
         followerId: session?.user?.email
       })
+      addNotification({
+        sender_id: session?.user?.email,
+        receiver_id: uid,
+        message: "following you",
+        link: `/profile/${session?.user?.email}`,
+        date: d.toUTCString()
+      })
     } else {
       handleClickOpen()
     }
@@ -94,6 +104,13 @@ const PostTopArea = ({ postContent = "", postAudience, createdAt, name, photo, u
       unfollow({
         user_id: uid,
         follower_id: session?.user?.email?.toString()
+      })
+      addNotification({
+        sender_id: session?.user?.email,
+        receiver_id: uid,
+        message: "following you",
+        link: `/profile/${session?.user?.email}`,
+        date: d.toUTCString()
       })
     } else {
       handleClickOpen()
@@ -174,7 +191,7 @@ const PostTopArea = ({ postContent = "", postAudience, createdAt, name, photo, u
 
       {/* post description */}
       <div className='py-2'>
-        <p className='text-[.9375rem] leading-[1.3333] font-normal text-gray-900'>
+        <p className='text-[.9375rem] leading-[1.3333] font-normal text-gray-800'>
           {
             !textExpand ?
               <>

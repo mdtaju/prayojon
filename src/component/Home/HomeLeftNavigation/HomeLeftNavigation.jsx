@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../features/profile/profileApi';
@@ -5,8 +6,6 @@ import HomeLeftMenuPrivate from './HomeLeftMenuPrivate';
 import HomeLeftMenuPublic from './HomeLeftMenuPublic';
 
 const HomeLeftNavigation = () => {
-      const [menuShowToggle, setMenuShowToggle] = useState(false);
-      const [shortcutShowToggle, setShortcutShowToggle] = useState(false);
       const [shortcutsInfo, setShortcutsInfo] = useState([]);
       const { data: session } = useSession();
       const [name, setName] = useState("");
@@ -46,9 +45,31 @@ const HomeLeftNavigation = () => {
             setShortcutsInfo(arr)
       }, [])
 
+      if (session === undefined) {
+            return (
+                  <session className=' w-[310px] h-screen overflow-hidden'>
+                        <div
+                              style={{ overscrollBehaviorY: 'contain' }}
+                              className={`fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px] rounded-md`}
+                        >
+                              <div className='space-y-3'>
+                                    {
+                                          Array.from(Array(8)).map((_, i) => (
+                                                <div key={i} className='common_shadow flex gap-4 items-center'>
+                                                      <Skeleton variant="circular" width={40} height={40} />
+                                                      <Skeleton variant="rounded" className='flex-1 rounded-lg' height={40} />
+                                                </div>
+                                          ))
+                                    }
+                              </div>
+                        </div>
+                  </session>
+            )
+      }
+
       return (
             <section
-                  className={`w-[310px] h-screen overflow-hidden`}
+                  className={` w-[310px] h-screen overflow-hidden`}
             >
                   {/* Menus outer container position fixed */}
                   <div

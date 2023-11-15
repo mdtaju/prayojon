@@ -9,7 +9,7 @@ import PostImgArea from './PostImgArea/PostImgArea';
 import PostTopArea from './PostTopArea/PostTopArea';
 
 const UserE_Post = ({ post = {} }) => {
-      const { id, post_type, post_content, post_audience, user_id, post_file_id, category, product_title, location, product_id, created_at, comments, reacts, files, user } = post;
+      const { id, post_content, post_audience, user_id, post_file_id, category, product_title, location, product_id, created_at, comments, reacts, files, user } = post;
       const { data: session } = useSession();
       const { data: cartItems } = useGetCartItemsQuery(session?.user?.email);
       if (post) {
@@ -45,6 +45,7 @@ const UserE_Post = ({ post = {} }) => {
                               postId={id}
                               postType="Product"
                               postUserId={user_id}
+                              postQueryId={product_id}
                               comments={comments}
                               reacts={reacts}
                         />

@@ -295,7 +295,7 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
                         </div>
                         <div className='w-fit flex items-center justify-between gap-2'>
                               <h4 className='text-sm font-bold text-orange-500'>Price: <del>{thousandFormate(original_price)}</del></h4>
-                              <h4 className='text-sm font-bold text-orange-500'>{thousandFormate(price)} TK.</h4>
+                              <h4 className='text-sm font-bold text-orange-500'>{thousandFormate(price)} BDT.</h4>
                         </div>
                         <div className='w-full h-auto flex items-end justify-between gap-3'>
                               <div>

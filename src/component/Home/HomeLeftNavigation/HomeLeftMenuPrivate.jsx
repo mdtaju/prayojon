@@ -30,7 +30,7 @@ const HomeLeftMenuPrivate = () => {
       return (
             <div>
                   {/* Profile menu */}
-                  <div className='p-4 py-2 flex items-center gap-2 bg-white hover:bg-gray-100 rounded-md cursor-pointer transition-all duration-150'>
+                  <div className='p-4 py-2 flex items-center gap-2 common_shadow rounded-md cursor-pointer transition-all duration-150'>
                         {
                               session ?
                                     <Link className='w-full flex items-center gap-2' href={`/profile`}>
@@ -39,7 +39,7 @@ const HomeLeftMenuPrivate = () => {
                                                 src={photo}
                                                 sx={{ width: 32, height: 32 }}
                                           />
-                                          <span className='text-base text-gray-900 font-semibold'>{name}</span>
+                                          <span className='text-base text-gray-800 font-semibold'>{name}</span>
                                     </Link> :
                                     <Link className='w-full' href={`/register`}>
                                           <button className='btn_primary w-full'>Signup</button>
@@ -92,7 +92,7 @@ const HomeLeftMenuPrivate = () => {
                                     icon={faArrowRightFromBracket}
                                     className="text-[22px] w-6 h-6 text-primary px-[3px]"
                               />
-                              <span className='text-base text-gray-900 font-semibold'>Logout</span>
+                              <span className='text-base text-gray-800 font-semibold'>Logout</span>
                         </div>
                   }
 

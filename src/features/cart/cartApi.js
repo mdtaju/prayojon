@@ -29,6 +29,7 @@ export const cartApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const { data: result } = await queryFulfilled;
+
           dispatch(addCarts(result));
         } catch (error) {}
       },
@@ -50,13 +51,11 @@ export const cartApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const {data} = await queryFulfilled;
+          const { data } = await queryFulfilled;
           dispatch(
             cartQuantityUpdate({ id: arg.cart_id, quantity: arg.quantity })
           );
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       },
       invalidatesTags: ["cartItemsQuery"],
     }),
@@ -70,9 +69,7 @@ export const cartApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           dispatch(cartItemRemove(arg.id));
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       },
       invalidatesTags: ["cartItemsQuery", "getCartItems"],
     }),
@@ -86,6 +83,31 @@ export const cartApi = apiSlice.injectEndpoints({
     getUserOrders: builder.query({
       query: (id) => `/user_orders/${id}`,
     }),
+    updateOrder: builder.mutation({
+      query: (data) => ({
+        url: "/manage_order",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data: result } = await queryFulfilled;
+          dispatch(
+            apiSlice.util.updateQueryData("getUserOrders", arg?.id, (draft) => {
+              Object.assign(draft, result?.order);
+              // return draft.splice(result?.index, 1, result?.order);
+            })
+          );
+        } catch (error) {}
+      },
+    }),
+    addProductReview: builder.mutation({
+      query: (data) => ({
+        url: "/product_review",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -98,5 +120,7 @@ export const {
   useCartRemoveMutation,
   useAddPaymentMutation,
   useGetUserOrdersQuery,
+  useUpdateOrderMutation,
+  useAddProductReviewMutation,
   util: { getRunningQueriesThunk },
 } = cartApi;

@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import React from "react";
+// import CartHero from "../../src/component/cart/CartHero";
 import Navbar from "../../src/component/common/Navbar/Navbar";
 import Layout from "../../src/component/containers/Layout";
-// import CartHero from dynamic(() => "../../src/component/cart/CartHero");
 const CartHero = dynamic(() => import("../../src/component/cart/CartHero"), {
   ssr: false,
 });

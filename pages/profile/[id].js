@@ -6,6 +6,7 @@ import ProfileHero from "../../src/component/containers/ProfileHero";
 
 const UserProfileView = () => {
   const router = useRouter();
+
   return (
     <Layout>
       <Navbar />

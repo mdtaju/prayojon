@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import Router from "next/router";
 import "react-phone-number-input/style.css";
+
 import { wrapper } from "../src/reduxStore/store";
 import "../styles/globals.css";
 
@@ -49,6 +50,7 @@ const theme = createTheme({
 });
 
 function MyApp({ Component, pageProps }) {
+  // <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
   return (
     <SessionProvider session={pageProps.session}>
       <ThemeProvider theme={theme}>
