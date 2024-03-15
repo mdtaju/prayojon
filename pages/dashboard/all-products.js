@@ -54,7 +54,7 @@ const AllProducts = () => {
     <Layout>
       <Navbar />
       <DashboardLayout>
-        <div className="flex items-center w-full justify-between">
+        <div className="flex flex-col md:flex-row items-center w-full justify-between">
           <TitleArea
             Icon={faTag}
             title={categories ? categories?.toUpperCase() : "ALL PRODUCTS"}

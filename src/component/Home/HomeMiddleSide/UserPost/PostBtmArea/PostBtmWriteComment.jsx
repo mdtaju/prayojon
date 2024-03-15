@@ -1,5 +1,5 @@
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
-import { faClose, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Dialog, IconButton } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
@@ -99,16 +99,18 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
             </>
       );
       return (
-            <div className='flex items-start gap-2 pb-1'>
-                  <div className=''>
-                        <Avatar
-                              alt="Remy Sharp"
-                              src={photo}
-                              sx={{ width: avatarWidth, height: avatarHeight }}
-                        />
-                  </div>
-                  <div className={`${isFocus ? 'rounded-md' : "rounded-full"} bg-gray-100 w-[calc(100%-40px)] py-1 px-3 h-full flex ${isFocus ? 'flex-col' : "flex-row"} items-end justify-between gap-1`}>
-                        {/* <blockquote
+            <div className='px-3'>
+                  <div className='flex items-start gap-2 py-2 px-3 rounded-sm bg-gray-100'>
+                        <div className=''>
+                              <Avatar
+                                    alt="Remy Sharp"
+                                    src={photo}
+                                    sx={{ width: avatarWidth, height: avatarHeight }}
+                                    variant='rounded'
+                              />
+                        </div>
+                        <div className={`${isFocus ? 'rounded-md' : "rounded-full"} w-[calc(100%-40px)] h-full flex ${isFocus ? 'flex-col' : "flex-row"} items-end justify-between gap-1`}>
+                              {/* <blockquote
                               role={'textbox'}
                               contentEditable="true"
                               placeholder='Write a comment...'
@@ -119,83 +121,83 @@ const PostBtmWriteComment = ({ avatarWidth, avatarHeight, comment, setComment, p
                               ref={ref}
                         >
                         </blockquote> */}
-                        {/* write a comment */}
-                        <textarea
-                              className={`w-full bg-transparent outline-none overflow-hidden resize-none px-1 text-[.9375rem] leading-[1.3333] placeholder:italic`}
-                              value={comment}
-                              style={comment.length === 0 ? { height: "27px" } : {}}
-                              placeholder={placeholder}
-                              onChange={(e) => {
-                                    setComment(e.target.value)
-                                    e.target.style.height = 'inherit';
-                                    e.target.style.height = `${e.target.scrollHeight}px`;
-                              }}
-                        ></textarea>
-                        {/* Emoji button to open emojis */}
-                        <div className='flex items-center gap-1'>
-                              <div
-                                    onClick={handleClick('top')}
-                                    className='p-1 w-fit cursor-pointer'>
-                                    <FontAwesomeIcon
-                                          icon={faFaceSmile}
-                                          className='text-xl text-gray-600'
-                                    />
-                              </div>
-                              {/* comment sent button */}
-                              <div
-                                    onClick={handleSentComment}
-                                    className='p-1 w-fit cursor-pointer'>
-                                    <FontAwesomeIcon
-                                          icon={faPaperPlane}
-                                          className='text-xl text-gray-600'
-                                    />
+                              {/* write a comment */}
+                              <textarea
+                                    className={`w-full bg-transparent outline-none overflow-hidden resize-none px-1 text-[.9375rem] leading-[1.3333] placeholder:italic`}
+                                    value={comment}
+                                    style={comment.length === 0 ? { height: "27px" } : {}}
+                                    placeholder={placeholder}
+                                    onChange={(e) => {
+                                          setComment(e.target.value)
+                                          e.target.style.height = 'inherit';
+                                          e.target.style.height = `${e.target.scrollHeight}px`;
+                                    }}
+                              ></textarea>
+                              {/* Emoji button to open emojis */}
+                              <div className='flex items-center gap-1'>
+                                    <div
+                                          onClick={handleClick('top')}
+                                          className='p-1 w-fit cursor-pointer'>
+                                          <FontAwesomeIcon
+                                                icon={faFaceSmile}
+                                                className='text-xl text-gray-600'
+                                          />
+                                    </div>
+                                    {/* comment sent button */}
+                                    <div
+                                          onClick={handleSentComment}
+                                          className='p-1 w-fit cursor-pointer'>
+                                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="#8190A3" />
+                                          </svg>
+                                    </div>
                               </div>
                         </div>
-                  </div>
-                  {/* Emoji popper */}
-                  <CustomPopper
-                        setOpenPopper={setOpen}
-                        anchorEl={anchorEl}
-                        open={open}
-                        placement={placement}
-                  >
-                        {/* emoji picker package from external package */}
-                        <EmojiPicker
-                              skinTonesDisabled={true}
-                              searchDisabled={true}
-                              width={360}
-                              height={350}
-                              autoFocusSearch={false}
-                              emojiStyle='facebook'
-                              previewConfig={{ showPreview: false }}
-                              lazyLoadEmojis={true}
-                              onEmojiClick={(e) => setComment((prevState) => prevState + e.emoji)}
-                        />
-                  </CustomPopper>
+                        {/* Emoji popper */}
+                        <CustomPopper
+                              setOpenPopper={setOpen}
+                              anchorEl={anchorEl}
+                              open={open}
+                              placement={placement}
+                        >
+                              {/* emoji picker package from external package */}
+                              <EmojiPicker
+                                    skinTonesDisabled={true}
+                                    searchDisabled={true}
+                                    width={360}
+                                    height={350}
+                                    autoFocusSearch={false}
+                                    emojiStyle='facebook'
+                                    previewConfig={{ showPreview: false }}
+                                    lazyLoadEmojis={true}
+                                    onEmojiClick={(e) => setComment((prevState) => prevState + e.emoji)}
+                              />
+                        </CustomPopper>
 
-                  {/* snackbar */}
-                  <Dialog
-                        open={snackOpen}
-                        onClose={() => setSnackOpen(false)}
-                        fullScreen
-                        PaperProps={windowSize.width > 768 ?
-                              {
-                                    style: {
-                                          borderRadius: '10px',
-                                          width: '500px',
-                                          height: "400px"
-                                    }
-                              } :
-                              {}
-                        }
-                  >
-                        <div className='p-4 bg-orange-200 w-full h-full'>
-                              {action}
-                              <div className='w-full h-[80%] grid place-items-center'>
-                                    {warnMss}
+                        {/* snackbar */}
+                        <Dialog
+                              open={snackOpen}
+                              onClose={() => setSnackOpen(false)}
+                              fullScreen
+                              PaperProps={windowSize.width > 768 ?
+                                    {
+                                          style: {
+                                                borderRadius: '10px',
+                                                width: '500px',
+                                                height: "400px"
+                                          }
+                                    } :
+                                    {}
+                              }
+                        >
+                              <div className='p-4 bg-orange-200 w-full h-full'>
+                                    {action}
+                                    <div className='w-full h-[80%] grid place-items-center'>
+                                          {warnMss}
+                                    </div>
                               </div>
-                        </div>
-                  </Dialog>
+                        </Dialog>
+                  </div>
             </div>
       );
 };

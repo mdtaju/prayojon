@@ -10,7 +10,7 @@ const PostBtmCommentParent = ({ comments }) => {
             setUserComments(commentsSliceLessAndMore);
       }, [commentCount, comments])
       return (
-            <div id="#1" className='flex flex-col gap-2 px-1 py-2'>
+            <div id="#1" className='flex flex-col gap-2 px-1 py-2 sm:px-3'>
                   {/* User comment child component. In this component has comment "Reply Parent" component. */}
                   {
                         userComments?.map((comment, i) => (

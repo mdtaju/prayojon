@@ -1,8 +1,7 @@
-import { faBangladeshiTakaSign, faDollarSign, faEuroSign, faIndianRupeeSign, faSterlingSign, faYenSign } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import thousandFormate from '../../../../../utils/thousandFormate';
 
 const CreatePostPrice = ({
@@ -40,7 +39,14 @@ const CreatePostPrice = ({
       paymentAddType,
       setPaymentAddType,
       subCategory,
-      setSubCategory
+      setSubCategory,
+      setStoreFiles,
+      setFileSizeWarning,
+      setChooseImgToggle,
+      ram,
+      setRam,
+      rom,
+      setRom
 }) => {
       const [disCountPrice, setDiscountPrice] = useState("");
       const [subCategoryOption, setSubCategoryOption] = useState([]);
@@ -228,37 +234,61 @@ const CreatePostPrice = ({
 
       const colorOption = ["Black", "White", "Red", "Blue", "Green", "Pink", "Yellow", "Orange", "Purple", "Brown", "Gray", "Gold", "Silver", "Lime", "Other's"]
 
-
-      // set currency function
-      const handleChange = (event) => {
-            setCurrencySign(event.target.value);
-      };
-      // Currencies 
-      const Currency = [
-            <FontAwesomeIcon icon={faDollarSign} className='text-gray-600' key={0} />,
-            <FontAwesomeIcon icon={faEuroSign} className='text-gray-600' key={1} />,
-            <FontAwesomeIcon icon={faBangladeshiTakaSign} className='text-gray-600' key={2} />,
-            <FontAwesomeIcon icon={faIndianRupeeSign} className='text-gray-600' key={3} />,
-            <FontAwesomeIcon icon={faYenSign} className='text-gray-600' key={4} />,
-            <FontAwesomeIcon icon={faSterlingSign} className='text-gray-600' key={5} />
+      const deliveryOptions = [
+            "1 day",
+            "2 days",
+            "3 days",
+            "4 days",
+            "5 days",
+            "6 days",
+            "7 days",
+            "8 days",
+            "9 days",
+            "10 days",
       ]
+
+      // file size validation
+      const onDrop = useCallback(selectedFiles => {
+            const acceptedFiles = [];
+            selectedFiles.forEach((item) => {
+                  // calculation of each selected file size into MB(Mega byte).
+                  const getSize = item.size / (1024 ** 2);
+
+                  if (getSize < 25) {
+                        acceptedFiles.push(item); // if file size small than 25MB then is accepted
+                  } else {
+                        setFileSizeWarning(`Your selected file "${item.name}" is large than 25MB.`);
+                        return;
+                  }
+            })
+            // after 5 seconds warning messages will remove.
+            // console.log("called file fun")
+            setTimeout(() => { setFileSizeWarning("") }, 5000)
+            setChooseImgToggle(true)
+            return setStoreFiles((prevState) => [selectedFiles[0], ...prevState])
+      }, [setStoreFiles, setFileSizeWarning, setChooseImgToggle])
+
+      const { getRootProps, getInputProps, isDragActive } = useDropzone({
+            onDrop,
+            accept: {
+                  'image/png': ['.png'],
+                  'image/jpg': ['.jpg'],
+                  'image/jpeg': ['.jpeg'],
+            }
+      })
+
+      const handleColorChange = (event) => {
+            const {
+                  target: { value },
+            } = event;
+            setColor(
+                  // On autofill we get a stringified value.
+                  typeof value === 'string' ? value.split(',') : value,
+            );
+      };
+
       return (
             <div>
-                  {/* Select currency */}
-                  {/* <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={currencySign}
-                        onChange={handleChange}
-                        size="small"
-                        sx={{ width: '60px', "& fieldset": { borderRight: 'none', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' } }}
-                  >
-                        {
-                              Currency.map((item, i) => (
-                                    <MenuItem value={i} key={i}>{item}</MenuItem>
-                              ))
-                        }
-                  </Select> */}
                   {/* product title */}
                   <TextField
                         required
@@ -326,7 +356,6 @@ const CreatePostPrice = ({
                   <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 items-center my-4'>
                         {/* brand name */}
                         <TextField
-                              required
                               sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
                               type='text'
                               size='small'
@@ -338,7 +367,7 @@ const CreatePostPrice = ({
                         />
                         {/* model name */}
                         <TextField
-                              required
+
                               sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
                               type='text'
                               size='small'
@@ -348,42 +377,30 @@ const CreatePostPrice = ({
                               value={model}
                               onChange={(e) => setModel(e.target.value)}
                         />
-                        {/* color name */}
-                        {/* <TextField
-                              required
-                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
-                              type='text'
-                              size='small'
-                              id="outlined-basic"
-                              label="Color"
-                              variant="outlined"
-                              value={color}
-                              onChange={(e) => setColor(e.target.value)}
-                        /> */}
-                        <FormControl
-                              fullWidth
-                              size='small'
-                              required
-                        >
-                              <InputLabel id="demo-simple-select-label">Color</InputLabel>
-                              <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={color}
-                                    label="Color"
-                                    onChange={e => setColor(e.target.value)}
-                              >
-                                    {
-                                          colorOption?.map((item, i) => (
 
-                                                <MenuItem key={i} value={item}>{item}</MenuItem>
-                                          ))
-                                    }
+
+                        <FormControl fullWidth
+                              size='small'>
+                              <InputLabel id="demo-multiple-checkbox-label">Color</InputLabel>
+                              <Select
+                                    labelId="demo-multiple-checkbox-label"
+                                    id="demo-multiple-checkbox"
+                                    multiple
+                                    value={color}
+                                    onChange={handleColorChange}
+                                    input={<OutlinedInput label="" />}
+                                    renderValue={(selected) => selected.join(', ')}
+                              >
+                                    {colorOption.map((name) => (
+                                          <MenuItem key={name} value={name}>
+                                                <Checkbox checked={color.indexOf(name) > -1} />
+                                                <ListItemText primary={name} />
+                                          </MenuItem>
+                                    ))}
                               </Select>
                         </FormControl>
                         {/* size name */}
                         <TextField
-                              required
                               sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
                               type='number'
                               size='small'
@@ -393,18 +410,47 @@ const CreatePostPrice = ({
                               value={size}
                               onChange={(e) => setSize(e.target.value)}
                         />
+                        {/* ram */}
                         <TextField
-                              required
                               sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
-                              type='number'
+                              type='text'
                               size='small'
                               id="outlined-basic"
-                              label="Delivery Estimate Time"
-                              placeholder='Number of days'
+                              label="Ram"
                               variant="outlined"
-                              value={estimateTime}
-                              onChange={(e) => setEstimateTime(e.target.value)}
+                              value={ram}
+                              onChange={(e) => setRam(e.target.value)}
                         />
+                        {/* rom */}
+                        <TextField
+                              sx={{ width: 'fit-content', "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
+                              type='text'
+                              size='small'
+                              id="outlined-basic"
+                              label="Rom"
+                              variant="outlined"
+                              value={rom}
+                              onChange={(e) => setRom(e.target.value)}
+                        />
+                        <FormControl
+                              fullWidth
+                              size='small'
+                        >
+                              <InputLabel id="demo-simple-select-label">Delivery Estimate Time</InputLabel>
+                              <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={estimateTime}
+                                    label="Delivery Estimate Time"
+                                    onChange={e => setEstimateTime(e.target.value)}
+                              >
+                                    {
+                                          deliveryOptions?.map((item, i) => (
+                                                <MenuItem key={i} value={item}>{item}</MenuItem>
+                                          ))
+                                    }
+                              </Select>
+                        </FormControl>
                         {/* write product price */}
                         <TextField
                               required
@@ -418,7 +464,6 @@ const CreatePostPrice = ({
                               onChange={(e) => setProductPrice(e.target.value)}
                         />
                         <TextField
-                              required
                               sx={{ "& fieldset": { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' } }}
                               type='number'
                               size='small'
@@ -518,9 +563,15 @@ const CreatePostPrice = ({
                         sx={{ width: "100%" }}
                         size='small'
                         value={location}
+
                         onChange={(e, newInputValue) => setLocation(newInputValue)}
-                        renderInput={(params) => <TextField {...params} label="Your City" />}
+                        renderInput={(params) => <TextField required {...params} label="Your City" />}
                   />
+                  <div className='mt-4 flex flex-col gap-2'>
+                        <label htmlFor="productThumbnail" className='text-sm font-bold'>Product Thumbnail (.png, .jpg, .jpeg) *</label>
+                        <div {...getRootProps()} className='btn_primary'>Chose a image file</div>
+                        <input {...getInputProps()} />
+                  </div>
                   <div className='my-4'>
                         <label className='flex items-center gap-3 cursor-pointer w-fit'>
                               <input checked={termsAgreement} onChange={() => setTermsAgreement((prev) => !prev)} className='w-[18px] h-[18px]' type="checkbox" name="" id="" />

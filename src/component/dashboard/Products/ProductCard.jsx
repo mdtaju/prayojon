@@ -1,6 +1,6 @@
 import { faAngleLeft, faAngleRight, faBangladeshiTakaSign, faBox, faBoxOpen, faCartPlus, faClose, faLocationDot, faMoneyBill, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dialog } from '@mui/material';
+import { Dialog, Rating } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
@@ -8,12 +8,13 @@ import React, { useEffect, useState } from 'react';
 import { MdOutlineOpenInNew } from "react-icons/md";
 import ReactPlayer from 'react-player';
 import { useAddCartItemMutation, useGetCartItemsQuery } from '../../../features/cart/cartApi';
-import { useGetUPostsImagesQuery } from '../../../features/userPost/userPostApi';
+import { useGetProductReviewsQuery, useGetUPostsImagesQuery } from '../../../features/userPost/userPostApi';
 import useWindowSize from '../../../hook/useWindowSize';
 import thousandFormate from '../../../utils/thousandFormate';
 
 const ProductCard = ({ product = {}, isDialogStay }) => {
       const { id, product_id, product_title, description, price, original_price, status, category, location, sales } = product;
+      const { data: productReviews } = useGetProductReviewsQuery(id);
       const [isAdded, setIsAdded] = useState(false);
       const [open, setOpen] = useState(false);
       const windowSize = useWindowSize();
@@ -27,6 +28,18 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
       const { data: session } = useSession();
       const { data: cartItems } = useGetCartItemsQuery(session?.user?.email);
       const [addCartItem, { data: cartData }] = useAddCartItemMutation();
+      const [productRating, setProductRating] = useState(0);
+
+      // calculate product rating
+      useEffect(() => {
+            if (productReviews?.length) {
+                  let avgRating = 0;
+                  productReviews.forEach((rating) => {
+                        avgRating += rating.total_avg_rating
+                  });
+                  setProductRating(avgRating / productReviews.length);
+            }
+      }, [productReviews])
 
       // to check is items added in the cart
       useEffect(() => {
@@ -212,7 +225,10 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
                                                             <FontAwesomeIcon className='text-green-500' icon={faMoneyBill} />
                                                             <span className='font-medium'>Price</span>
                                                       </div>
-                                                      <span className='text-xs text-orange-500 font-semibold'><del><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+original_price)}</del></span>
+                                                      {
+                                                            moneyFormate(+original_price) !== moneyFormate(+price) &&
+                                                            <span className='text-xs text-orange-500 font-semibold'><del><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+original_price)}</del></span>
+                                                      }
                                                       <span className='text-gray-500 text-sm'><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+price)}</span>
                                                 </div>
                                                 {/* Type */}
@@ -289,12 +305,23 @@ const ProductCard = ({ product = {}, isDialogStay }) => {
                   <div className='p-2'>
                         <div className='flex items-center justify-between'>
                               <h1 onClick={handleOpen} className='text-gray-800 text-lg font-semibold cursor-pointer hover:underline'>{product_title?.slice(0, 20)} {product_title?.length >= 20 ? "..." : ""}</h1>
+
                               <Link href={`/marketplace/${product_id}`} target='_blank'>
                                     <MdOutlineOpenInNew className='text-lg hover:text-blue-600 cursor-pointer' />
                               </Link>
                         </div>
+                        <Rating
+                              name="read-only"
+                              precision={0.5}
+                              value={productRating}
+                              readOnly
+                              size="small"
+                        />
                         <div className='w-fit flex items-center justify-between gap-2'>
-                              <h4 className='text-sm font-bold text-orange-500'>Price: <del>{thousandFormate(original_price)}</del></h4>
+                              {
+                                    thousandFormate(original_price) !== thousandFormate(price) &&
+                                    <h4 className='text-sm font-bold text-orange-500'>Price: <del>{thousandFormate(original_price)}</del></h4>
+                              }
                               <h4 className='text-sm font-bold text-orange-500'>{thousandFormate(price)} BDT.</h4>
                         </div>
                         <div className='w-full h-auto flex items-end justify-between gap-3'>

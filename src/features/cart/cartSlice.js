@@ -17,6 +17,12 @@ export const cartSlice = createSlice({
       );
       getItem.quantity = action.payload.quantity;
     },
+    cartColorSelection: (state, action) => {
+      const getItem = state?.cart?.find(
+        (item) => item.card_id == action.payload.id
+      );
+      getItem.color = action.payload.color;
+    },
     cartItemRemove: (state, action) => {
       for (let i = 0; i < state.cart.length; ) {
         const element = state.cart[i];
@@ -29,6 +35,10 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addCarts, cartQuantityUpdate, cartItemRemove } =
-  cartSlice.actions;
+export const {
+  addCarts,
+  cartQuantityUpdate,
+  cartColorSelection,
+  cartItemRemove,
+} = cartSlice.actions;
 export default cartSlice.reducer;

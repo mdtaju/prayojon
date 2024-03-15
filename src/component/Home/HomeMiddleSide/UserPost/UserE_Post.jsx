@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useGetCartItemsQuery } from '../../../../features/cart/cartApi';
 import PostBtmArea from '../UserPost/PostBtmArea/PostBtmArea';
-import E_PostBtmArea from './E_PostBtmArea/E_PostBtmArea';
 import E_PostTitleDes from './E_PostTitleDes/E_PostTitleDes';
 import PostImgArea from './PostImgArea/PostImgArea';
 import PostTopArea from './PostTopArea/PostTopArea';
@@ -14,7 +13,7 @@ const UserE_Post = ({ post = {} }) => {
       const { data: cartItems } = useGetCartItemsQuery(session?.user?.email);
       if (post) {
             return (
-                  <div className='w-full common_shadow mt-4 px-0'>
+                  <div className='w-full common_shadow pt-0 mt-4 px-0'>
                         {/* E-commerce post top area */}
                         <PostTopArea
                               postAudience={post_audience}
@@ -22,6 +21,7 @@ const UserE_Post = ({ post = {} }) => {
                               name={user?.name}
                               photo={user?.photo_url}
                               uid={user_id}
+                              isEPost={true}
                         />
                         {/* title, location, category and description component */}
                         <E_PostTitleDes
@@ -36,10 +36,10 @@ const UserE_Post = ({ post = {} }) => {
                               files={files}
                         />
                         {/* E-commerce post price, type, status and cart component */}
-                        <E_PostBtmArea
+                        {/* <E_PostBtmArea
                               product={post}
                               cartItems={cartItems}
-                        />
+                        /> */}
                         {/* like, comment and share component */}
                         <PostBtmArea
                               postId={id}
@@ -48,6 +48,8 @@ const UserE_Post = ({ post = {} }) => {
                               postQueryId={product_id}
                               comments={comments}
                               reacts={reacts}
+                              product={post}
+                              cartItems={cartItems}
                         />
                   </div>
             );

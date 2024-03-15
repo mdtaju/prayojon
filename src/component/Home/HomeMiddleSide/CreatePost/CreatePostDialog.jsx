@@ -15,11 +15,12 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
       const [productPrice, setProductPrice] = useState("");
       const [description, setDescription] = useState("");
       const [storeFiles, setStoreFiles] = useState([]);
+      // const [productThumbnail, setProductThumbnail] = useState(null);
       const [currencySign, setCurrencySign] = useState(0);
       const [postAudience, setPostAudience] = useState("Public");
       const [location, setLocation] = useState("");
       const [category, setCategory] = useState('');
-      const [discount, setDiscount] = useState("");
+      const [discount, setDiscount] = useState(0);
       const [productType, setProductType] = useState("");
       const [productQuantity, setProductQuantity] = useState("");
       const [termsAgreement, setTermsAgreement] = useState(false);
@@ -32,11 +33,13 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
       const { data: authData } = useSession();
       const [postError, setPostError] = useState("");
       const [brandName, setBrandName] = useState("");
-      const [color, setColor] = useState("");
-      const [size, setSize] = useState("");
+      const [ram, setRam] = useState("");
+      const [rom, setRom] = useState("");
+      const [color, setColor] = useState([]);
+      const [size, setSize] = useState(0);
       const [model, setModel] = useState("")
       const [estimateTime, setEstimateTime] = useState("");
-      const [paymentAddType, setPaymentAddType] = useState("");
+      const [paymentAddType, setPaymentAddType] = useState("Free");
       const [subCategory, setSubCategory] = useState("");
       // check submit button - state 
       const [isProductReadyForSubmit, setIsProductReadyForSubmit] = useState(false);
@@ -62,10 +65,18 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                   }
             }
       }, [open]);
-
+      // check is first file an image 
+      const isImageFile = (file) => {
+            if (file?.type?.startsWith("image/")) {
+                  return true
+            } else {
+                  return false
+            }
+      };
       // check is ready for submit 
       useEffect(() => {
             if (productPrice &&
+                  isImageFile(storeFiles[0]) &&
                   storeFiles.length !== 0 &&
                   location &&
                   category &&
@@ -74,10 +85,6 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                   productQuantity &&
                   termsAgreement &&
                   shippingCharge &&
-                  brandName &&
-                  color &&
-                  size &&
-                  model &&
                   estimateTime &&
                   paymentAddType &&
                   subCategory) {
@@ -137,6 +144,8 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
             fromProductData.append("brand_name", brandName);
             fromProductData.append("color", color);
             fromProductData.append("size", size);
+            fromProductData.append("ram", ram);
+            fromProductData.append("rom", rom);
             fromProductData.append("model", model);
             fromProductData.append("estimate_time", estimateTime);
             fromProductData.append("payment_add_type", paymentAddType);
@@ -274,6 +283,10 @@ const CreatePostDialog = ({ open, setOpen, name, photo }) => {
                                     setPaymentAddType={setPaymentAddType}
                                     subCategory={subCategory}
                                     setSubCategory={setSubCategory}
+                                    ram={ram}
+                                    setRam={setRam}
+                                    rom={rom}
+                                    setRom={setRom}
                               />
                         </DialogContent>
 

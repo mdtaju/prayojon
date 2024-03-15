@@ -1,4 +1,4 @@
-import { faBars, faChartLine, faCircleQuestion, faClose, faGraduationCap, faHammer, faTableCellsLarge, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCartShopping, faChartLine, faCircleQuestion, faClose, faHammer, faTableCellsLarge, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ const MobileSidebar = () => {
                               </ListItem>
                         </Link>
                         <Divider />
-                        <Link href={"/all-products"}>
+                        <Link href={"/dashboard/all-products"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -54,7 +54,7 @@ const MobileSidebar = () => {
                                     </ListItemButton>
                               </ListItem>
                         </Link>
-                        <Link href={"/manage-products"}>
+                        <Link href={"/dashboard/manage-products"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -68,8 +68,7 @@ const MobileSidebar = () => {
                                     </ListItemButton>
                               </ListItem>
                         </Link>
-                        <Divider />
-                        <Link href={"/upload-courses"}>
+                        {/* <Link href={"/dashboard/upload-courses"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -82,8 +81,8 @@ const MobileSidebar = () => {
                                           <ListItemText primary={"Upload Courses"} />
                                     </ListItemButton>
                               </ListItem>
-                        </Link>
-                        <Link href={"/manage-courses"}>
+                        </Link> */}
+                        {/* <Link href={"/dashboard/manage-courses"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -96,9 +95,9 @@ const MobileSidebar = () => {
                                           <ListItemText primary={"Manage Courses"} />
                                     </ListItemButton>
                               </ListItem>
-                        </Link>
+                        </Link> */}
                         <Divider />
-                        <Link href={"/manage-orders"}>
+                        <Link href={"/dashboard/manage-orders"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -112,22 +111,37 @@ const MobileSidebar = () => {
                                     </ListItemButton>
                               </ListItem>
                         </Link>
-                        <Link href={"/orders-status"}>
+                        <Divider />
+                        <Link href={"/dashboard/all-purchase"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
                                                 <div>
                                                       <FontAwesomeIcon
-                                                            icon={faHammer}
+                                                            icon={faCartShopping}
                                                       />
                                                 </div>
                                           </ListItemIcon>
-                                          <ListItemText primary={"Orders Status"} />
+                                          <ListItemText primary={"All Purchase"} />
+                                    </ListItemButton>
+                              </ListItem>
+                        </Link>
+                        <Link href={"/dashboard/track-purchase"}>
+                              <ListItem disablePadding>
+                                    <ListItemButton>
+                                          <ListItemIcon>
+                                                <div>
+                                                      <FontAwesomeIcon
+                                                            icon={faCartShopping}
+                                                      />
+                                                </div>
+                                          </ListItemIcon>
+                                          <ListItemText primary={"Track Purchase"} />
                                     </ListItemButton>
                               </ListItem>
                         </Link>
                         <Divider />
-                        <Link href={"/reports"}>
+                        <Link href={"/dashboard/reports"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>
@@ -142,7 +156,7 @@ const MobileSidebar = () => {
                               </ListItem>
                         </Link>
                         <Divider />
-                        <Link href={"/help"}>
+                        <Link href={"/dashboard/help"}>
                               <ListItem disablePadding>
                                     <ListItemButton>
                                           <ListItemIcon>

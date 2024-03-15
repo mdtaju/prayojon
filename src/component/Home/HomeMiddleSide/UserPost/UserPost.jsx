@@ -9,7 +9,7 @@ const UserPost = ({ post = {} }) => {
 
       if (post) {
             return (
-                  <div className='w-full common_shadow mt-4 px-0'>
+                  <div className='w-full common_shadow pt-0 mt-4 px-0'>
                         <PostTopArea
                               postContent={post_content}
                               postAudience={post_audience}
@@ -17,6 +17,7 @@ const UserPost = ({ post = {} }) => {
                               name={user?.name}
                               photo={user?.photo_url}
                               uid={user_id}
+                              isEPost={false}
                         />
                         <PostImgArea
                               files={files}
@@ -28,6 +29,8 @@ const UserPost = ({ post = {} }) => {
                               postUserId={user_id}
                               comments={comments}
                               reacts={reacts}
+                              product={{}}
+                              cartItems={[]}
                         />
                   </div>
             );

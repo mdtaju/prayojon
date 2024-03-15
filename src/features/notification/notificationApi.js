@@ -36,6 +36,7 @@ export const notification = apiSlice.injectEndpoints({
           });
         } catch (error) {}
       },
+      providesTags: ["getNotification"],
     }),
     addNotificationRead: builder.mutation({
       query: (data) => ({
@@ -43,39 +44,7 @@ export const notification = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        // const patchResult = dispatch(
-        //   apiSlice.util.updateQueryData("getNotifications", arg.id, (draft) => {
-        //     console.log(draft);
-        //     if (arg?.isAll) {
-        //       draft.map((n) => (n.read_status = "Read"));
-        //     } else {
-        //       const getElement = draft.find((n) => n?.id === arg?.id);
-        //       getElement.read_status = "Read";
-        //     }
-        //   })
-        // );
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(
-            apiSlice.util.updateQueryData(
-              "getNotifications",
-              undefined,
-              (draft) => {
-                if (arg?.isAll) {
-                  draft.map((n) => (n.read_status = "Read"));
-                } else {
-                  const getElement = draft.find((n) => n?.id === arg?.id);
-                  getElement.read_status = "Read";
-                }
-              }
-            )
-          );
-          // dispatch()
-        } catch (error) {
-          // patchResult.undo();
-        }
-      },
+      invalidatesTags: ["getNotification"],
     }),
   }),
 });

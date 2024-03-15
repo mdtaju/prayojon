@@ -2,116 +2,176 @@ import { Avatar, Rating } from '@mui/material';
 import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react';
 
-const Reviews = ({ reviews }) => {
-      const [starCount, setStarCount] = useState({
-            oneStar: 0,
-            twoStar: 0,
-            threeStar: 0,
-            fourStar: 0,
-            fiveStar: 0
+const Reviews = ({ reviews, type }) => {
+
+      const [reviewCategories, setReviewCategories] = useState({
+            avgTotal: 0,
+            productQuality: 0,
+            valueForMoney: 0,
+            accurateDescription: 0,
+            accuratePhoto: 0,
+            deliveryService: 0,
+            sellerService: 0
       });
-      const [avgRating, setAvgRating] = useState(0);
 
       useEffect(() => {
             if (reviews?.length) {
-                  const starCountInitial = {
-                        oneStar: 0,
-                        twoStar: 0,
-                        threeStar: 0,
-                        fourStar: 0,
-                        fiveStar: 0
-                  }
-                  let initialAvgStar = 0;
-                  reviews.forEach(r => {
-                        switch (r?.star) {
-                              case 5:
-                                    starCountInitial.fiveStar += 1
-                                    break;
-                              case 4:
-                                    starCountInitial.fourStar += 1
-                                    break;
-                              case 3:
-                                    starCountInitial.threeStar += 1
-                                    break;
-                              case 2:
-                                    starCountInitial.twoStar += 1
-                                    break;
-                              case 1:
-                                    starCountInitial.oneStar += 1
-                                    break;
-                              default:
-                                    break;
+                  if (type === "product") {
+                        let totalRating = {
+                              avg: 0,
+                              productQuality: 0,
+                              valueForMoney: 0
                         }
-                        initialAvgStar += r?.star;
-                  })
-                  const avgCalculating = initialAvgStar / reviews?.length;
-                  setAvgRating(avgCalculating);
-                  setStarCount(starCountInitial);
+                        reviews.forEach((rating) => {
+                              totalRating.productQuality += rating.product_quality_rating;
+                              totalRating.valueForMoney += rating.value_for_money_rating;
+                              totalRating.avg += rating.total_avg_rating
+                        })
+                        setReviewCategories((prevRating) => {
+                              return {
+                                    ...prevRating,
+                                    productQuality: totalRating.productQuality / reviews.length,
+                                    valueForMoney: totalRating.valueForMoney / reviews.length,
+                                    avgTotal: totalRating.avg / reviews.length
+                              }
+                        })
+                  } else {
+                        let totalRating = {
+                              avg: 0,
+                              accurateDescription: 0,
+                              accuratePhoto: 0,
+                              deliveryService: 0,
+                              sellerService: 0
+                        }
+                        reviews.forEach((rating) => {
+                              totalRating.accurateDescription += rating.accurate_description_rating;
+                              totalRating.accuratePhoto += rating.accurate_photo;
+                              totalRating.deliveryService += rating.delivery_service;
+                              totalRating.sellerService += rating.seller_service;
+                              totalRating.avg += rating.total_avg_rating
+                        })
+                        setReviewCategories((prevRating) => {
+                              return {
+                                    ...prevRating,
+                                    accurateDescription: totalRating.accurateDescription / reviews.length,
+                                    accuratePhoto: totalRating.accuratePhoto / reviews.length,
+                                    deliveryService: totalRating.deliveryService / reviews.length,
+                                    sellerService: totalRating.sellerService / reviews.length,
+                                    avgTotal: totalRating.avg / reviews.length
+                              }
+                        })
+                  }
             }
-      }, [reviews]);
+      }, [reviews, type]);
 
+
+      // what to render 
+      let content;
+      if (type === "product") {
+            content = <>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Product Quality</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.productQuality}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.productQuality}</span>
+                        </div>
+                  </div>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Value for money</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.valueForMoney}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.valueForMoney}</span>
+                        </div>
+                  </div>
+            </>
+      } else {
+            content = <>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Accurate Description</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.accurateDescription}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.accurateDescription}</span>
+                        </div>
+                  </div>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Accurate Photo</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.accuratePhoto}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.accuratePhoto}</span>
+                        </div>
+                  </div>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Delivery Service</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.deliveryService}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.deliveryService}</span>
+                        </div>
+                  </div>
+                  <div className=''>
+                        <h6 className='text-sm font-semibold'>Seller Service</h6>
+                        <div className='flex items-center gap-2'>
+                              <Rating
+                                    name="read-only"
+                                    precision={0.5}
+                                    value={reviewCategories.sellerService}
+                                    readOnly
+                                    size="medium"
+                              />
+                              <span>{reviewCategories.sellerService}</span>
+                        </div>
+                  </div>
+            </>
+      }
       return (
             <div>
                   <h1 className='text-xl font-bold text-gray-800'>Rating and Reviews</h1>
                   <div className='flex flex-col sm:flex-row items-start gap-6 mt-6 pb-4 border-b border-gray-300'>
                         <div className='space-y-2'>
-                              <h4 className='text-4xl font-semibold text-gray-800'>{avgRating}</h4>
+                              <h4 className='text-4xl font-semibold text-gray-800'>{reviewCategories.avgTotal}</h4>
                               <Rating
                                     name="read-only"
-                                    value={avgRating}
+                                    value={reviewCategories.avgTotal}
+                                    precision={0.5}
                                     readOnly
                                     size="large"
                               />
                               <p className='text-sm font-medium text-gray-500'>{reviews?.length} ratings</p>
                         </div>
                         <div className='space-y-3'>
-                              <div className='flex items-center gap-2'>
-                                    <Rating
-                                          name="read-only"
-                                          value={5}
-                                          readOnly
-                                          size="medium"
-                                    />
-                                    <span>{starCount?.fiveStar}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                    <Rating
-                                          name="read-only"
-                                          value={4}
-                                          readOnly
-                                          size="medium"
-                                    />
-                                    <span>{starCount?.fourStar}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                    <Rating
-                                          name="read-only"
-                                          value={3}
-                                          readOnly
-                                          size="medium"
-                                    />
-                                    <span>{starCount?.threeStar}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                    <Rating
-                                          name="read-only"
-                                          value={2}
-                                          readOnly
-                                          size="medium"
-                                    />
-                                    <span>{starCount?.twoStar}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                    <Rating
-                                          name="read-only"
-                                          value={1}
-                                          readOnly
-                                          size="medium"
-                                    />
-                                    <span>{starCount?.oneStar}</span>
-                              </div>
+                              {
+                                    content
+                              }
                         </div>
-
                   </div>
 
                   {/* review message */}
@@ -133,7 +193,8 @@ const Reviews = ({ reviews }) => {
                                                       </div>
                                                       <Rating
                                                             name="read-only"
-                                                            value={r?.star}
+                                                            precision={0.5}
+                                                            value={r?.total_avg_rating}
                                                             readOnly
                                                             size="small"
                                                       />

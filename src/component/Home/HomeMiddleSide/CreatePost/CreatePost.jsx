@@ -59,7 +59,7 @@ const CreatePost = () => {
             </>
       );
       return (
-            <div className='w-full common_shadow'>
+            <div className='w-full p-3'>
                   <CreatePostDialog
                         open={open}
                         setOpen={setOpen}
@@ -67,18 +67,16 @@ const CreatePost = () => {
                         photo={photo}
                         name={name}
                   />
-                  <p className='font-bold text-lg mb-4 text-gray-700'>Create a post</p>
-                  <div className='flex items-center gap-4'>
+                  <div onClick={handleClickOpen} className='flex items-center gap-4 py-2 px-3 rounded-sm bg-gray-100 hover:bg-gray-200 cursor-pointer w-full'>
                         <div>
                               <Avatar
                                     alt="Remy Sharp"
                                     src={photo}
                                     sx={{ width: 40, height: 40 }}
+                                    variant='rounded'
                               />
                         </div>
-                        <div onClick={handleClickOpen} className='py-2 px-3 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer w-full'>
-                              <p className='font-semibold text-base text-gray-500'>{"What's on your mind?"}</p>
-                        </div>
+                        <p className='font-semibold text-base text-gray-500'>{"What's on your mind?"}</p>
                   </div>
 
                   {/* snackbar */}

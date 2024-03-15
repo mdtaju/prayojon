@@ -25,9 +25,8 @@ const HomeMiddleSide = ({ UID, userProducts, generalPost }) => {
       const { data: productPosts } = useGetProductPostsQuery();
       const [userPosts, setUserPosts] = useState([]);
       const [userEPosts, setUserEPosts] = useState([]);
-      // console.log(router)
       useEffect(() => {
-            if (data, productPosts) {
+            if (data || productPosts) {
                   if (generalPost) {
                         setUserPosts(generalPost);
                   }
@@ -43,63 +42,64 @@ const HomeMiddleSide = ({ UID, userProducts, generalPost }) => {
             }
       }, [data, productPosts, userProducts, generalPost]);
 
-      return (
-            <section className='w-full min-h-screen md:w-[740px] mx-auto p-2 sm:py-4 sm:px-8'>
-
-                  {/* Create post and post all width are 500px for large view */}
-                  <div className='w-full sm:w-[550px] mx-auto'>
-                        {/* Post filtering component */}
-                        <PostsFilter
-                              postType={postType}
-                              setPostType={setPostType}
+      // what to render 
+      let content;
+      const loader = <div className='w-full sm:w-[450px] md:w-[480px] lg:w-[550px] mx-auto px-2 mt-4'>
+            <div className='w-full common_shadow mx-auto'>
+                  <div className='w-full px-4 flex items-center gap-4'>
+                        <Skeleton variant="circular" width={40} height={40} />
+                        <div className='w-[200px]'>
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                              <Skeleton variant="text" sx={{ fontSize: '8px', width: "140px" }} />
+                        </div>
+                  </div>
+                  <div className='w-full mt-4'>
+                        <Skeleton variant="rectangular" sx={{ width: "100%", height: "250px" }} />
+                  </div>
+            </div>
+      </div>
+      if (postType === "general") {
+            if (userPosts.length) {
+                  content = userPosts?.map((p, i) => (
+                        <UserPost
+                              post={p}
+                              key={i}
                         />
-                        {/* CreatePost component */}
-                        {
-                              (session?.user?.email === UID || router?.pathname === "/" || router?.pathname === "/profile") &&
-                              <CreatePost />
-                        }
+                  ))
+            } else {
+                  content = loader
+            }
+      } else {
+            if (userEPosts.length) {
+                  content = userEPosts?.map((p, i) => (
+                        <UserE_Post
+                              post={p}
+                              key={i}
+                        />
+                  ))
+            } else {
+                  content = loader
+            }
+      }
+      return (
+            <section className='w-full sm:w-[450px] md:w-[480px] lg:w-[550px] mx-auto min-h-screen p-2 sm:py-6'>
+                  {/* Create post and all post width are 500px for large view */}
+                  <div className='w-full'>
+                        {/* Post filtering component */}
+                        <div className='w-full common_shadow p-0'>
+
+                              <PostsFilter
+                                    postType={postType}
+                                    setPostType={setPostType}
+                              />
+                              {/* CreatePost component */}
+                              {
+                                    (session?.user?.email === UID || router?.pathname === "/" || router?.pathname === "/profile") &&
+                                    <CreatePost />
+                              }
+                        </div>
                         {/* Post component */}
-
-                        {
-                              userPosts?.length ?
-                                    <>
-
-                                          {postType === "general" ?
-                                                <>
-                                                      {
-
-                                                            userPosts?.map((p, i) => (
-                                                                  <UserPost
-                                                                        post={p}
-                                                                        key={i}
-                                                                  />
-                                                            ))
-                                                      }
-                                                </> :
-                                                <>
-                                                      {
-                                                            userEPosts?.map((p, i) => (
-                                                                  <UserE_Post
-                                                                        post={p}
-                                                                        key={i}
-                                                                  />
-                                                            ))
-                                                      }
-                                                </>}
-                                    </> :
-                                    <div className='w-full common_shadow mt-4 px-0'>
-                                          <div className='w-full px-4 flex items-center gap-4'>
-                                                <Skeleton variant="circular" width={40} height={40} />
-                                                <div className='w-[200px]'>
-                                                      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-                                                      <Skeleton variant="text" sx={{ fontSize: '8px', width: "140px" }} />
-                                                </div>
-                                          </div>
-                                          <div className='w-full mt-4'>
-                                                <Skeleton variant="rectangular" sx={{ width: "100%", height: "250px" }} />
-                                          </div>
-                                    </div>
-                        }
+                        {content}
                   </div>
             </section>
       );

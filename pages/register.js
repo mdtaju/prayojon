@@ -1,12 +1,12 @@
 import { getSession } from "next-auth/react";
 import React, { useState } from "react";
+import Banner from "../public/images/register_banner.png";
 import AuthProviders from "../src/component/Register/AuthProviders";
 import FormOTP from "../src/component/Register/FormOTP";
 import FormPassword from "../src/component/Register/FormPassword";
 import FormPhone from "../src/component/Register/FormPhone";
 import Layout from "../src/component/Register/Layout";
 import RouteToggle from "../src/component/Register/RouteToggle";
-import TitleContainer from "../src/component/Register/TitleContainer";
 
 const Register = () => {
   const [userPhone, setUserPhone] = useState("");
@@ -14,8 +14,7 @@ const Register = () => {
   const [isSuccessValidated, setIsSuccessValidated] = useState(false);
   const [requestedOTP, setRequestedOTP] = useState("");
   return (
-    <Layout>
-      <TitleContainer title={"Create an account"} />
+    <Layout Banner={Banner}>
       {!isSuccessValidated ? (
         <>
           {!isOptSend ? (
@@ -32,6 +31,7 @@ const Register = () => {
               userPhone={userPhone}
               setIsSuccessValidated={setIsSuccessValidated}
               requestedOTP={requestedOTP}
+              setRequestedOTP={setRequestedOTP}
             />
           )}
         </>
@@ -41,7 +41,6 @@ const Register = () => {
           setIsSuccessValidated={setIsSuccessValidated}
         />
       )}
-      <div className="w-full h-[1px] bg-gray-300 my-3"></div>
       <AuthProviders />
       <RouteToggle title={"Already have an account"} path="/login" />
     </Layout>

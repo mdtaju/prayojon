@@ -8,7 +8,7 @@ import Sidebar from '../marketplace/Sidebar/Sidebar';
 const MarketPlaceHero = () => {
       const [filters, setFilters] = useState({
             priceRange: [100, 1000000],
-            sizeRange: [0, 1000],
+            sizeRange: [0, 100],
             categories: "",
             subCategories: [],
             type: [],
@@ -33,6 +33,7 @@ const MarketPlaceHero = () => {
                   const filteredProducts = searchProductPost.filter((product) => {
                         // Apply filters here
                         const { priceRange, sizeRange, categories, subCategories, type, colorType, sort, availability } = filters;
+                        const getArrFromServer = product.color?.split(",")
 
                         // Apply price range filter
                         if (priceRange && (product.price < priceRange[0] || product.price > priceRange[1])) {
@@ -50,8 +51,13 @@ const MarketPlaceHero = () => {
                         }
 
                         // Apply Colors filter
-                        if (colorType.length > 0 && !colorType.includes(product.color)) {
-                              return false;
+                        if (colorType.length > 0) {
+                              const getPureArr = colorType.find((item) => {
+                                    return getArrFromServer.includes(item);
+                              });
+                              if (!getPureArr) {
+                                    return false;
+                              }
                         }
 
                         // Apply categories filter
@@ -60,7 +66,7 @@ const MarketPlaceHero = () => {
                         }
 
                         // Apply sub categories filter
-                        if (subCategories.length > 0 && !subCategories.includes(product.subCategories)) {
+                        if (subCategories.length > 0 && !subCategories.includes(product.sub_category)) {
                               return false;
                         }
 

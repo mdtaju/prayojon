@@ -8,7 +8,7 @@ import React from 'react';
 import BtmMenuElement from './BtmMenuElement';
 import MenuTabTopSide from './MenuTabTopSide';
 
-const MobileNav = () => {
+const MobileNav = ({ countValue }) => {
       return (
             // Mobile nav container. it's a Inner container of main header tag 
             <div className='block md:hidden w-full h-full py-2 px-3'>
@@ -50,6 +50,7 @@ const MobileNav = () => {
                         <BtmMenuElement
                               Icon={faBell}
                               activeLink={"/notification"}
+                              countValue={countValue}
                         />
                         {/* <BtmMenuElement
                               Icon={faMessage}

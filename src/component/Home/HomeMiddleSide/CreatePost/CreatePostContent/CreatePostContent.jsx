@@ -52,20 +52,21 @@ const CreatePostContent = ({
       paymentAddType,
       setPaymentAddType,
       subCategory,
-      setSubCategory
+      setSubCategory,
+      ram,
+      setRam,
+      rom,
+      setRom
 }) => {
       const [fileSizeWarning, setFileSizeWarning] = useState("");
       const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
+
+
       // file size validation
       const onDrop = useCallback(selectedFiles => {
             const acceptedFiles = [];
-            if (!storeFiles?.length && !isImageFile(selectedFiles[0])) {
-                  setFileSizeWarning(`Your selected first file must be an image`)
-                  return setTimeout(() => { setFileSizeWarning([]) }, 5000)
-            }
-            // Add the files to the state
             selectedFiles.forEach((item) => {
                   // calculation of each selected file size into MB(Mega byte).
                   const getSize = item.size / (1024 ** 2);
@@ -83,10 +84,7 @@ const CreatePostContent = ({
             return setStoreFiles((prevState) => [...prevState, ...acceptedFiles])
       }, [setStoreFiles])
 
-      // check is first file an image 
-      const isImageFile = (file) => {
-            return file.type.startsWith("image/");
-      };
+
 
       // file type validation
       const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -150,6 +148,13 @@ const CreatePostContent = ({
                               setPaymentAddType={setPaymentAddType}
                               subCategory={subCategory}
                               setSubCategory={setSubCategory}
+                              setStoreFiles={setStoreFiles}
+                              setFileSizeWarning={setFileSizeWarning}
+                              setChooseImgToggle={setChooseImgToggle}
+                              ram={ram}
+                              setRam={setRam}
+                              rom={rom}
+                              setRom={setRom}
                         />
                   }
                   {/* Write post text here */}
@@ -236,6 +241,7 @@ const CreatePostContent = ({
                                           <FontAwesomeIcon
                                                 icon={faCloudArrowUp}
                                           />
+                                          <input {...getInputProps()} />
                                           <span className='text-base font-semibold select-none'> Add Photos/Videos</span>
                                     </div>
                               }

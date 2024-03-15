@@ -1,3 +1,5 @@
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextField } from '@mui/material';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -7,7 +9,12 @@ import axios from '../../config/axios';
 const FormPassword = ({ userPhone, setIsSuccessValidated }) => {
       const router = useRouter();
       const [password, setPassword] = useState("");
+      const [retypePassword, setRetypePassword] = useState("")
       const [isValid, setIsValid] = useState(false);
+      const [showPassword, setShowPassword] = useState(false);
+
+
+      const handleClickShowPassword = () => setShowPassword((show) => !show);
 
       // password length checking
       useEffect(() => {
@@ -55,16 +62,60 @@ const FormPassword = ({ userPhone, setIsSuccessValidated }) => {
                   <p className='text-green-500 text-center text-base font-semibold'>Successfully verified your phone.</p>
                   <p className='text-yellow-500 text-center text-sm mb-3'>{"Warning: Don't reload this page before creating your account."}</p>
                   <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
-                        <div className={`px-4 py-4 border border-gray-300 rounded-sm`}>
-                              <span className='select-none'>{userPhone}</span>
+
+                        {/* password */}
+                        <div className="space-y-1 w-full">
+                              <h4 className="text-sm font-medium">Password</h4>
+                              {/* password and eye button container */}
+                              <div className="relative w-full">
+                                    {/* password input */}
+                                    <TextField
+                                          sx={{ width: "100%" }}
+                                          type={showPassword ? "text" : "password"}
+                                          placeholder={"Enter a strong password"}
+                                          value={password}
+                                          size="small"
+                                          onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                    {/* password show and hidden control */}
+                                    <div
+                                          onClick={handleClickShowPassword}
+                                          className="absolute right-3 top-1 w-fit h-fit p-1 cursor-pointer">
+                                          {showPassword ? (
+                                                <FontAwesomeIcon icon={faEyeSlash} />
+                                          ) : (
+                                                <FontAwesomeIcon icon={faEye} />
+                                          )}
+                                    </div>
+                              </div>
                         </div>
-                        <TextField
-                              required
-                              type={"password"}
-                              placeholder={"Enter a strong password"}
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                        />
+
+                        {/* retype password */}
+                        <div className="space-y-1 w-full">
+                              <h4 className="text-sm font-medium">Retype Password</h4>
+                              {/* password and eye button container */}
+                              <div className="relative w-full">
+                                    {/* password input */}
+                                    <TextField
+                                          sx={{ width: "100%" }}
+                                          type={showPassword ? "text" : "password"}
+                                          placeholder={"Retype Password"}
+                                          value={retypePassword}
+                                          size="small"
+                                          onChange={(e) => setRetypePassword(e.target.value)}
+                                    />
+                                    {/* password show and hidden control */}
+                                    <div
+                                          onClick={handleClickShowPassword}
+                                          className="absolute right-3 top-1 w-fit h-fit p-1 cursor-pointer">
+                                          {showPassword ? (
+                                                <FontAwesomeIcon icon={faEyeSlash} />
+                                          ) : (
+                                                <FontAwesomeIcon icon={faEye} />
+                                          )}
+                                    </div>
+                              </div>
+                        </div>
                         <button
                               disabled={isValid ? false : true}
                               className={`${isValid ? 'input_submit_btn' : "input_submit_btn_err"}`}

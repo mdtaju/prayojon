@@ -19,7 +19,7 @@ const SizeRange = ({ margin, filters, setFilters }) => {
                   <h1 className='text-lg text-orange-500 font-semibold'>Size Range</h1>
                   <Slider
                         min={0}
-                        max={10000}
+                        max={500}
                         value={filters?.sizeRange}
                         onChange={handleChange}
                         getAriaLabel={() => 'Temperature range'}

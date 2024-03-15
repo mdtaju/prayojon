@@ -4,36 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Skeleton } from '@mui/material';
 import Image from 'next/legacy/image';
 import React, { Suspense, useState } from 'react';
-import { useCartRemoveMutation, useCartUpdateQuantityMutation } from '../../../features/cart/cartApi';
+import { useCartColorUpdateMutation, useCartRemoveMutation, useCartUpdateQuantityMutation } from '../../../features/cart/cartApi';
 import thousandFormate from '../../../utils/thousandFormate';
 
 const CartLeftBottomAreaItem = ({ item = {} }) => {
-      const { cart_id, image, title, description, price, quantity, stock, original_price } = item;
+      const { cart_id, image, title, description, price, quantity, stock, original_price, colors = [], color = "" } = item;
       const [checked, setChecked] = useState(true);
       const [quantityInput, setQuantityInput] = useState(quantity);
-      const [cartUpdateQuantity, { data }] = useCartUpdateQuantityMutation();
-      const [cartRemove, { data: removeItem }] = useCartRemoveMutation();
+      const [cartUpdateQuantity] = useCartUpdateQuantityMutation();
+      const [cartRemove] = useCartRemoveMutation();
+      const [cartColorUpdate] = useCartColorUpdateMutation();
+      const [selectedColor, setSelectedColor] = useState(color ? color : "");
 
-      // quantity input handle change
-      const handleQuantity = (e) => {
-            const value = e.target.value;
-            if (!isNaN(value)) {
-                  setQuantityInput(Number(value));
-                  cartUpdateQuantity({ cart_id, quantity: Number(value) });
-            } else {
-                  alert('Please enter a valid number');
-            }
-      }
-
-      // handle quantity onBlur
-      const handleQuantityBlur = (e) => {
-            const value = e.target.value;
-            if (!isNaN(value)) {
-                  if (Number(value) < 1) {
-                        setQuantityInput(1);
-                        cartUpdateQuantity({ cart_id, quantity: 1 });
-                  }
-            }
+      // color selection 
+      const handleColorChange = (e) => {
+            cartColorUpdate({ cart_id, color: e.target.value })
+            setSelectedColor(e.target.value);
       }
 
       // quantity update handler 
@@ -114,13 +100,30 @@ const CartLeftBottomAreaItem = ({ item = {} }) => {
                                           quantityInput == stock &&
                                           <p className='text-xs text-red-500 font-semibold text-center'>Stock limit to {stock}</p>
                                     }
+                                    {
+                                          colors?.length > 0 &&
+                                          <select name="" id="" value={selectedColor} onChange={handleColorChange} className='px-2 py-1 border border-gray-500 text-xs font-medium rounded-md mt-2 outline-none'>
+                                                <option value="" disabled>Select a color</option>
+                                                {
+                                                      colors.map((color, i) => (
+                                                            <option key={i} value={color}>{color}</option>
+                                                      ))
+                                                }
+                                          </select>
+                                    }
                               </div>
                         </div>
                   </div>
                   {/* price */}
                   <div className='text-center'>
-                        <h4 className='whitespace-nowrap text-lg font-semibold text-gray-800'>{thousandFormate(price * +quantity)} BDT.</h4>
-                        <h4 className='whitespace-nowrap text-base font-semibold text-orange-500'><del>{thousandFormate(+original_price * +quantity)} BDT.</del></h4>
+                        {
+                              thousandFormate(+price) === thousandFormate(+original_price) ?
+                                    <h4 className='whitespace-nowrap text-lg font-semibold text-gray-800'>{thousandFormate(price * +quantity)} BDT.</h4> :
+                                    <>
+                                          <h4 className='whitespace-nowrap text-lg font-semibold text-gray-800'>{thousandFormate(price * +quantity)} BDT.</h4>
+                                          <h4 className='whitespace-nowrap text-base font-semibold text-orange-500'><del>{thousandFormate(+original_price * +quantity)} BDT.</del></h4>
+                                    </>
+                        }
                   </div>
             </div>
       );

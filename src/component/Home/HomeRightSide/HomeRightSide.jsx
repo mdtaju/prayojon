@@ -8,10 +8,10 @@ const HomeRightSide = () => {
       const { data: session } = useSession();
       if (session === undefined) {
             return (
-                  <session className='hidden md:block w-[310px] h-screen overflow-hidden'>
+                  <session className='hidden md:block w-[310px] md:w-[380px] h-screen overflow-hidden'>
                         <div
                               style={{ overscrollBehaviorY: 'contain' }}
-                              className={`fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px] rounded-md`}
+                              className={`fixed w-[310px] md:w-[380px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px] rounded-md`}
                         >
                               <div className='space-y-3'>
                                     {
@@ -28,10 +28,10 @@ const HomeRightSide = () => {
             )
       }
       return (
-            <section className='hidden md:block w-[310px] h-screen overflow-hidden '>
+            <section className='hidden md:block w-[310px] md:w-[380px] h-screen overflow-hidden '>
                   <div
                         style={{ overscrollBehaviorY: 'contain' }}
-                        className={`fixed w-[310px] h-full z-20 overflow-y-scroll custom_scrollbar px-4 py-3 pb-[70px] rounded-md`}
+                        className={`fixed w-[310px] md:w-[380px] h-full z-20 overflow-y-scroll custom_scrollbar px-0 sm:px-4 py-6 pb-[70px] rounded-md`}
                   >
                         {/* Friend request notifications outer container */}
                         {

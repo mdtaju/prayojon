@@ -8,7 +8,7 @@ function NotificationHero() {
       const { data } = useGetNotificationsQuery(session?.user?.email);
       return (
             <div className='w-full min-h-screen common_shadow'>
-                  <div className='w-full mt-4 flex flex-col gap-4'>
+                  <div className='w-full mt-4 md:mt-16 flex flex-col gap-4'>
                         {
                               data?.length ?
                                     <>

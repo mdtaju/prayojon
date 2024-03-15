@@ -14,6 +14,7 @@
   }
   body {
     background-color: #dae0e6;
+    /* background: #f5faff; */
     color: #374151;
     /* font-family: "Nunito Sans", sans-serif; */
     /* font-family: "Roboto", sans-serif; */
@@ -26,11 +27,11 @@
     @apply font-mono;
   } */
   .btn_primary {
-    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-full active:scale-95 duration-150 cursor-pointer;
+    @apply min-w-[108px] bg-primary text-white text-base font-medium py-[6px] px-[20px] rounded-sm active:scale-95 duration-150 cursor-pointer;
   }
   .common_shadow {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    @apply rounded-md bg-[#fff] py-2 px-4;
+    @apply rounded-sm bg-[#fff] py-2 px-4;
   }
   .common_description {
     @apply text-[.9375rem] leading-[1.3333] font-normal text-gray-800;
@@ -54,7 +55,7 @@
     @apply text-[16px] text-gray-800;
   }
   .custom_scrollbar::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
   }
   .custom_scrollbar::-webkit-scrollbar-track {
     background: transparent;

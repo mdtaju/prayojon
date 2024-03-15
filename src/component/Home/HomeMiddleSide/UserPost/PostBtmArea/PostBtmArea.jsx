@@ -2,42 +2,50 @@ import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import useWindowSize from '../../../../../hook/useWindowSize';
 import PostBtmCommentParent from './PostBtmCommentParent';
-import PostBtmStatusBar from './PostBtmStatusBar';
 const PostBtmActionBar = dynamic(() => import('./PostBtmActionBar'), { ssr: false });
 const PostBtmWriteComment = dynamic(() => import('./PostBtmWriteComment'), { ssr: false });
 
-const PostBtmArea = ({ postId, postQueryId, postType, postUserId, comments = [], reacts = [] }) => {
+const PostBtmArea = ({ postId, postQueryId, postType, postUserId, comments = [], reacts = [], product,
+      cartItems }) => {
       const [comment, setComment] = useState("");
+      const [commentsShow, setCommentsShow] = useState(false);
       const [showReplyInput, setShowReplyInput] = useState(false);
       const windowSize = useWindowSize();
 
       return (
-            <div className='w-full px-1 sm:px-4 border-t border-gray-300'>
+            <div className='w-full'>
 
                   {/* Like Comment Status component */}
-                  <PostBtmStatusBar
+                  {/* <PostBtmStatusBar
                         postReacts={reacts}
                         commentsLength={comments.length}
-                  />
+                  /> */}
 
                   {/* Do Like Comment component */}
                   <PostBtmActionBar
                         id={postId}
                         postQueryId={postQueryId}
+                        postReacts={reacts}
                         postUserId={postUserId}
                         postType={postType}
                         reacts={reacts}
+                        setCommentsShow={setCommentsShow}
+                        product={product}
+                        cartItems={cartItems}
                   />
 
                   {/* Users comments component */}
-                  <PostBtmCommentParent
-                        comments={comments}
-                  />
+                  {
+                        commentsShow &&
+                        <PostBtmCommentParent
+                              comments={comments}
+                        />
+                  }
 
                   {/* Write comment component */}
                   <PostBtmWriteComment
-                        avatarWidth={windowSize.width > 425 ? 36 : 28}
-                        avatarHeight={windowSize.width > 425 ? 36 : 28}
+                        avatarWidth={28}
+                        avatarHeight={28}
                         comment={comment}
                         setComment={setComment}
                         placeholder={"Write a comment..."}

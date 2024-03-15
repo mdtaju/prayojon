@@ -334,6 +334,12 @@ export const userPostApi = apiSlice.injectEndpoints({
     getSinglePost: builder.query({
       query: ({ type, id }) => `/single_post?type=${type}&id=${id}`,
     }),
+    getSellerReviews: builder.query({
+      query: (id) => `/seller_reviews/${id}`,
+    }),
+    getProductReviews: builder.query({
+      query: (id) => `/product_review/${id}`,
+    }),
   }),
 });
 
@@ -360,5 +366,7 @@ export const {
   useGetUserPurchaseOrdersMutation,
   useRemoveReactMutation,
   useGetSinglePostQuery,
+  useGetSellerReviewsQuery,
+  useGetProductReviewsQuery,
   util: { getRunningQueriesThunk },
 } = userPostApi;

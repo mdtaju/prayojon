@@ -1,18 +1,17 @@
 import {
-      faArrowRightFromBracket,
-      faArrowRightToBracket,
-      faBell,
-      faCartShopping,
-      faHouse,
-      faStore
+      faBell
 } from "@fortawesome/free-solid-svg-icons";
 import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import React from 'react';
 // import CustomSkeleton from "../CustomSkeleton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+// import cartIcon from "../../../../public/images/home_cart.svg";
+// import homeIcon from "../../../../public/images/home_home.svg";
+// import marketPlaceIcon from "../../../../public/images/home_marketplace.svg";
+import { useGetNotificationsQuery } from "../../../features/notification/notificationApi";
 import MobileNav from "./MobileNav/MobileNav";
 import NavMiddleElement from "./NavMiddleElement";
 import NavRightSideElement from "./NavRightSideElement/NavRightSideElement";
@@ -25,6 +24,15 @@ const NavLeftElement = dynamic(() => import('./NavLeftElement/NavLeftElement'), 
 
 const Navbar = () => {
       const { data } = useSession();
+      const { data: notifications = [] } = useGetNotificationsQuery(data?.user?.email);
+      const [unreadNotifications, setUnreadNotifications] = useState(0);
+
+      useEffect(() => {
+            if (notifications.length) {
+                  const getUnreadItems = notifications.filter((notification) => notification.read_status === "Unread");
+                  setUnreadNotifications(getUnreadItems.length)
+            }
+      }, [notifications]);
       return (
             // {/* There are three part in header */}
             <header className='w-full h-[90px] md:h-[60px] sticky md:fixed top-0 shadow-md flex items-center bg-white z-50'>
@@ -42,7 +50,7 @@ const Navbar = () => {
                               <ul className="flex w-fit h-full mx-auto items-center gap-2">
                                     <NavMiddleElement
                                           toolTitle={"Home"}
-                                          Icon={faHouse}
+                                          Icon={""}
                                           activeLink={"/"}
                                     />
                                     {/* <NavMiddleElement
@@ -52,12 +60,12 @@ const Navbar = () => {
                                     /> */}
                                     <NavMiddleElement
                                           toolTitle={"Marketplace"}
-                                          Icon={faStore}
+                                          Icon={""}
                                           activeLink={"/marketplace"}
                                     />
                                     <NavMiddleElement
                                           toolTitle={"Cart"}
-                                          Icon={faCartShopping}
+                                          Icon={""}
                                           activeLink={"/cart"}
                                     />
                               </ul>
@@ -66,15 +74,6 @@ const Navbar = () => {
                         {/* Part three contain right nav */}
                         <div className="w-[302px] h-full flex items-center justify-end">
                               <ul className="h-full flex items-center gap-3">
-                                    {/* Message Component */}
-                                    {/* <NavRightSideElement
-                                          toolTitle={"Messages"}
-                                          countValue={4}
-                                          Icon={faMessage}
-                                    >
-                                          <h1>Messages</h1>
-                                    </NavRightSideElement> */}
-
                                     {/* Profile Component */}
                                     {
                                           data ?
@@ -82,7 +81,7 @@ const Navbar = () => {
                                                       {/* Notification Component */}
                                                       <NavRightSideElement
                                                             toolTitle={"Notifications"}
-                                                            countValue={0}
+                                                            countValue={unreadNotifications}
                                                             Icon={faBell}
                                                       >
                                                             <NotificationPopper />
@@ -94,21 +93,27 @@ const Navbar = () => {
                                                       </NavRightSideElement>
                                                 </>
                                                 :
-                                                <Link href={"/login"}>
-                                                      <div className="btn_primary">
-                                                            <FontAwesomeIcon
-                                                                  icon={data ? faArrowRightFromBracket : faArrowRightToBracket}
-                                                                  className="text-xl"
-                                                            /> Login
-                                                      </div>
-                                                </Link>
+                                                <div className="flex items-center gap-4">
+                                                      <Link href={"/login"}>
+                                                            <button className="btn_primary">
+                                                                  LOGIN
+                                                            </button>
+                                                      </Link>
+                                                      <Link href={"/login"}>
+                                                            <button className="btn_primary bg-white border border-primary text-primary hover:bg-primary hover:text-white">
+                                                                  SIGN UP
+                                                            </button>
+                                                      </Link>
+                                                </div>
                                     }
                               </ul>
                         </div>
                   </div>
 
                   {/* Mobile nav component */}
-                  <MobileNav />
+                  <MobileNav
+                        countValue={unreadNotifications}
+                  />
             </header>
       );
 };

@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_SERVER_URL,
-    // "https://prayojon-server.prayojon.com",
+    // "http://localhost:9000",
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
@@ -18,6 +18,7 @@ export const apiSlice = createApi({
     "getProduct",
     "getCartItems",
     "cartItemsQuery",
+    "getNotification",
   ],
   endpoints: (builder) => ({}),
 });

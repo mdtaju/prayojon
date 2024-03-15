@@ -1,5 +1,10 @@
 import { apiSlice } from "../api/apiSlice";
-import { addCarts, cartItemRemove, cartQuantityUpdate } from "./cartSlice";
+import {
+  addCarts,
+  cartColorSelection,
+  cartItemRemove,
+  cartQuantityUpdate,
+} from "./cartSlice";
 
 export const cartApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -55,6 +60,20 @@ export const cartApi = apiSlice.injectEndpoints({
           dispatch(
             cartQuantityUpdate({ id: arg.cart_id, quantity: arg.quantity })
           );
+        } catch (error) {}
+      },
+      invalidatesTags: ["cartItemsQuery"],
+    }),
+    cartColorUpdate: builder.mutation({
+      query: (data) => ({
+        url: "/cart_color_update",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(cartColorSelection({ id: arg.cart_id, color: arg.color }));
         } catch (error) {}
       },
       invalidatesTags: ["cartItemsQuery"],
@@ -122,5 +141,6 @@ export const {
   useGetUserOrdersQuery,
   useUpdateOrderMutation,
   useAddProductReviewMutation,
+  useCartColorUpdateMutation,
   util: { getRunningQueriesThunk },
 } = cartApi;

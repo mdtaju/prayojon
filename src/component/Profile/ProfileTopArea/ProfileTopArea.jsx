@@ -1,9 +1,10 @@
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faCaretDown, faUserCheck, faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar } from '@mui/material';
+import { Avatar, Rating } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/legacy/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAddNotificationMutation } from '../../../features/notification/notificationApi';
@@ -11,7 +12,8 @@ import { useGetUserQuery } from '../../../features/profile/profileApi';
 import { useAddFollowerMutation, useGetFollowerQuery, useUnfollowMutation } from '../../../features/userPost/userPostApi';
 import useWindowSize from '../../../hook/useWindowSize';
 
-const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
+const ProfileTopArea = ({ UID = "", agvRating,
+      totalRating }) => {
       const windowSize = useWindowSize();
       const router = useRouter();
       const [photo, setPhoto] = useState("");
@@ -26,6 +28,7 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
       const [unfollow, { data: getUnfollow }] = useUnfollowMutation();
       const [addNotification] = useAddNotificationMutation();
       const d = new Date();
+
       // check is follow the user
       useEffect(() => {
             if (followers) {
@@ -125,6 +128,19 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
                               {/* profile name and info container */}
                               <div>
                                     <h2 className='text-2xl font-bold'>{name}</h2>
+                                    {
+                                          agvRating > 0 &&
+                                          <div className="flex items-center gap-1">
+                                                <Rating
+                                                      name="read-only"
+                                                      precision={0.5}
+                                                      value={agvRating}
+                                                      readOnly
+                                                      size="small"
+                                                />
+                                                <span className='text-sm font-medium'>{totalRating}</span>
+                                          </div>
+                                    }
                                     <p className='text-base font-bold text-gray-500'>{profession}</p>
                               </div>
                         </div>
@@ -169,36 +185,55 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
 
                   {/* tab list */}
                   <div className='w-full px-4 flex gap-4 mt-6 border-t border-gray-300'>
-                        <div onClick={() => setActiveTab("post")} className={`profile_tab_link ${activeTab === "post" ? "profile_tab_link_active" : ""}`}>
-                              <span>Timeline</span>
-                        </div>
+                        <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=post` : "/profile?tab=post"}`}>
+                              <div className={`profile_tab_link ${router.query.tab === "post" ? "profile_tab_link_active" : ""}`}>
+                                    <span>Timeline</span>
+                              </div>
+                        </Link>
                         {
                               windowSize.width > 768 ?
                                     <>
                                           {/* tab list items for large view */}
-                                          <div onClick={() => setActiveTab("lists")} className={`profile_tab_link ${activeTab === "lists" ? "profile_tab_link_active" : ""}`}>
-                                                <span>Lists</span>
-                                          </div>
-                                          <div onClick={() => setActiveTab("about")} className={`profile_tab_link ${activeTab === "about" ? "profile_tab_link_active" : ""}`}>
-                                                <span>About</span>
-                                          </div>
-                                          <div onClick={() => setActiveTab("video")} className={`profile_tab_link ${activeTab === "video" ? "profile_tab_link_active" : ""}`}>
-                                                <span>Videos</span>
-                                          </div>
-                                          <div onClick={() => setActiveTab("photo")} className={`profile_tab_link ${activeTab === "photo" ? "profile_tab_link_active" : ""}`}>
-                                                <span>Photos</span>
-                                          </div>
-                                          <div onClick={() => setActiveTab("follower")} className={`profile_tab_link ${activeTab === "follower" ? "profile_tab_link_active" : ""}`}>
-                                                <span>Followers</span>
-                                          </div>
-                                          <div onClick={() => setActiveTab("following")} className={`profile_tab_link ${activeTab === "following" ? "profile_tab_link_active" : ""}`}>
-                                                <span>Following</span>
-                                          </div>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=lists` : "/profile?tab=lists"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "lists" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Lists</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=about` : "/profile?tab=about"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "about" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>About</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=video` : "/profile?tab=video"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "video" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Videos</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=photo` : "/profile?tab=photo"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "photo" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Photos</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=follower` : "/profile?tab=follower"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "follower" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Followers</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=following` : "/profile?tab=following"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "following" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Following</span>
+                                                </div>
+                                          </Link>
+                                          <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=reviews` : "/profile?tab=reviews"}`}>
+                                                <div className={`profile_tab_link ${router.query.tab === "reviews" ? "profile_tab_link_active" : ""}`}>
+                                                      <span>Reviews</span>
+                                                </div>
+                                          </Link>
                                     </> :
                                     // dropdown > More option container > for small view
                                     <div className='group relative'>
                                           {/* dropdown button */}
-                                          <div className={`profile_tab_link flex gap-2 items-center ${(activeTab === "lists" || "about" || "video" || "photo" || "follower" || "following") ? "profile_tab_link_active" : ""}`}>
+                                          <div className={`profile_tab_link flex gap-2 items-center ${(router.query.tab === "lists" || "about" || "video" || "photo" || "follower" || "following") ? "profile_tab_link_active" : ""}`}>
                                                 <span>More</span>
                                                 <FontAwesomeIcon
                                                       icon={faCaretDown}
@@ -207,12 +242,27 @@ const ProfileTopArea = ({ activeTab, setActiveTab, UID = "" }) => {
                                           {/* dropdown lists */}
                                           <div className="absolute invisible group-hover:visible z-10 common_shadow p-0">
                                                 <ul className='py-2 text-base font-medium text-gray-600'>
-                                                      <li onClick={() => setActiveTab("lists")} className='profile_tab_link_mobile'>Lists</li>
-                                                      <li onClick={() => setActiveTab("about")} className='profile_tab_link_mobile'>About</li>
-                                                      <li onClick={() => setActiveTab("video")} className='profile_tab_link_mobile'>Videos</li>
-                                                      <li onClick={() => setActiveTab("photo")} className='profile_tab_link_mobile'>Photos</li>
-                                                      <li onClick={() => setActiveTab("follower")} className='profile_tab_link_mobile'>Followers</li>
-                                                      <li onClick={() => setActiveTab("following")} className='profile_tab_link_mobile'>Following</li>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=lists` : "/profile?tab=lists"}`}>
+                                                            <li className='profile_tab_link_mobile'>Lists</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=about` : "/profile?tab=about"}`}>
+                                                            <li className='profile_tab_link_mobile'>About</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=video` : "/profile?tab=video"}`}>
+                                                            <li className='profile_tab_link_mobile'>Videos</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=photo` : "/profile?tab=photo"}`}>
+                                                            <li className='profile_tab_link_mobile'>Photos</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=follower` : "/profile?tab=follower"}`}>
+                                                            <li className='profile_tab_link_mobile'>Followers</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=following` : "/profile?tab=following"}`}>
+                                                            <li className='profile_tab_link_mobile'>Following</li>
+                                                      </Link>
+                                                      <Link href={`${router?.query?.id ? `/profile/${router.query.id}?tab=reviews` : "/profile?tab=reviews"}`}>
+                                                            <li className='profile_tab_link_mobile'>Reviews</li>
+                                                      </Link>
                                                 </ul>
                                           </div>
                                     </div>

@@ -88,14 +88,14 @@ const ImageArea = ({ files = [] }) => {
 
       return (
             <div className='w-full sm:w-[380px]'>
-                  <div className="p-2 border border-gray-300 w-full h-[320px] relative rounded-md">
+                  <div className="p-2 border border-gray-300 w-full sm:min-w-[380px] h-[320px] relative rounded-md">
                         {
                               (isImage(selectedFile)) ?
                                     <img
                                           src={selectedFile}
                                           alt='product_file'
                                           // layout='fill'
-                                          className=' w-full h-full object-contain object-center rounded-md'
+                                          className='min-w-full h-full object-contain object-center rounded-md'
                                     />
                                     :
                                     <div className='w-full h-full'>

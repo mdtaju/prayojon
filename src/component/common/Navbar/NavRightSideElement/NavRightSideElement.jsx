@@ -7,6 +7,8 @@ import { useGetUserQuery } from "../../../../features/profile/profileApi";
 const CustomPopper = dynamic(() => import('../../CustomPopper'), {
       ssr: false,
 });
+import NotificationIcon from "../../../../../public/web-icons/menu_icons/menu_notification.svg";
+import Image from 'next/image';
 
 
 const NavRightSideElement = ({ toolTitle, countValue, Icon, children }) => {
@@ -51,10 +53,19 @@ const NavRightSideElement = ({ toolTitle, countValue, Icon, children }) => {
                                                       sx={{ width: 36, height: 36 }}
                                                 /> :
                                                 <Badge badgeContent={countValue} color="primary">
-                                                      <FontAwesomeIcon
-                                                            className="nav_icon text-[18px]"
-                                                            icon={Icon}
-                                                      />
+                                                      {
+                                                            toolTitle === "Notifications" ?
+                                                                  <Image
+                                                                        src={NotificationIcon}
+                                                                        alt='notification'
+                                                                        width={22}
+                                                                        height={22}
+                                                                  /> :
+                                                                  <FontAwesomeIcon
+                                                                        className="nav_icon text-[18px]"
+                                                                        icon={Icon}
+                                                                  />
+                                                      }
                                                 </Badge>
                                     }
                               </div>

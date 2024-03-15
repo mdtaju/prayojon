@@ -12,6 +12,7 @@ const CreatePostFooter = ({
       isProductReadyForSubmit,
       postLoading
 }) => {
+
       return (
             <div className='w-full p-2 flex flex-col gap-2'>
                   <div className='w-full flex items-center justify-center gap-3 border border-gray-300 p-2 rounded-md'>

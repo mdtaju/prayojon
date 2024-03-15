@@ -25,6 +25,7 @@ const ManageOrders = () => {
   const [deliveryStatus, setDeliveryStatus] = useState("Not-Delivered");
   const [paymentStatus, setPaymentStatus] = useState("Not-Paid");
   const [loading, setLoading] = useState(false);
+  const [deliveryNote, setDeliveryNote] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState({
     error: false,
@@ -89,6 +90,7 @@ const ManageOrders = () => {
         paymentStatus: "",
         deliveryStatus,
         acceptance: "",
+        deliveryNote,
       };
       updateOrder(makeData)
         .unwrap()
@@ -106,6 +108,7 @@ const ManageOrders = () => {
           });
           setLoading(false);
           setOpen(true);
+          setDeliveryNote("");
           refetch(session?.user?.email);
         })
         .catch((e) => {
@@ -158,7 +161,6 @@ const ManageOrders = () => {
         });
     });
   };
-
   // console.log(orders);
   return (
     <Layout>
@@ -222,6 +224,15 @@ const ManageOrders = () => {
                   <option value="Delivered">Delivered</option>
                   <option value="Not-Delivered">Not-Delivered</option>
                 </select>
+                {deliveryStatus === "Delivered" && (
+                  <textarea
+                    name=""
+                    id=""
+                    value={deliveryNote}
+                    onChange={(e) => setDeliveryNote(e.target.value)}
+                    placeholder="write a note"
+                    className="w-full mt-4 outline-none border border-gray-400 rounded-md p-3"></textarea>
+                )}
               </div>
               <button
                 onClick={deliveryStatusHandler}
@@ -274,7 +285,7 @@ const ManageOrders = () => {
             rows={orders ? orders : []}
             columns={[
               {
-                field: "star",
+                field: "total_avg_rating",
                 minWidth: 200,
                 headerName: "Review",
                 renderCell: (params) => {
@@ -385,6 +396,11 @@ const ManageOrders = () => {
                 field: "quantity",
                 minWidth: 150,
                 headerName: "Quantity",
+              },
+              {
+                field: "color",
+                minWidth: 150,
+                headerName: "Color",
               },
               {
                 field: "product_price",

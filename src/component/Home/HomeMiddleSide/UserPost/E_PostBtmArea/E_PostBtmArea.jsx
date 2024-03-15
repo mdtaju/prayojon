@@ -45,7 +45,10 @@ const PostE_BtmArea = ({ product = {}, cartItems = [] }) => {
                                     <FontAwesomeIcon className='text-green-500' icon={faMoneyBill} />
                                     <span className='font-medium'>Price</span>
                               </div>
-                              <span className='text-xs text-orange-500 font-semibold'><del><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+original_price)}</del></span>
+                              {
+                                    moneyFormate(+original_price) !== moneyFormate(+price) &&
+                                    <span className='text-xs text-orange-500 font-semibold'><del><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+original_price)}</del></span>
+                              }
                               <span className='text-gray-500 text-sm'><FontAwesomeIcon icon={faBangladeshiTakaSign} /> {moneyFormate(+price)}</span>
                         </div>
                         {/* Type */}

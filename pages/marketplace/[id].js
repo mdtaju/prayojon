@@ -17,11 +17,17 @@ const Product = () => {
         const res = await axiosInstance.get(
           `/single_product/${router?.query?.id}`
         );
+        if (!res?.data?.id) {
+          router.push("/");
+        }
         setProductData(res?.data);
       }
       getProduct();
     }
   }, [router]);
+
+  console.log(productData);
+
   return (
     <div>
       <Head>
