@@ -25,6 +25,7 @@ const HomeMiddleSide = ({ UID, userProducts, generalPost }) => {
       const { data: productPosts } = useGetProductPostsQuery();
       const [userPosts, setUserPosts] = useState([]);
       const [userEPosts, setUserEPosts] = useState([]);
+      console.log(productPosts)
       useEffect(() => {
             if (data || productPosts) {
                   if (generalPost) {
@@ -44,7 +45,7 @@ const HomeMiddleSide = ({ UID, userProducts, generalPost }) => {
 
       // what to render 
       let content;
-      const loader = <div className='w-full sm:w-[450px] md:w-[480px] lg:w-[550px] mx-auto px-2 mt-4'>
+      const loader = <div className='w-full mx-auto mt-4'>
             <div className='w-full common_shadow mx-auto'>
                   <div className='w-full px-4 flex items-center gap-4'>
                         <Skeleton variant="circular" width={40} height={40} />

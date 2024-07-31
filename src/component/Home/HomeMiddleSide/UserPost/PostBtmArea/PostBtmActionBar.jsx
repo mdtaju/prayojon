@@ -141,7 +141,7 @@ const PostBtmActionBar = ({ id, postQueryId, postReacts,
                               {/* type */}
                               <div className='flex items-center gap-1 text-sm'>
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M6.66683 2H3.7335C3.62741 2 3.52567 2.04214 3.45065 2.11716C3.37564 2.19217 3.3335 2.29391 3.3335 2.4V13.6C3.3335 13.7061 3.37564 13.8078 3.45065 13.8828C3.52567 13.9579 3.62741 14 3.7335 14H6.66683M7.3335 4.66667H8.66683M7.3335 8H8.66683M7.3335 11.3333H8.66683M9.3335 2H12.2668C12.3729 2 12.4747 2.04214 12.5497 2.11716C12.6247 2.19217 12.6668 2.29391 12.6668 2.4V13.6C12.6668 13.7061 12.6247 13.8078 12.5497 13.8828C12.4747 13.9579 12.3729 14 12.2668 14H9.3335" stroke="#8190A3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                          <path d="M6.66683 2H3.7335C3.62741 2 3.52567 2.04214 3.45065 2.11716C3.37564 2.19217 3.3335 2.29391 3.3335 2.4V13.6C3.3335 13.7061 3.37564 13.8078 3.45065 13.8828C3.52567 13.9579 3.62741 14 3.7335 14H6.66683M7.3335 4.66667H8.66683M7.3335 8H8.66683M7.3335 11.3333H8.66683M9.3335 2H12.2668C12.3729 2 12.4747 2.04214 12.5497 2.11716C12.6247 2.19217 12.6668 2.29391 12.6668 2.4V13.6C12.6668 13.7061 12.6247 13.8078 12.5497 13.8828C12.4747 13.9579 12.3729 14 12.2668 14H9.3335" stroke="#8190A3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                     <span>Type:</span>
                                     <span className='font-semibold'>{product?.type}</span>
@@ -166,10 +166,10 @@ const PostBtmActionBar = ({ id, postQueryId, postReacts,
                               <div onClick={handleAddToCart} className={`group bg-gray-200 p-1 grid place-items-center rounded-full cursor-pointer active:scale-95 duration-150 hover:bg-orange-500 ${isAdded ? "bg-orange-500" : ""}`}>
                                     {/* <FontAwesomeIcon className={`group-hover:text-white ${isAdded ? "text-white" : "text-orange-500"}`} icon={faCartPlus} /> */}
                                     <svg className='stroke-[#4CAF50] group-hover:stroke-white' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g clip-path="url(#clip0_405_1586)">
-                                                <path d="M3 4.5H21L18.75 14.25H5.25M18.75 17.25H6L2.25 1.5H0" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M17.25 21.75C18.0784 21.75 18.75 21.0784 18.75 20.25C18.75 19.4216 18.0784 18.75 17.25 18.75C16.4216 18.75 15.75 19.4216 15.75 20.25C15.75 21.0784 16.4216 21.75 17.25 21.75Z" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M7.5 21.75C8.32843 21.75 9 21.0784 9 20.25C9 19.4216 8.32843 18.75 7.5 18.75C6.67157 18.75 6 19.4216 6 20.25C6 21.0784 6.67157 21.75 7.5 21.75Z" stroke-linecap="round" stroke-linejoin="round" />
+                                          <g clipPath="url(#clip0_405_1586)">
+                                                <path d="M3 4.5H21L18.75 14.25H5.25M18.75 17.25H6L2.25 1.5H0" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M17.25 21.75C18.0784 21.75 18.75 21.0784 18.75 20.25C18.75 19.4216 18.0784 18.75 17.25 18.75C16.4216 18.75 15.75 19.4216 15.75 20.25C15.75 21.0784 16.4216 21.75 17.25 21.75Z" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M7.5 21.75C8.32843 21.75 9 21.0784 9 20.25C9 19.4216 8.32843 18.75 7.5 18.75C6.67157 18.75 6 19.4216 6 20.25C6 21.0784 6.67157 21.75 7.5 21.75Z" strokeLinecap="round" strokeLinejoin="round" />
                                           </g>
                                           <defs>
                                                 <clipPath id="clip0_405_1586">

@@ -1,5 +1,6 @@
 import io from "socket.io-client";
 import { apiSlice } from "../api/apiSlice";
+import { addProductPost } from "./userPostSlice";
 
 export const userPostApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

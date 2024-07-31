@@ -1,9 +1,9 @@
 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="bytesize:cart">
 <g id="Group">
-<path id="Vector" d="M6.75 6.75H33.75L30.375 21.375H10.125M30.375 25.875H11.25L5.625 2.25H2.25" stroke="#8190A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M28.125 32.625C29.3676 32.625 30.375 31.6176 30.375 30.375C30.375 29.1324 29.3676 28.125 28.125 28.125C26.8824 28.125 25.875 29.1324 25.875 30.375C25.875 31.6176 26.8824 32.625 28.125 32.625Z" stroke="#8190A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M13.5 32.625C14.7426 32.625 15.75 31.6176 15.75 30.375C15.75 29.1324 14.7426 28.125 13.5 28.125C12.2574 28.125 11.25 29.1324 11.25 30.375C11.25 31.6176 12.2574 32.625 13.5 32.625Z" stroke="#8190A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M6.75 6.75H33.75L30.375 21.375H10.125M30.375 25.875H11.25L5.625 2.25H2.25" stroke="#8190A3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path id="Vector_2" d="M28.125 32.625C29.3676 32.625 30.375 31.6176 30.375 30.375C30.375 29.1324 29.3676 28.125 28.125 28.125C26.8824 28.125 25.875 29.1324 25.875 30.375C25.875 31.6176 26.8824 32.625 28.125 32.625Z" stroke="#8190A3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path id="Vector_3" d="M13.5 32.625C14.7426 32.625 15.75 31.6176 15.75 30.375C15.75 29.1324 14.7426 28.125 13.5 28.125C12.2574 28.125 11.25 29.1324 11.25 30.375C11.25 31.6176 12.2574 32.625 13.5 32.625Z" stroke="#8190A3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </g>
 </g>
 </svg>
